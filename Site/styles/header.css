@@ -1,19 +1,73 @@
 @import url(index.css);
 
-header {
-    font-family: 'Reddit Sans', sans-serif;
-    font-size: 18px;
-    line-height: 1.6;
-    background-color: white;
-    color: black;
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+#faixa-vermelha{
+    height: 10px;
+    width: 100%;
+    background-color: var(--red);
+}
+
+#menu {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-areas: "logo . . . . inicio grupo escotismo como-chegar fale-conosco blog paxtu";
+    align-items: center;
+    padding: 10px 10px;
+}
+
+#logo {
+    grid-area: logo;
+}
+
+#logo img {
+    width: 100%;
+    max-width: 80px;
+    height: auto;
+    padding: 0 0 0 50px;
+}
+
+#inicio {
+    grid-area: inicio;
+}
+
+#grupo {
+    grid-area: grupo;
+}
+
+#escotismo {
+    grid-area: escotismo;
+}
+
+#como-chegar {
+    grid-area: como-chegar;
+}
+
+#fale-conosco {
+    grid-area: fale-conosco;
+}
+
+#blog {
+    grid-area: blog;
+}
+
+#paxtu {
+    grid-area: paxtu;
 }
 
 a {
-    color: black;
     text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+    padding: 10px;
 }
 
-a:hover {
-    color: var(--red, #ff0002);
-    transition: 0.4s;
+a:hover{
+    color: var(--red);
+    transform: scale(1.1);
 }
