@@ -1,3 +1,5 @@
+import { setupMenu } from './menu.js';
+
 async function loadHTML(elementID, filePath) {
     try {
         const response = await fetch(filePath);
@@ -11,31 +13,40 @@ async function loadHTML(elementID, filePath) {
 }
 
 async function initPage() {
-    // Carregar header e footer
     await loadHTML("header", "header.html");
     await loadHTML("footer", "footer.html");
 
-    // Adicionar evento para navegação via links no header
+    setupMenu();
+
     document.querySelector("header").addEventListener("click", async (event) => {
         const target = event.target;
         if (target.tagName === "A" && target.dataset.page) {
-            event.preventDefault(); // Evita o carregamento padrão
+            event.preventDefault();
             const page = target.dataset.page;
             await loadHTML("main", `conteudos/${page}.html`);
+            updateActiveLink(page);
             window.history.pushState({ page }, "", `#${page}`);
         }
     });
 
-    // Carregar página inicial (landing_page.html ou outra)
     const initialPage = location.hash ? location.hash.substring(1) : "landing_page";
     await loadHTML("main", `conteudos/${initialPage}.html`);
+    updateActiveLink(initialPage);
 }
 
-// Manter o estado da página ao usar o botão "Voltar" ou "Avançar" do navegador
+function updateActiveLink(page) {
+    const activeLink = document.querySelector(`#menu a[data-page="${page}"]`);
+    if (activeLink) {
+        document.querySelectorAll("#menu a").forEach(link => link.classList.remove("active"));
+        activeLink.classList.add("active");
+    }
+}
+
 window.addEventListener("popstate", (event) => {
     const page = event.state?.page || "landing_page";
-    loadHTML("main", `conteudos/${page}.html`);
+    loadHTML("main", `conteudos/${page}.html`).then(() => {
+        updateActiveLink(page);
+    });
 });
 
-// Inicializar a página quando o DOM estiver carregado
 document.addEventListener("DOMContentLoaded", initPage);
