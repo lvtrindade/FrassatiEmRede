@@ -1,6 +1,6 @@
 export function setupMenu() {
     const menuLinks = document.querySelectorAll('#menu a');
-    const currentPage = location.hash.substring(1) || "inicial"; // Fallback para "inicial"
+    const currentPage = location.hash.substring(1) || "inicial";
 
     menuLinks.forEach(link => {
         link.addEventListener('click', () => {
@@ -9,6 +9,19 @@ export function setupMenu() {
 
         if (link.dataset.page === currentPage) {
             setActiveLink(link, menuLinks);
+        }
+    });
+
+    const grupoButton = document.getElementById('grupoButton');
+    const grupo = document.getElementById('grupo');
+
+    grupoButton.addEventListener('click', () => {
+        grupo.classList.toggle('show');
+    });
+
+    document.addEventListener('click', (event) => {
+        if (!grupo.contains(event.target)) {
+            grupo.classList.remove('show');
         }
     });
 }
