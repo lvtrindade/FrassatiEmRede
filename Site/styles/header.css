@@ -1,124 +1,98 @@
 @import url(index.css);
 
-#faixa-vermelha {
-    height: 10px;
-    width: 100%;
-    background-color: var(--red);
+#menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-top: 13px solid var(--red);
 }
 
-#menu {
-    width: 97%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 10px 10px;
-    
+#logo img {
+    max-width: 80px;
+    padding-left: 6vw;
 }
 
 #opcoes {
     display: flex;
-    justify-content: space-around;
-    flex: 12;
-    position: relative;
+    gap: 15px;
+    align-items: center;
 }
 
-#logo {
-    grid-area: logo;
-    flex: 11;
+#opcoes ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-#logo img {
-    width: 100%;
-    max-width: 80px;
-    height: auto;
-    padding: 0 0 0 6vw;
-}
-
-#grupo {
-    position: relative;
+#opcoes li {
+    margin: 0 15px;
     display: inline-block;
 }
 
-#grupoButton {
-    padding: 8px;
-    background-color: white;
+#menu a {
     color: black;
-    transition: color 0.3s ease, transform 0.3s ease;
+    text-decoration: none;
+    padding: 10px;
+    transition: color 0.3s, transform 0.3s;
+}
+
+a:hover {
+    color: var(--red);
+    transform: scale(1.1);
+}
+
+a.opcao.active {
+    border-bottom: 3px solid var(--red);
+}
+
+#grupoButton {
+    background: none;
     border: none;
-    cursor: pointer;
+    color: black;
     font-size: 100%;
-    font-family: 'Reddit Sans', sans-serif;
+    font-family: inherit;
+    cursor: pointer;
+    padding: 0;
 }
 
 #grupoOptions {
+    display: none;
+}
+
+#grupoOptins:not(.hidden) {
+    display: block;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
     display: none;
     position: absolute;
     top: 100%;
     left: 0;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 110px;
     border-radius: 10px;
     overflow: hidden;
     opacity: 0;
     transform: scaleY(0);
     transform-origin: top;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    transition: transform 0.3s, opacity 0.3s;
 }
 
-#grupo.show #grupoOptions {
+.dropdown:hover .dropdown-content {
     display: block;
     opacity: 1;
     transform: scaleY(1);
 }
 
-#grupoOptions ul {
-    padding: 0;
-    margin: 0;
-}
-
-#grupoOptions li {
-    margin: 5px 0;
-}
-
-#grupoOptions a {
+.dropdown-content a {
+    text-decoration: none;
     display: block;
     padding: 10px;
     color: black;
-    text-decoration: none;
-}
-
-a {
-    color: black;
-    text-decoration: none;
-    transition: color 0.3s ease, transform 0.3s ease;
-    padding: 10px;
-    position: relative;
-}
-
-#opcoes a:hover {
-    color: var(--red);
-    transform: scale(1.1);
-    transition: 0.1s;
-}
-
-a:visited {
-    color: black;
-}
-
-#opcoes a.active::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    transform: translateX(14%);
-    width: 80%;
-    height: 3px;
-    background-color: var(--red);
-}
-
-#grupoButton:hover {
-    color: var(--red);
-    transform: scale(1.1);
-    transition: 0.1s;
 }
