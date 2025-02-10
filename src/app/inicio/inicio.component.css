@@ -1,0 +1,189 @@
+* {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hexagon-container {
+    position: absolute;
+    bottom: 20px;
+    margin: 0;
+}
+
+.section {
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+#heroes_page {
+    background-image: url(https://i.imgur.com/aA39QIP.jpeg);
+}
+
+.content {
+    z-index: 1;
+}
+
+#heroes_page h1 {
+    font-size: 70px;
+    font-weight: bold;
+    color: white;
+    position: absolute;
+    margin: 0;
+    text-shadow: 0px 8px 10px rgba(0, 0, 0, 0.9);
+}
+
+#heroes_page p {
+    font-size: 25px;
+    color: white;
+    position: absolute;
+    bottom: 60px;
+    margin: 0;
+    text-shadow: 0px 3px 2px rgba(0, 0, 0, 0.6);
+}
+
+#heroes_page .arrow-white {
+    z-index: 11;
+    rotate: 90deg;
+    bottom: 25px;
+    text-shadow: 5px 0px 2px rgba(0, 0, 0, 0.6);
+}
+
+.triangle {
+    bottom: -100px;
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    height: 200px;
+    background-color: #fff;
+    clip-path: polygon(
+        50% 50%,
+        0% 0%,
+        0% 100%,
+        50% 50%,
+        100% 100%,
+        100% 0%,
+        50% 50%
+    );
+}
+
+#landing_grupo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    max-width: 80%;
+    margin: 0 auto;
+    position: relative;
+}
+
+#landing_grupo h2 {
+    margin: 0;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    z-index: 10;
+    color: red;
+    font-size: 45px;
+}
+
+#landing_grupo p {
+    text-align: left;
+    margin: 10px 0;
+    white-space: pre-line;
+    margin-top: 15px;
+    color: red;
+    font-size: 20px;
+    line-height: 2rem;
+}   
+
+#landing_escotismo {
+    background-image: url(https://www.gesaomario.org.br/wp-content/uploads/2020/09/historia3.jpg);
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: darken;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    margin: 0 auto;
+    position: relative;
+    color: white;
+}
+
+
+#landing_escotismo h2 {
+    margin: 0;
+    position: absolute;
+    top: 20px;
+    font-size: 45px;
+    text-shadow: 2px 5px 7px rgba(0, 0, 0, 0.6);
+}
+
+#landing_escotismo p {
+    text-indent: 60px;
+    max-width: 80%;
+    text-align: left;
+    margin: 10px 0;
+    margin-top: 15px;
+    font-size: 20px;
+    text-shadow: 2px 5px 7px rgba(0, 0, 0, 0.8);
+    line-height: 2rem;
+}
+
+#landing_blog {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    position: relative;
+}
+
+#landing_blog h2 {
+    margin: 0;
+    position: absolute;
+    top: 20px;
+    font-size: 45px;
+    color: var(--red);
+}
+
+#landing_como_chegar {
+    top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--red);
+    margin: 0 auto;
+    position: relative;
+}
+
+#text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--red);
+    margin: 0 auto;
+    position: relative;
+    margin-top: 3rem;
+}
+
+#landing_como_chegar p {
+    font-size: 20px;
+    line-height: 2.5rem;
+}
+
+#landing_como_chegar img {
+    width: auto;
+    max-height: 150px;
+}

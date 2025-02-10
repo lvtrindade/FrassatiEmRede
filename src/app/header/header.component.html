@@ -1,0 +1,32 @@
+<nav id="menu">
+    <a routerLink="/inicio" id="logo">
+      <img src="logo.png" alt="GE Jorge Frassati">
+    </a>
+  
+    <div class="opcoes">
+      <ul>
+        <li><a routerLink="/inicio" routerLinkActive="active" id="inicio" class="opcoes opcao">Início</a></li>
+  
+        <li class="dropdown" [class.open]="isOpen">
+          <a (click)="toggleDropdown()" [class.active]="isGroupActive()" id="grupo" class="opcoes opcao dropdown-btn">
+            O grupo
+          </a>
+          <div class="dropdown-content">
+            <a routerLink="/grupo/historia" routerLinkActive="active" (click)="optionSelected()">História</a>
+            <a routerLink="/grupo/escotismo" routerLinkActive="active" (click)="optionSelected()">Escotismo</a>
+            <a routerLink="/grupo/documentos" routerLinkActive="active" (click)="optionSelected()">Documentos</a>
+          </div>
+        </li>
+  
+        <li><a routerLink="/calendario" routerLinkActive="active" id="escotismo" class="opcoes opcao">Calendário</a></li>
+        <li><a routerLink="/como-chegar" routerLinkActive="active" id="como-chegar" class="opcoes opcao">Como chegar</a></li>
+        <li><a routerLink="/fale-conosco" routerLinkActive="active" id="fale-conosco" class="opcoes opcao">Fale conosco</a></li>
+        <li><a routerLink="/blog" id="blog" routerLinkActive="active" class="opcoes opcao">Blog</a></li>
+        <li>
+          <a id="paxtu" class="opcoes" href="https://paxtu.escoteiros.org.br/" target="_blank" rel="noopener noreferrer">
+            Paxtu
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>  

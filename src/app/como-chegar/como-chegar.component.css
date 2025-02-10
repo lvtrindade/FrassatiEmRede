@@ -1,0 +1,30 @@
+#como_chegar {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+    position: relative;
+}
+
+#cabecalho {
+    top: -25px;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+    position: relative;
+    padding-bottom: 50px;
+}
+
+#cabecalho a {
+    padding-bottom: 10px;
+    text-decoration: none;
+    color: var(--red);
+    font-size: 18px;
+
+}
+
+#mapa {
+    height: 100vh;
+}
