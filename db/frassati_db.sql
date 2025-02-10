@@ -25,6 +25,14 @@ CREATE TABLE AtividadeTag (
     PRIMARY KEY (id_atividade, id_tag)
 );
 
+CREATE TABLE AtividadeCalendario (
+	id_atividade_calendario INT,
+    data_atividade_calendario DATE,
+    horario_atividade_calendario TIME,
+    nome VARCHAR(50),
+    PRIMARY KEY (id_atividade_calendario)
+);
+
 ALTER TABLE Galeria
 ADD FOREIGN KEY (id_atividade) REFERENCES Atividade(id) ON DELETE CASCADE;
 

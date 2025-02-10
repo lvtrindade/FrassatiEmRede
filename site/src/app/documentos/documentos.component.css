@@ -1,0 +1,35 @@
+a {
+    text-decoration: none;
+    color: var(--red);
+}
+
+#documentos {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+    padding-bottom: 4.1%;
+}
+
+#documentos h1 {
+    padding-top: 1%;
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+#documentos h2 {
+    padding: 1.5% 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#documentos h3 {
+    padding-top: 1.5%;
+    padding-bottom: 1%;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#documentos h4 {
+    padding-bottom: 1.5%;
+}

@@ -1,0 +1,16 @@
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    background-color: var(--red);
+}
+
+.admin-hide {
+    display: block;
+}
+
+:host-context(.admin) .admin-hide {
+    display: none;
+}
