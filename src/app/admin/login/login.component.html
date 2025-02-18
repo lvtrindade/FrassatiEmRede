@@ -1,7 +1,7 @@
-<form class="login-form" (ngSubmit)="fazerLogin()" method="post">
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="login-container">
-        <h2>Bem vindo!</h2>
-        <p>Digite seus dados nos campos de acesso a baixo</p>
+        <h2>Bem-vindo!</h2>
+        <p>Digite seus dados nos campos de acesso abaixo:</p>
 
         <div class="campo">
             <div class="input-container" id="input-login" #inputLogin>
@@ -9,8 +9,7 @@
                     <span class="material-symbols-outlined">account_circle</span>
                 </div>
                 <div class="divider">|</div>
-                <input type="text" name="usuario" placeholder="Usuário" required (focus)="onFocus(inputLogin)"
-                    (blur)="onBlur(inputLogin)">
+                <input type="text" formControlName="usuario" placeholder="Usuário" required>
             </div>
         </div>
 
@@ -20,13 +19,9 @@
                     <span class="material-symbols-outlined">lock</span>
                 </div>
                 <div class="divider">|</div>
-                <input type="password" name="senha" placeholder="Senha" required (focus)="onFocus(inputPassword)"
-                (blur)="onBlur(inputPassword)">
+                <input type="password" formControlName="senha" placeholder="Senha" required>
             </div>
         </div>
 
         <div class="botao">
-            <button type="submit">Acessar</button>
-        </div>
-    </div>
-</form>
+            <button type="submit" [disabled]="loginForm.invalid">Acess

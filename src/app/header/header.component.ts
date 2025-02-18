@@ -1,7 +1,6 @@
 import { DOCUMENT, NgIf } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, HostListener, Inject, ViewChild } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { HeaderHeightService } from '../../header-heigth.service';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +16,6 @@ export class HeaderComponent implements AfterViewInit {
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    private headerHeightService: HeaderHeightService,
     private router: Router
   ) {}
 
@@ -25,7 +23,6 @@ export class HeaderComponent implements AfterViewInit {
     const headerElement = this.document.querySelector('.header') as HTMLElement;
     if (headerElement) {
       const headerHeight = headerElement.offsetHeight;
-      this.headerHeightService.updateHeaderHeight(headerHeight);
     } else {
       console.error('Elemento com classe .header não encontrado.');
     }

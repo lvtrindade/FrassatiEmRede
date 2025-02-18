@@ -1,57 +1,58 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule], // Importando ReactiveFormsModule aqui
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-  inputLogin: HTMLElement | undefined;
-  inputPassword: HTMLElement | undefined;
-  onFocus(container: HTMLElement) {
-    container.classList.add('focused');
+export class LoginComponent implements OnInit {
+  
+  loginForm!: FormGroup; // Definindo o formulário reativo
+
+  constructor(private http: HttpClient, private router: Router) { }
+
+  ngOnInit(): void {
+    // Inicializando o formulário com validadores
+    this.loginForm = new FormGroup({
+      usuario: new FormControl('', [Validators.required]), // Validador "required" para o campo usuario
+      senha: new FormControl('', [Validators.required]) // Validador "required" para o campo senha
+    });
   }
 
-  onBlur(container: HTMLElement) {
-    container.classList.remove('focused');
-  }
+  // Função chamada ao submeter o formulário
+  onSubmit() {
+    if (this.loginForm.invalid) {
+      return;
+    }
 
-  usuario: string = '';
-  senha: string = '';
+    const dadosLogin = {
+      username: this.loginForm.value.usuario,
+      password: this.loginForm.value.senha
+    };
+    
+    const headers = { 'Content-Type': 'application/json' };
 
-  constructor(private http: HttpClient, private router: Router, private ngZone: NgZone) {}
+    this.http.post<{ message: string }>('http://localhost/src/app/admin/login/login.php', dadosLogin, { headers })
+      .subscribe(
+        (response: any) => {
+          console.log('Resposta do servidor:', response);
 
-  fazerLogin () {
-
-    const dados = { usuario: this.usuario, senha: this.senha};
-
-    this.http.post<{ sucess:boolean }>('http://localhost/site/src/app/backend/login.php', dados).subscribe (
-      (res) => {
-
-        console.log('Resposta do servidor:', res);
-
-        if (res.sucess) {
-
-          console.log('Login bem-sucedido! Redirecionando...');
-
-          this.ngZone.run(() => {
+          if (response.message === 'Login bem-sucedido!') {
             this.router.navigate(['/admin/dashboard']);
-          });
-        
-        } else {
-        
-          alert('Login ou Senha incorretos!');
-        
+          } else {
+            alert('Usuário ou senha inválidos!');
+          }
+        },
+        (error) => {
+          console.error('Erro na requisição:', error);
+          alert('Erro ao tentar fazer login. Tente novamente.');
         }
-      },
-      (erro) => {
-        console.error('Erro na requisição', erro);
-        alert('Erro ao tentar fazer Login');
-      }
-    );
+      );
   }
 }

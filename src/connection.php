@@ -1,14 +1,12 @@
 <?php
-    $DBhost = "localhost";
-    $DBusername = "root";
-    $DBpassword = "";
-    $DBname = "frassati_db";
+$host = 'localhost'; // ou o endereço do seu servidor de banco de dados
+$dbname = 'frassati_db';
+$username = 'usuario';
+$password = 'senha';
 
-    $connection = new mysqli($DBhost, $DBusername, $DBpassword, $DBname);
-    $connection->set_charset("utf8");
-
-    // if ($connection->connect_errno){
-    //     echo "FALHA NA CONEXAO COM O BANCO DE DADOS";
-    // } else {
-    //     echo "BANCO CONECTADO";
-    // }
+try {
+    $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Erro na conexão: " . $e->getMessage();
+}
