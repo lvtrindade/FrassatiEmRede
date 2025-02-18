@@ -7,25 +7,24 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule], // Importando ReactiveFormsModule aqui
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
   
-  loginForm!: FormGroup; // Definindo o formulário reativo
+  loginForm!: FormGroup;
 
   constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
-    // Inicializando o formulário com validadores
+
     this.loginForm = new FormGroup({
-      usuario: new FormControl('', [Validators.required]), // Validador "required" para o campo usuario
-      senha: new FormControl('', [Validators.required]) // Validador "required" para o campo senha
+      usuario: new FormControl('', [Validators.required]),
+      senha: new FormControl('', [Validators.required])
     });
   }
 
-  // Função chamada ao submeter o formulário
   onSubmit() {
     if (this.loginForm.invalid) {
       return;
@@ -44,15 +43,23 @@ export class LoginComponent implements OnInit {
           console.log('Resposta do servidor:', response);
 
           if (response.message === 'Login bem-sucedido!') {
+            
+            localStorage.setItem('authToken', 'true');
+            localStorage.setItem('expira', response.expira);
+            
             this.router.navigate(['/admin/dashboard']);
+
           } else {
-            alert('Usuário ou senha inválidos!');
+            alert('Usuário ou senha inválidos!');  
           }
+
         },
+        
         (error) => {
           console.error('Erro na requisição:', error);
           alert('Erro ao tentar fazer login. Tente novamente.');
         }
+
       );
   }
 }

@@ -9,37 +9,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-// Verifica se os dados foram enviados via POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405); // Método não permitido
+    http_response_code(405);
     echo json_encode(["message" => "Método não permitido!", "erro" => true]);
     exit();
 }
 
-// Captura os dados do JSON recebido
 $data = json_decode(file_get_contents("php://input"), true);
 
-// Verifica se os dados foram enviados corretamente
 if (!$data || !isset($data['username']) || !isset($data['password'])) {
-    http_response_code(400); // Bad Request
+    http_response_code(400);
     echo json_encode(["message" => "Dados não enviados corretamente!", "erro" => true]);
     exit();
 }
 
 $username = $data['username'];
 $password = $data['password'];
-// Exemplo de verificação simples (substitua com sua lógica de autenticação real)
-$validUsername = "admin"; // Aqui você poderia fazer uma consulta ao banco de dados
-$validPassword = "senha"; // Nunca faça isso em produção! Use hash de senha
 
-// Verifica se o usuário e a senha são válidos
+$validUsername = "admin";
+$validPassword = "senha";
+
 if ($username === $validUsername && $password === $validPassword) {
+
+    session_start();
+
+    $tempo_expiracao = time() + 3600 * 12;
+    
+    $_SESSION['authenticated'] = true;
+    $_SESSION['expira'] = $tempo_expiracao;
+
     echo json_encode([
         "message" => "Login bem-sucedido!",
         "usuario_recebido" => $username
     ]);
 } else {
-    http_response_code(401); // Unauthorized
+    http_response_code(401);
     echo json_encode(["message" => "Usuário ou senha inválidos!", "erro" => true]);
 }
 exit();
