@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
+import { CalendarEvent, CalendarModule, DateAdapter } from 'angular-calendar';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-calendario',
@@ -6,6 +8,8 @@ import { Component } from '@angular/core';
   templateUrl: './calendario.component.html',
   styleUrl: './calendario.component.css'
 })
-export class CalendarioComponent {
 
+export class CalendarioComponent {
+  viewDate: Date = new Date();
+  events: CalendarEvent[] = [];
 }

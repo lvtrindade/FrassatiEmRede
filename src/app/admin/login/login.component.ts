@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
     
     const headers = { 'Content-Type': 'application/json' };
 
-    this.http.post<{ message: string }>('http://localhost/src/app/admin/login/login.php', dadosLogin, { headers })
+    this.http.post<{ message: string }>('http://localhost/src/app/backend/login.php', dadosLogin, { headers })
       .subscribe(
         (response: any) => {
           console.log('Resposta do servidor:', response);
