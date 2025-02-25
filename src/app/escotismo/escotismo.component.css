@@ -1,0 +1,104 @@
+.document {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    margin: 0 auto;
+    position: relative;
+    padding-bottom: 80px;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 80%;
+}
+
+.text h1 {
+    align-self: flex-start;
+    padding: 2% 0 2% 4%;
+    font-size: 22px;
+    font-weight: bolder;
+}
+
+.text h2 {
+    align-self: flex-start;
+    padding: 2% 0 3% 5%;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.text h3 {
+    align-self: flex-start;
+    padding: 3% 0% 1% 6%;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.text h4 {
+    align-self: center;
+    padding: 3% 0% 1% 0%;
+    font-size: 18px;
+    font-style: italic;
+}
+
+.text p {
+    text-indent: 5%;
+    font-size: 16px;
+    text-align: justify;
+    padding-bottom: 1%;
+}
+
+.text .obs {
+    font-size: 16px;
+    text-align: center;
+    padding-bottom: 3%
+}
+
+.text a {
+    font-size: 16px;
+    text-align: center;
+    margin: 3% 0 3% 0;
+    color: var(--red);
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+    width: 100%;
+}
+
+.text a:hover {
+    transform: scale(105%);
+}
+
+.text .quote {
+    text-indent: 0;
+    align-self: center;
+    font-size: 16px;
+    text-align: center;
+    padding: 3% 0 3% 0;
+    font-style: italic;
+    width: 60%;
+}
+
+.text .leis {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+}
+
+.text .leis .list {
+    align-self: center;
+    padding: 1% 0 1% 0;
+    font-style: italic;
+    text-align: center;
+    width: 100%;
+}
+
+.text #promessa {
+    text-indent: 0;
+    align-self: center;
+    padding: 1% 0 3% 0;
+    font-style: italic;
+    text-align: center;
+    line-height: 140%;
+}
