@@ -1,21 +1,17 @@
-<div>
-    <nav>
-        <ul>
-            <li>
-                <a href="">Atividades</a>
-            </li>
-            
-            <li>
-                <a href="">Calendário</a>
-            </li>
-            
-            <li>
-                <a href="">Background</a>
-            </li>
-        </ul>
-    </nav>
+<div class="header">
+    <button (click)="logout()">logout</button>
 </div>
 
-<div>
+<div class="admin-layout">
+    <div class="side-bar">
+        <ul>
+            <li><a (click)="navigateTo('background')">Background</a></li>
+            <li><a (click)="navigateTo('calendario')">Calendário</a></li>
+            <li><a (click)="navigateTo('atividades')">Atividades</a></li>
+        </ul>
+    </div>
 
+    <div class="content">
+        <router-outlet/>
+    </div>
 </div>

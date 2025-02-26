@@ -18,7 +18,6 @@ export class LoginComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
-
     this.loginForm = new FormGroup({
       usuario: new FormControl('', [Validators.required]),
       senha: new FormControl('', [Validators.required])
@@ -40,14 +39,14 @@ export class LoginComponent implements OnInit {
     this.http.post<{ message: string }>('http://localhost/src/app/backend/login.php', dadosLogin, { headers })
       .subscribe(
         (response: any) => {
+          console.log('Resposta completa do servidor:', response);
           console.log('Resposta do servidor:', response);
 
           if (response.message === 'Login bem-sucedido!') {
             
             localStorage.setItem('authToken', 'true');
-            localStorage.setItem('expira', response.expira);
             
-            this.router.navigate(['/admin/dashboard']);
+            this.router.navigate(['/admin/dashboard/background']);
 
           } else {
             alert('Usuário ou senha inválidos!');  

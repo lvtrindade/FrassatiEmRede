@@ -1,0 +1,57 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    top: 0;
+    left: 0;
+    background-color: #db1832;
+}
+
+.header button {
+    align-self: flex-end;
+    margin: 2% 4% 2% 0;
+    cursor: pointer;
+}
+
+.admin-layout {
+    display: flex;
+    flex-direction: row;
+    height: 88.7vh;
+}
+
+.side-bar {
+    width: 300px;
+    background-color: #cc263c;
+    height: 100%;
+}
+
+.content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.side-bar ul {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+}
+
+.side-bar li {
+    cursor: pointer;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    width: 100%;
+    height: 50px;
+}
+
+.side-bar a {
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    padding: 2% 5% 2% 5%;
+    color: white;
+    z-index: 1000;
+}

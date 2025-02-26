@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { InicioComponent } from './inicio/inicio.component';
-import path from 'path';
 import { HistoriaComponent } from './historia/historia.component';
 import { CalendarioComponent } from './calendario/calendario.component';
 import { DocumentosComponent } from './documentos/documentos.component';
@@ -11,6 +10,10 @@ import { BlogComponent } from './blog/blog.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { LoginComponent } from './admin/login/login.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { BackgroundComponent } from './background/background.component';
+import { AdmCalComponent } from './adm-cal/adm-cal.component';
+import { AdmAtvComponent } from './adm-atv/adm-atv.component';
+import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
     {
@@ -67,6 +70,13 @@ export const routes: Routes = [
     {
         path: 'admin',
         children: [
+
+            {
+                path: '',
+                redirectTo: 'login',
+                pathMatch: 'full'
+            },
+
             {
                 path: 'login',
                 component: LoginComponent
@@ -74,15 +84,32 @@ export const routes: Routes = [
 
             {
                 path: 'dashboard',
-                component: DashboardComponent
+                canActivate: [AuthGuard],
+                component: DashboardComponent,
+                children: [
+                    {
+                        path: 'background',
+                        component: BackgroundComponent
+                    },
+
+                    {
+                        path: 'calendario',
+                        component: AdmCalComponent
+                    },
+
+                    {
+                        path: 'atividades',
+                        component: AdmAtvComponent
+                    },
+
+                    {
+                        path: '',
+                        redirectTo: 'background',
+                        pathMatch: 'full'
+                    },
+                ]
             }
         ]
-    },
-
-    {
-        path: 'admin',
-        redirectTo: 'admin/login',
-        pathMatch: 'full',
     },
 
     {
