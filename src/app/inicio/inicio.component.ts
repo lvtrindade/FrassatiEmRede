@@ -1,5 +1,6 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { BackgroundService } from '../background.service';
 
 @Component({
   selector: 'app-inicio',
@@ -7,8 +8,38 @@ import { RouterLink } from '@angular/router';
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.css'
 })
+
 export class InicioComponent implements AfterViewInit {
+
+  constructor(private BackgroundService: BackgroundService) { }
+
   ngAfterViewInit(): void {
+    this.loadBackgroundImage();
+    this.setupScrollLinks();
+  }
+
+  private loadBackgroundImage(): void {
+    this.BackgroundService.getBackgroundImage().subscribe({
+      next: (response: { imagem: any; }) => {
+        if (response.imagem) {
+          const heroesPage = document.getElementById('heroes_page');
+
+          if (heroesPage) {
+            heroesPage.style.backgroundImage = `url(data:image/*;base64,${response.imagem})`;
+          }
+
+        } else {
+          console.error('Nenhuma imagem encontrada');
+        }
+      },
+
+      error: (error: any) => {
+        console.error('Erro ao carregar imagem de fundo', error);
+      }
+    });
+  }
+
+  private setupScrollLinks(): void {
     const scrollLinks = document.querySelectorAll('.scroll-link');
     scrollLinks.forEach((link) => {
       link.addEventListener('click', (e) => {
@@ -34,7 +65,7 @@ export class InicioComponent implements AfterViewInit {
               startPosition,
               distance,
               duration
-            );            
+            );
 
             window.scrollTo(0, run);
 
@@ -54,5 +85,5 @@ export class InicioComponent implements AfterViewInit {
     if (t < 1) return (c / 2) * t * t * t + b;
     t -= 2;
     return (c / 2) * (t * t * t + 2) + b;
-  }  
+  }
 }

@@ -1,8 +1,8 @@
 <?php
 $host = 'localhost'; // ou o endereço do seu servidor de banco de dados
 $dbname = 'frassati_db';
-$username = 'usuario';
-$password = 'senha';
+$username = 'root';
+$password = '';
 
 try {
     $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);

@@ -1,1 +1,13 @@
-<p>background works!</p>
+<div class="content">
+    <h1>Atualizar o plano de fundo</h1>
+
+    <form class="upload" (submit)="uploadFile($event)">
+
+        Selecione uma imagem para ser o plano de fundo do site:
+        
+        <input type="file" name="background" id="background" accept="image/*" (change)="onFileChange($event)">
+        
+        <button type="submit">Enviar</button>
+    </form>
+
+</div>
