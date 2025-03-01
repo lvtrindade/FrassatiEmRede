@@ -3,9 +3,9 @@
 
     <form class="upload" (submit)="uploadFile($event)">
 
-        Selecione uma imagem para ser o plano de fundo do site:
+        <h2>Selecione uma imagem para ser o plano de fundo do site:</h2>
         
-        <input type="file" name="background" id="background" accept="image/*" (change)="onFileChange($event)">
+        <input type="file" name="background" class="background" accept="image/*" (change)="onFileChange($event)">
         
         <button type="submit">Enviar</button>
     </form>

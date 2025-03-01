@@ -1,0 +1,36 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.content h1 {
+    margin: auto;
+    font-size: 3em;
+    color: #333;
+}
+
+.upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.upload h2 {
+    font-size: 1.3rem;
+    color: #333;
+}
+
+.background {
+    margin: 6%;
+    width: 100%; 
+    padding: 10px; 
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px; 
+    outline: none;
+    transition: border-color 0.3s ease;
+}
