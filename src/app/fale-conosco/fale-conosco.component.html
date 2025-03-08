@@ -1,1 +1,70 @@
-<p>fale-conosco works!</p>
+<div class="titulo">
+    <h1>Fale Conosco</h1>
+</div>
+
+<div class="formulario">
+    <form [formGroup]="emailForm" (ngSubmit)="onSubmit()">
+        <div>
+            <label for="name">Nome</label>
+            <input type="text" id="name" formControlName="name" required>
+            
+            <small *ngIf="emailForm.get('name')?.invalid && emailForm.get('name')?.touched">
+                Nome é obrigatório.
+            </small>
+        </div>
+
+        <div>
+            <h2>Contato</h2>
+
+            <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" formControlName="email" placeholder="exemplo@dominio.com" required>
+
+                <div>
+                    <small *ngIf="emailForm.get('email')?.invalid && emailForm.get('email')?.touched">
+                        E-mail é obrigatório.
+                    </small>
+
+                    <small *ngIf="emailForm.get('email')?.errors?.['pattern']">
+                        E-mail inválido.
+                    </small>
+                </div>
+            </div>
+
+            <div>
+                <label for="telephone">Telefone</label>
+                <input type="text" id="telephone" formControlName="telephone" appPhoneFormat placeholder="(__) _____-____" required>
+
+                <small *ngIf="emailForm.get('telephone')?.invalid && emailForm.get('telephone')?.touched">
+                    Telefone é obrigatório.
+                </small>
+            </div>
+        </div>
+
+        <div>
+            <label for="section">Selecione:</label>
+            <select id="section" formControlName="section" required>
+                <option value="Quero falar com vocês">Quero falar com vocês</option>
+                <option value="Sugestão de Atividade">Sugestão de Atividade</option>
+                <option value="Já fui um Frassatiano">Já fui um Frassatiano</option>
+            </select>
+
+            <small *ngIf="emailForm.get('section')?.invalid && emailForm.get('section')?.touched">
+                Esta seção é obrigatória.
+            </small>
+        </div>
+
+        <div>
+            <label for="content">Nos conte um pouco mais</label>
+            <textarea id="content" formControlName="content" required></textarea>
+
+            <small *ngIf="emailForm.get('content')?.invalid && emailForm.get('content')?.touched">
+                Conteúdo é obrigatório.
+            </small>
+        </div>
+
+        <div>
+            <button type="submit" [disabled]="emailForm.invalid">Enviar</button>
+        </div>
+    </form>
+</div>
