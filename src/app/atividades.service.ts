@@ -6,15 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AtividadesService {
-  private apiUrl = 'http://localhosto/src/app/backend';
+  private apiUrl = 'http://localhost/src/app/backend/getAtividades.php';
 
   constructor(private http: HttpClient) { }
 
-  getAtividades(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/getAtividades.php`);
-  }
-
-  addAtividades(atividade: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/addAtividade.php`, atividade);
+  getAtividades(): Observable <any[]> {
+    return this.http.get<any[]>(this.apiUrl);
   }
 }
