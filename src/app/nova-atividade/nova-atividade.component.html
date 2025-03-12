@@ -1,0 +1,46 @@
+<div class="content">
+    <h1>Publique a sua atividade:</h1>
+
+    <form class="upload" (ngSubmit)="enviarAtividade()" #atividadeForm="ngForm">
+        <!-- Imagem Principal -->
+        <label>Escolha a sua imagem principal</label>
+        <input type="file" name="principal" class="principal" accept="image/*"
+            (change)="onImagemPrincipalSelecionada($event)" required>
+
+        <!-- Título -->
+        <label>Título</label>
+        <input type="text" name="titulo" [(ngModel)]="titulo" required>
+
+        <!-- Data da Atividade -->
+        <label>Quando essa atividade aconteceu?</label>
+        <input type="text" name="dataAtividade" [(ngModel)]="dataAtividade" mask="00/00/0000" placeholder="DD-MM-AAAA"
+            required>
+
+        <!-- Descrição -->
+        <label>O que aconteceu nessa atividade?</label>
+        <textarea name="descricao" [(ngModel)]="descricao" required></textarea>
+
+        <!-- Tags -->
+        <label>Selecione a tag:</label>
+        <select name="tags" [(ngModel)]="tagSelecionada" required>
+            <option *ngFor="let tag of tags" [value]="tag.id">{{ tag.nome }}</option>
+        </select>
+
+        <!-- Galeria de Imagens -->
+        <label>Adicione fotos à galeria (opcional)</label>
+        <input type="file" name="galeria" class="galeria" accept="image/*" (change)="onGaleriaSelecionada($event)"
+            multiple>
+
+        <!-- Pré-visualização da Galeria -->
+        <div *ngIf="imagensGaleria.length > 0" class="galeria-preview">
+            <h2>Fotos da Galeria</h2>
+            <div *ngFor="let imagem of imagensGaleria; let i = index" class="imagem-container">
+                <img [src]="imagem.base64" alt="Imagem {{ i + 1 }}" class="thumbnail">
+                <button type="button" (click)="removerImagemGaleria(i)">Excluir</button>
+            </div>
+        </div>
+
+        <!-- Botão de Envio -->
+        <button type="submit" [disabled]="!atividadeForm.form.valid">Enviar</button>
+    </form>
+</div>

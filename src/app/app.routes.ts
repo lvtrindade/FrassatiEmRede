@@ -14,6 +14,7 @@ import { BackgroundComponent } from './background/background.component';
 import { AdmCalComponent } from './adm-cal/adm-cal.component';
 import { AdmAtvComponent } from './adm-atv/adm-atv.component';
 import { AuthGuard } from './auth.guard';
+import { NovaAtividadeComponent } from './nova-atividade/nova-atividade.component';
 
 export const routes: Routes = [
     {
@@ -99,7 +100,12 @@ export const routes: Routes = [
 
                     {
                         path: 'atividades',
-                        component: AdmAtvComponent
+                        component: AdmAtvComponent,
+                    },
+
+                    {
+                        path: 'nova-atividade',
+                        component: NovaAtividadeComponent
                     },
 
                     {

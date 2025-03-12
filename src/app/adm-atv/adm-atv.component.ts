@@ -8,5 +8,9 @@ import { Router } from '@angular/router';
   styleUrl: './adm-atv.component.css'
 })
 export class AdmAtvComponent {
-    constructor () {}
+    constructor (private router: Router) {}
+
+    navigateTo(path: string) {
+      this.router.navigate([`/admin/dashboard/${path}`]);
+    }
 }
