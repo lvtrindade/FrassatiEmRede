@@ -58,15 +58,45 @@
 </div>
 
 <div class="section" id="landing_blog">
-    
+
     <h2>Atividades</h2>
-    
-    <div id="display_atividades">
-        <p>Atividade 1</p>
-        <p>Atividade 2</p>
-        <p>Atividade 3</p>
+
+    <div class="section" id="atividades">
+        <div id="atividades-container">
+            <!-- Mensagem de fallback -->
+            <div *ngIf="!atividades || atividades.length === 0" class="no-atividades-message">
+                Não temos atividades disponíveis.
+            </div>
+
+            <!-- Contêineres de atividade -->
+            <div *ngFor="let atividade of atividades" class="atividade-item">
+                <!-- Metade superior: Imagem -->
+                <div class="imagem"
+                    [style.background-image]="'url(data:image/*;base64,' + atividade.caminho_imagem_destaque + ')'">
+                </div>
+
+                <!-- Metade inferior: Informações -->
+                <div class="informacoes">
+                    <!-- Tag -->
+                    <div class="tag" [style.backgroundColor]="atividade.tag_cor">
+                        {{ atividade.tag_nome }}
+                    </div>
+
+                    <!-- Data -->
+                    <div class="data">
+                        {{ formatarData(atividade.data_atividade) }}
+                    </div>
+
+                    <!-- Título -->
+                    <div class="titulo">
+                        {{ atividade.titulo }}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    
+
+
     <div routerLink="/blog" class="hexagon-container">
         <span class="hexagon-red">hexagon</span>
         <span class="arrow-red">arrow_forward_ios</span>
@@ -85,6 +115,9 @@
 
 <div class="section" id="landing_mapa">
     <div id="map">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3603.8667678390757!2d-49.22909592482913!3d-25.409269977575015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94dce5c248970045%3A0x89f3e0e711d62378!2sG.E.%20Jorge%20Frassati%20-%2002%2FPR!5e0!3m2!1spt-BR!2sbr!4v1737576192373!5m2!1spt-BR!2sbr" width="1200" height="650" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3603.8667678390757!2d-49.22909592482913!3d-25.409269977575015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94dce5c248970045%3A0x89f3e0e711d62378!2sG.E.%20Jorge%20Frassati%20-%2002%2FPR!5e0!3m2!1spt-BR!2sbr!4v1737576192373!5m2!1spt-BR!2sbr"
+            width="1200" height="650" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
 </div>

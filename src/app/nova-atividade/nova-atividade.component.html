@@ -13,8 +13,7 @@
 
         <!-- Data da Atividade -->
         <label>Quando essa atividade aconteceu?</label>
-        <input type="text" name="dataAtividade" [(ngModel)]="dataAtividade" mask="00/00/0000" placeholder="DD-MM-AAAA"
-            required>
+        <input type="date" name="dataAtividade" [(ngModel)]="dataAtividade" required>
 
         <!-- Descrição -->
         <label>O que aconteceu nessa atividade?</label>
@@ -35,7 +34,8 @@
         <div *ngIf="imagensGaleria.length > 0" class="galeria-preview">
             <h2>Fotos da Galeria</h2>
             <div *ngFor="let imagem of imagensGaleria; let i = index" class="imagem-container">
-                <img [src]="imagem.base64" alt="Imagem {{ i + 1 }}" class="thumbnail">
+                <!-- Usando FileReader para exibir a pré-visualização -->
+                <img [src]="getImagemUrl(imagem)" alt="Imagem {{ i + 1 }}" class="thumbnail">
                 <button type="button" (click)="removerImagemGaleria(i)">Excluir</button>
             </div>
         </div>

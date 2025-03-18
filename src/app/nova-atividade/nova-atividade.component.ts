@@ -11,10 +11,10 @@ import { CommonModule } from '@angular/common';
 })
 export class NovaAtividadeComponent {
   titulo: string = '';
-  dataAtividade: string = '';
+  dataAtividade: string = ''; // Já está no formato YYYY-MM-DD
   descricao: string = '';
-  imagemPrincipal: { file: File, base64: string } | null = null;
-  imagensGaleria: { file: File, base64: string }[] = [];
+  imagemPrincipal: File | null = null;
+  imagensGaleria: File[] = [];
   tags: { id: number, nome: string }[] = []; // Lista de tags disponíveis
   tagSelecionada: number | null = null; // ID da tag selecionada
 
@@ -40,23 +40,14 @@ export class NovaAtividadeComponent {
   // Captura a imagem principal
   onImagemPrincipalSelecionada(event: any) {
     const file: File = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imagemPrincipal = { file, base64: reader.result as string };
-    };
-    reader.readAsDataURL(file);
+    this.imagemPrincipal = file;
   }
 
   // Captura as imagens da galeria
   onGaleriaSelecionada(event: any) {
     const files: FileList = event.target.files;
     for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imagensGaleria.push({ file, base64: reader.result as string });
-      };
-      reader.readAsDataURL(file);
+      this.imagensGaleria.push(files[i]);
     }
   }
 
@@ -65,18 +56,28 @@ export class NovaAtividadeComponent {
     this.imagensGaleria.splice(index, 1);
   }
 
+  // Converte File em URL para pré-visualização
+  getImagemUrl(file: File): string {
+    return URL.createObjectURL(file);
+  }
+
   // Envia o formulário
   enviarAtividade() {
-    const dadosAtividade = {
-      titulo: this.titulo,
-      dataAtividade: this.formatarDataParaBackend(this.dataAtividade),
-      descricao: this.descricao,
-      imagemPrincipal: this.imagemPrincipal?.base64 || null,
-      imagensGaleria: this.imagensGaleria.map(imagem => imagem.base64),
-      tag: this.tagSelecionada // Envia apenas o ID da tag selecionada
-    };
+    const formData = new FormData();
+    formData.append('titulo', this.titulo);
+    formData.append('dataAtividade', this.dataAtividade); // Já está no formato YYYY-MM-DD
+    formData.append('descricao', this.descricao);
+    formData.append('tag', this.tagSelecionada?.toString() || '');
 
-    this.http.post('http://localhost/src/app/backend/addAtividade.php', dadosAtividade)
+    if (this.imagemPrincipal) {
+      formData.append('imagemPrincipal', this.imagemPrincipal);
+    }
+
+    this.imagensGaleria.forEach((imagem, index) => {
+      formData.append(`imagensGaleria[${index}]`, imagem);
+    });
+
+    this.http.post('http://localhost/src/app/backend/addAtividade.php', formData)
       .subscribe({
         next: (res: any) => {
           console.log('Resposta do backend:', res);
@@ -87,11 +88,5 @@ export class NovaAtividadeComponent {
           alert('Erro ao criar atividade.');
         }
       });
-  }
-
-  // Converte a data de DD-MM-AAAA para AAAA-MM-DD
-  private formatarDataParaBackend(data: string): string {
-    const [dia, mes, ano] = data.split('/');
-    return `${ano}-${mes}-${dia}`;
   }
 }
