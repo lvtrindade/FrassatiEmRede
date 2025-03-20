@@ -94,7 +94,7 @@ export class InicioComponent implements AfterViewInit {
       next: (response: any) => {
         console.log('Dados recebidos:', response); // Log para depuração
         if (response && response.atividades && response.atividades.length > 0) {
-          this.atividades = response.atividades.slice(-3);
+          this.atividades = response.atividades.slice(0, 3);
           console.log('Atividades carregadas:', this.atividades); // Log para depuração
           console.log('Imagem da primeira atividade:', this.atividades[0].caminho_imagem_destaque); // Log para depuração
         } else {

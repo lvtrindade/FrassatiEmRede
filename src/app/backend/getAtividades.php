@@ -25,7 +25,6 @@ try {
         LEFT JOIN AtividadeTag at ON a.id = at.id_atividade
         LEFT JOIN Tag t ON at.id_tag = t.id
         ORDER BY a.id DESC
-        LIMIT 3
     ";
 
     $stmt = $conn->query($sql);
