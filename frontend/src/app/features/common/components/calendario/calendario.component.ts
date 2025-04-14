@@ -1,6 +1,5 @@
-import { Component, NgModule } from '@angular/core';
-import { CalendarEvent, CalendarModule, DateAdapter } from 'angular-calendar';
-import { AppComponent } from '../app.component';
+import { Component } from '@angular/core';
+import { CalendarEvent } from 'angular-calendar';
 
 @Component({
   selector: 'app-calendario',

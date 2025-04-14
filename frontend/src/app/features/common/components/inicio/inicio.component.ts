@@ -1,7 +1,7 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { BackgroundService } from '../background.service';
-import { AtividadesService } from '../atividades.service';
+import { BackgroundService } from '../../../../core/services/background.service';
+import { AtividadesService } from '../../../../core/services/atividades.service';
 import { CommonModule } from '@angular/common';
 
 @Component({

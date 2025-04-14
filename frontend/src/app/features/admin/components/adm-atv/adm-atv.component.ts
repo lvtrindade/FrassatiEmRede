@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, HostListener, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AtividadesService } from '../atividades.service';
+import { AtividadesService } from '../../../../core/services/atividades.service';
 
 @Component({
   selector: 'app-adm-atv',
