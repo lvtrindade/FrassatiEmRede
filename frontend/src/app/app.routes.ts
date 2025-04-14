@@ -1,20 +1,20 @@
 import { Routes } from '@angular/router';
-import { InicioComponent } from './inicio/inicio.component';
-import { HistoriaComponent } from './historia/historia.component';
-import { CalendarioComponent } from './calendario/calendario.component';
-import { DocumentosComponent } from './documentos/documentos.component';
-import { EscotismoComponent } from './escotismo/escotismo.component';
-import { ComoChegarComponent } from './como-chegar/como-chegar.component';
-import { FaleConoscoComponent } from './fale-conosco/fale-conosco.component';
-import { BlogComponent } from './blog/blog.component';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { LoginComponent } from './admin/login/login.component';
-import { DashboardComponent } from './admin/dashboard/dashboard.component';
-import { BackgroundComponent } from './background/background.component';
-import { AdmCalComponent } from './adm-cal/adm-cal.component';
-import { AdmAtvComponent } from './adm-atv/adm-atv.component';
-import { AuthGuard } from './auth.guard';
-import { NovaAtividadeComponent } from './nova-atividade/nova-atividade.component';
+import { InicioComponent } from './features/common/components/inicio/inicio.component';
+import { HistoriaComponent } from './features/common/components/historia/historia.component';
+import { CalendarioComponent } from './features/common/components/calendario/calendario.component';
+import { DocumentosComponent } from './features/common/components/documentos/documentos.component';
+import { EscotismoComponent } from './features/common/components/escotismo/escotismo.component';
+import { ComoChegarComponent } from './features/common/components/como-chegar/como-chegar.component';
+import { FaleConoscoComponent } from './features/common/components/fale-conosco/fale-conosco.component';
+import { BlogComponent } from './features/common/components/blog/blog.component';
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { LoginComponent } from './features/admin/components/login/login.component';
+import { DashboardComponent } from './features/admin/components/dashboard/dashboard.component';
+import { BackgroundComponent } from './features/admin/components/background/background.component';
+import { AdmCalComponent } from './features/admin/components/adm-cal/adm-cal.component';
+import { AdmAtvComponent } from './features/admin/components/adm-atv/adm-atv.component';
+import { AuthGuard } from './core/guard/auth.guard';
+import { NovaAtividadeComponent } from './features/admin/components/nova-atividade/nova-atividade.component';
 
 export const routes: Routes = [
     {
