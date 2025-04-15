@@ -14,7 +14,7 @@ RUN a2enmod rewrite
 
 # Intala do Compose
 WORKDIR /var/www/html
-COPY ./backend/composer.* .
+COPY ./backend/composer.* ./
 RUN composer install --no-dev --optimize-autoloader
 COPY ./backend .
 
