@@ -9,6 +9,6 @@ RUN npm run build
 # Serve os arquivos com Nginx
 FROM nginx:alpine
 COPY --from=build /app/dist/site /usr/share/nginx/html
-COPY ./docker/nginx/nginx.config /etc/nginx/conf.d/default.conf
+COPY ./docker/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 
