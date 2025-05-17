@@ -1,28 +1,26 @@
-# Usa a imagem oficial do PHP 8.3 com Apache
+# Imagem base
 FROM php:8.3-apache
 
-# Instala dependencias do sistema + Composer
+# Instala dependências
 RUN apt-get update && apt-get install -y \
     git unzip \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Instala as extensões necessárias (pdo_mysql)
-RUN docker-php-ext-install pdo pdo_mysql
+# Extensões PHP
+RUN docker-php-ext-install pdo pdo_mysql \
+    && pecl install apcu && docker-php-ext-enable apcu
 
-# Habilita o mod_rewrite do Apache (para rotas no Slim)
-RUN a2enmod rewrite
+# Configura Apache
+RUN a2enmod rewrite headers
 
-# Intala do Compose
+# Instalação do projeto
 WORKDIR /var/www/html
 COPY ./backend/composer.* ./
-RUN composer install --no-dev --optimize-autoloader
-COPY ./backend .
+RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
 
-# Copia o código PHP para o container
-COPY ./backend/.htaccess /var/www/html/.htaccess
+# Copia o código (preserva permissões)
+COPY --chown=www-data:www-data ./backend .
 
-# Garante permissões corretas
-RUN chown -R www-data:www-data /var/www/html
-
-# Expõe a porta 80 (Apache)
+# Configurações finais
 EXPOSE 80
+CMD ["apache2-foreground"]
