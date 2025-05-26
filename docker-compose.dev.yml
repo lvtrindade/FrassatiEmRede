@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      args:
+        APP_ENV: dev
+        XDEBUG_ENABLED: ${XDEBUG_ENABLED:-0}
+    environment:
+      APP_ENV: dev
+      XDEBUG_MODE: debug,develop
+    volumes:
+      - ./backend:/var/www/html
+      - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+    ports:
+      - "9001:9000" # PHP-FPM
+      - "9003:9003" # Xdebug
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  frontend:
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "4200:4200" # Angular dev server
+    command: npm start
+
+  mysql:
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}

@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      args:
+        APP_ENV: prod
+    environment:
+      APP_ENV: prod
+      OPcache_ENABLED: 1
+
+  frontend:
+    environment:
+      NODE_ENV: production
+    ports:
+      - "80:80"
+      - "443:443"
+
+  mysql:
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2G
