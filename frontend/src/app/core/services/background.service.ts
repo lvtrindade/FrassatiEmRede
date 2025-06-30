@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class BackgroundService {
-  private apiUrl = 'http://localhost/src/app/backend/get-background.php';
+  private apiUrl = '${enviroment.apiUrl}/get-background.php';
 
   constructor(private http: HttpClient) {}
 
