@@ -9,5 +9,11 @@ class responseFormatter {
         ]);
     }
 
-    public static function error($mensagem, $cod)
+    public static function error($mensagem, $cod = 400) {
+        http_response_code($cod);
+        return json_encode([
+            'cod' => $cod,
+            'mensagem' => $mensagem
+        ]);
+    }
 }
