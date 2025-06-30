@@ -1,5 +1,5 @@
 <?php
-class responseFormatter {
+class ResponseFormatter {
     public static function success($mensagem, $data = null, $cod = 200) {
         http_response_code($cod);
         return json_encode([
