@@ -1,11 +1,13 @@
 <?php
-require_once 'repositories/AtividadesRepository.php';
+namespace App\Services;
+
+use App\Repositories\AtividadeRepository;
 
 class AtividadeService {
     private $repo;
 
     public function __construct() {
-        $this->repo = new AtividadeRespository();
+        $this->repo = new AtividadeRepository();
     }
 
     public function listarTodas() {

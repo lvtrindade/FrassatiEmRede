@@ -33,6 +33,7 @@ services:
       DB_PASSWORD: ${DB_PASSWORD:-frassati_pass}
     depends_on:
       - db
+    command: php -S 0.0.0.0:9000 -t public
 
   db:
     image: mysql:8.0
@@ -45,6 +46,8 @@ services:
       - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./database/frassati_db.sql:/docker-entrypoint-initdb.d/frassati_db.sql:ro
+
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD}"]
       interval: 5s

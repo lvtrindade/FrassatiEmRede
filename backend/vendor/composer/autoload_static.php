@@ -32,6 +32,15 @@ class ComposerStaticInit830e4bba56f1ff55787769733d4c2f4c
             'Fig\\Http\\Message\\' => 17,
             'FastRoute\\' => 10,
         ),
+        'A' => 
+        array (
+            'App\\Services\\' => 13,
+            'App\\Repositories\\' => 17,
+            'App\\Models\\' => 11,
+            'App\\DTOs\\' => 9,
+            'App\\Controllers\\' => 16,
+            'App\\Config\\' => 11,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -57,13 +66,13 @@ class ComposerStaticInit830e4bba56f1ff55787769733d4c2f4c
         ),
         'Psr\\Http\\Server\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-server-handler/src',
-            1 => __DIR__ . '/..' . '/psr/http-server-middleware/src',
+            0 => __DIR__ . '/..' . '/psr/http-server-middleware/src',
+            1 => __DIR__ . '/..' . '/psr/http-server-handler/src',
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Container\\' => 
         array (
@@ -76,6 +85,30 @@ class ComposerStaticInit830e4bba56f1ff55787769733d4c2f4c
         'FastRoute\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/fast-route/src',
+        ),
+        'App\\Services\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/services',
+        ),
+        'App\\Repositories\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/repositories',
+        ),
+        'App\\Models\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Models',
+        ),
+        'App\\DTOs\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/DTOs',
+        ),
+        'App\\Controllers\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/controllers',
+        ),
+        'App\\Config\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/config',
         ),
     );
 

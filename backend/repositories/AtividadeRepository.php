@@ -1,5 +1,8 @@
 <?php
-require_once 'config/connection.php';
+namespace App\Repositories;
+
+use App\Config\Connection;
+use PDO;
 
 class AtividadeRepository {
     private $conn;
@@ -9,7 +12,7 @@ class AtividadeRepository {
     }
 
     public function getAll() {
-        $stmt = $this->conn->query("SELECT a.*, t.nome, AS nome_tag, t.cor AS cor_tag FROM Atividade a INNER JOIN Tag t ON a.id_tag = t.id ORDER BY a.data_atividade DESC");
+        $stmt = $this->conn->query("SELECT a.*, t.nome AS nome_tag, t.cor AS cor_tag FROM Atividade a INNER JOIN Tag t ON a.id_tag = t.id ORDER BY a.data_atividade DESC");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -36,7 +39,7 @@ class AtividadeRepository {
     }
 
     public function criarGaleriaParaAtividade($idAtividade) {
-        $stmt = this->conn->prepare("INSERT INTO Galeria (id_atividade) VALUES (?)");
+        $stmt = $this->conn->prepare("INSERT INTO Galeria (id_atividade) VALUES (?)");
         $stmt->execute([$idAtividade]);
     }
 }
