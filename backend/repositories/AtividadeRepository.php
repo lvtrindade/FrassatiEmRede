@@ -1,8 +1,9 @@
 <?php
 namespace App\Repositories;
 
-use App\Config\Connection;
 use PDO;
+
+use App\Config\Connection;
 
 class AtividadeRepository {
     private $conn;
