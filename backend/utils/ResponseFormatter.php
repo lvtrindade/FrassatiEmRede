@@ -1,4 +1,6 @@
 <?php
+namespace App\Utils;
+
 class ResponseFormatter {
     public static function success($mensagem, $data = null, $cod = 200) {
         http_response_code($cod);

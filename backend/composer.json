@@ -11,8 +11,9 @@
             "App\\Controllers\\": "controllers/",
             "App\\Repositories\\": "repositories/",
             "App\\DTOs\\": "DTOs/",
-            "App\\Models\\": "Models/",
-            "App\\Config\\": "config/"
+            "App\\Models\\": "models/",
+            "App\\Config\\": "config/",
+            "App\\Utils\\": "utils/"
         }
     }
 }

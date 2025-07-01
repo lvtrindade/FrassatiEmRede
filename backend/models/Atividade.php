@@ -1,4 +1,6 @@
 <?php
+namespace App\Models;
+
 class Atividade {
     public $id;
     public $titulo;

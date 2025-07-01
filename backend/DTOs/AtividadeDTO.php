@@ -1,4 +1,6 @@
 <?php
+namespace App\DTOs;
+
 class AtividadeDTO {
     public $titulo;
     public $descricao;

@@ -34,6 +34,7 @@ class ComposerStaticInit830e4bba56f1ff55787769733d4c2f4c
         ),
         'A' => 
         array (
+            'App\\Utils\\' => 10,
             'App\\Services\\' => 13,
             'App\\Repositories\\' => 17,
             'App\\Models\\' => 11,
@@ -66,8 +67,8 @@ class ComposerStaticInit830e4bba56f1ff55787769733d4c2f4c
         ),
         'Psr\\Http\\Server\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-server-middleware/src',
-            1 => __DIR__ . '/..' . '/psr/http-server-handler/src',
+            0 => __DIR__ . '/..' . '/psr/http-server-handler/src',
+            1 => __DIR__ . '/..' . '/psr/http-server-middleware/src',
         ),
         'Psr\\Http\\Message\\' => 
         array (
@@ -86,6 +87,10 @@ class ComposerStaticInit830e4bba56f1ff55787769733d4c2f4c
         array (
             0 => __DIR__ . '/..' . '/nikic/fast-route/src',
         ),
+        'App\\Utils\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/utils',
+        ),
         'App\\Services\\' => 
         array (
             0 => __DIR__ . '/../..' . '/services',
@@ -96,7 +101,7 @@ class ComposerStaticInit830e4bba56f1ff55787769733d4c2f4c
         ),
         'App\\Models\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/Models',
+            0 => __DIR__ . '/../..' . '/models',
         ),
         'App\\DTOs\\' => 
         array (
