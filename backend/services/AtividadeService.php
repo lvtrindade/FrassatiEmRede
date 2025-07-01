@@ -35,7 +35,7 @@ class AtividadeService {
         }
 
         $this->repo->update($id, $dto);
-        return $this->repo->delete($id);
+        return $this->repo->findById($id);
     }
 
     public function excluir($id) {

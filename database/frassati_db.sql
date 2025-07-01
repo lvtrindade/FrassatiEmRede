@@ -37,11 +37,14 @@ CREATE TABLE ImagemGaleria (
 );
 
 -- Tabela de eventos do calendário
-CREATE TABLE AtividadeCalendario (
+CREATE TABLE Eventos (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    data_atividade_calendario DATE NOT NULL,
-    horario_atividade_calendario TIME,
-    nome VARCHAR(50) NOT NULL
+    data_evento DATE NOT NULL,
+    horario TIME,
+    titulo VARCHAR(50) NOT NULL,
+    descricao TEXT,
+    id_tag INT NOT NULL,
+    FOREIGN KEY (id_tag) REFERENCES Tag(id) ON DELETE RESTRICT
 );
 
 -- Plano de fundo (background)
@@ -53,7 +56,7 @@ CREATE TABLE Background (
 -- Índices
 CREATE INDEX idx_data_atividade ON Atividade(data_atividade);
 CREATE INDEX idx_titulo ON Atividade(titulo);
-CREATE INDEX idx_data_calendario ON AtividadeCalendario(data_atividade_calendario);
+CREATE INDEX idx_data_calendario ON Eventos(data_evento);
 CREATE INDEX idx_atividade_tag_fk ON Atividade(id_tag);
 
 -- Inserção de tags padrão

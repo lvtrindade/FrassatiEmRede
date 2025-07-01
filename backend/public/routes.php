@@ -10,3 +10,8 @@ $app->map(['GET', 'POST', 'PUT', 'DELETE'], '/atividades[/{id}]', function (Requ
     $controller = new AtividadeController();
     return $controller->handle($request, $response, $args);
 });
+
+$app->map(['GET', 'POST', 'PUT', 'DELETE'], '/evento[/{id}]', function (Request $request, Response $response, $args) {
+    $controller = new CalendarioController();
+    return $controller->handle($request, $response, $args);
+});

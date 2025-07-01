@@ -2,6 +2,9 @@
 
 namespace App\Controllers;
 
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+
 use App\Services\CalendarioService;
 use App\DTOs\EventoDTO;
 use App\Utils\ResponseFormatter;
@@ -13,43 +16,44 @@ class CalendarioController {
         $this->service = new CalendarioService();
     }
 
-    public function handle($method, $id=null) {
+    public function handle(Request $request, Response $response, $args): Response {
+        $method = $request->getMethod();
+        $id = $args['id'] ?? null;
+
         try {
             switch ($method) {
                 case 'GET':
-                    if ($id) {
-                        $data = $this->service->buscarPorId($id);
-                        echo ResponseFormatter::sucess("Evento encontrado", $data);
-                    } else {
-                        $data = $this->service->listarTodas();
-                        echo ResponseFormatter::sucess("Lista de eventos", $data);
-                    }
+                    $data = $id ? $this->service->buscarPorId($id) : $this->service->listarTodos();
+                    $payload = ResponseFormatter::success("Sucesso", $data);
                     break;
 
                 case 'POST':
-                    $input = $json_decode(file_get_contents('php://input'), true);
+                    $input = json_decode($request->getBody()->getContents(), true);
                     $dto = new EventoDTO($input);
                     $nova = $this->service->criar($dto);
-                    echo ResponseFormatter::sucess("Evento criado", $nova, 201);
+                    $payload = ResponseFormatter::success("Criado", $nova, 201);
                     break;
                 
                 case 'PUT':
-                    $input = json_decode(file_get_contents('php://input'), true);
+                    $input = json_decode($request->getBody()->getContents(), true);
                     $dto = new EventoDTO($input);
-                    $atualizada = $this->service->editar($id, $dto);
-                    echo ResponseFormatter::success("Evento atualizado", $atualizada);
+                    $atualizado = $this->service->editar($id, $dto);
+                    $payload = ResponseFormatter::success("Evento atualizado", $atualizado);
                     break;
                 
                 case 'DELETE':
                     $this->service->excluir($id);
-                    echo ResponseFormatter::sucess("Evento excluído");
+                    $payload = ResponseFormatter::success("Evento excluído");
                     break;
 
                 default:
-                    echo ResponseFormatter::error("Método não suportado", 405);
+                    $payload = ResponseFormatter::error("Método não suportado", 405);
             }
         } catch (Exception $e) {
-            echo ResponseFormatter::error($e->getMessage(), 400);
+            $payload = ResponseFormatter::error($e->getMessage(), 400);
         }
+
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
     }
 }

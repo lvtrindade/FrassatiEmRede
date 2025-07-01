@@ -7,10 +7,10 @@ class CalendarioService {
     private $repo;
 
     public function __construct() {
-        $this->repo = new AtividadeRepository();
+        $this->repo = new CalendarioRepository();
     }
 
-    public function listarTodas() {
+    public function listarTodos() {
         return $this->repo->getAll();
     }
 
@@ -24,7 +24,7 @@ class CalendarioService {
         }
         $idEvento = $this->repo->create($dto);
     
-        return $this->repo->findById($idAtividade);
+        return $this->repo->findById($idEvento);
     }
 
     public function editar($id, $dto) {
@@ -33,7 +33,7 @@ class CalendarioService {
         }
 
         $this->repo->update($id, $dto);
-        return $this->repo->delete($id);
+        return $this->repo->findById($id);
     }
 
     public function excluir($id) {
