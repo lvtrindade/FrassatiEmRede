@@ -2,7 +2,8 @@
     "require": {
         "slim/slim": "^4.14",
         "slim/psr7": "^1.7",
-        "slim/http": "^0.4.0"
+        "slim/http": "^0.4.0",
+        "vlucas/phpdotenv": "^5.6"
     },
 
     "autoload": {
@@ -13,7 +14,8 @@
             "App\\DTOs\\": "DTOs/",
             "App\\Models\\": "models/",
             "App\\Config\\": "config/",
-            "App\\Utils\\": "utils/"
+            "App\\Utils\\": "utils/",
+            "App\\Middleware\\": "middleware/"
         }
     }
 }

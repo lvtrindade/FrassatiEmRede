@@ -4,10 +4,10 @@ USE frassati_db;
 
 CREATE TABLE Usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
+    usuario VARCHAR(50) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
     role VARCHAR(20) DEFAULT 'ADMIN'
-)
+);
 
 -- Tabela de TAGS
 CREATE TABLE Tag (
@@ -73,3 +73,5 @@ INSERT INTO Tag (nome, cor) VALUES
 ('Sênior', '#800020'),    -- Grená
 ('Pioneiro', '#FF0000'),  -- Vermelho
 ('Geral', '#A2D5F2');     -- Azul Pastel
+
+INSERT  INTO Usuario (usuario, senha) VALUES ('admin', '$2y$10$mzdCJlE9ltn.HX/ov8ARrOlI5NiKfpZQUXXpbWcG/txGZB3D7BL/2');

@@ -1,4 +1,6 @@
 <?php
+namespace App\DTOs;
+
 class ImagemGaleriaDTO {
     public $id_galeria;
     public $imagem_base64;
