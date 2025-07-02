@@ -68,10 +68,10 @@ CREATE INDEX idx_atividade_tag_fk ON Atividade(id_tag);
 
 -- Inserção de tags padrão
 INSERT INTO Tag (nome, cor) VALUES
+('Geral', '#A2D5F2'),     -- Azul Pastel
 ('Lobinho', '#FFD700'),   -- Amarelo
 ('Escoteiro', '#008000'), -- Verde
-('Sênior', '#800020'),    -- Grená
-('Pioneiro', '#FF0000'),  -- Vermelho
-('Geral', '#A2D5F2');     -- Azul Pastel
+('Senior', '#800020'),    -- Grená
+('Pioneiro', '#FF0000');  -- Vermelho
 
 INSERT  INTO Usuario (usuario, senha) VALUES ('admin', '$2y$10$mzdCJlE9ltn.HX/ov8ARrOlI5NiKfpZQUXXpbWcG/txGZB3D7BL/2');
