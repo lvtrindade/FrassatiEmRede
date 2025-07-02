@@ -4,6 +4,7 @@ namespace App\Services;
 use Exception;
 
 use App\Repositories\LoginRepository;
+use App\DTOs\UsuarioDTO;
 
 class AuthService {
     private $repo;

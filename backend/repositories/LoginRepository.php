@@ -5,7 +5,7 @@ use PDO;
 
 use App\Config\Connection;
 
-class UsuarioRepository {
+class LoginRepository {
     private $conn;
 
     public function __construct() {
