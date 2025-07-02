@@ -2,8 +2,11 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use Slim\Factory\AppFactory;
+use App\Middleware\CorsMiddleware;
 
 $app = AppFactory::create();
+
+$app->add(new CorsMiddleware());
 
 $app->addErrorMiddleware(true, true, true);
 

@@ -36,8 +36,20 @@ class BackgroundController {
     }
 
     public function obter(Request $request, Response $response): Response {
+    try {
         $imagem = $this->service->obterImagemDeFundo();
+
+        if (!$imagem) {
+            $response->getBody()->write(json_encode(["erro" => "Imagem não encontrada no banco de dados."]));
+            return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
+        }
+
         $response->getBody()->write(json_encode($imagem));
         return $response->withHeader('Content-Type', 'application/json');
+        
+        } catch (\Exception $e) {
+            $response->getBody()->write(json_encode(["erro" => $e->getMessage()]));
+            return $response->withStatus(500)->withHeader('Content-Type', 'application/json');
+        }
     }
 }
