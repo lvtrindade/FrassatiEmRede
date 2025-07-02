@@ -2,21 +2,22 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { environment } from '../../environments/environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AtividadesService {
-  private apiUrl = 'http://localhost/src/app/backend';
+  private apiUrl = `${environment.apiUrl}/atividades`;
 
   constructor(private http: HttpClient) { }
 
   getAtividades(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/getAtividades.php`);
+    return this.http.get<any[]>(this.apiUrl);
   }
 
   excluirAtividade(atividadeId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/excluir-atividade.php?id=${atividadeId}`);
+    return this.http.delete(`${this.apiUrl}/${atividadeId}`);
   }
 
   editarAtividade(formData: FormData): Observable<any> {
@@ -24,7 +25,7 @@ export class AtividadesService {
       'Accept': 'application/json'
     });
 
-    return this.http.post(`${this.apiUrl}/editar-atividade.php`, formData, {
+    return this.http.post(`${this.apiUrl}`, formData, {
       headers: headers,
       responseType: 'json'
     }).pipe(
