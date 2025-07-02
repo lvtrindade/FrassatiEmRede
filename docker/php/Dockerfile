@@ -98,5 +98,5 @@ CMD ["php-fpm"]
 
 EXPOSE 9000
 
-HEALTHCHECK --interval=30s --timeout=3s --start-period=1m \
-  CMD curl -f http://localhost:9000/healthcheck.php || exit 1
+#HEALTHCHECK --interval=30s --timeout=3s --start-period=1m \
+#  CMD curl -f http://localhost:9000/healthcheck.php || exit 1

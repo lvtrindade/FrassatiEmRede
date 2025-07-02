@@ -47,3 +47,7 @@ Thumbs.db
 
 # Environment files
 .env
+
+#PHP vendor/
+backend/vendor/*
+backend/vendor/composer/
