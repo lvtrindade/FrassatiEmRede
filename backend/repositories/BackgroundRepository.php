@@ -15,7 +15,7 @@ class BackgroundRepository {
     public function buscarPorId($id) {
         $stmt = $this->conn->prepare("SELECT * FROM Background WHERE id = ?");
         $stmt->execute([$id]);
-        return $stmt->fecth(PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function atualizarImagem($id, $base64) {

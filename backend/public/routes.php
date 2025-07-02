@@ -17,7 +17,12 @@ $app->map(['GET', 'POST', 'PUT', 'DELETE'], '/evento[/{id}]', function (Request 
     return $controller->handle($request, $response, $args);
 });
 
-$app->map(['GET', 'PUT'], '/background[/{id}]', function (Request $request, Response $response, $args) {
+$app->get('/background', function (Request $request, Response $response, $args) {
     $controller = new BackgroundController();
-    return $controller->handle($request, $response, $args);
+    return $controller->obter($request, $response);
+});
+
+$app->put('/background', function (Request $request, Response $response, $args) {
+    $controller = new BackgroundController();
+    return $controller->upload($request, $response);
 });
