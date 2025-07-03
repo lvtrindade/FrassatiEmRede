@@ -16,19 +16,27 @@ class CorsMiddleware implements MiddlewareInterface {
             'http://localhost'
         ];
 
-        $response = ($request->getMethod() === 'OPTIONS')
-            ? new SlimResponse()
+        $response = $request->getMethod() === 'OPTIONS'
+            ? new SlimResponse(200)
             : $handler->handle($request);
 
+        $headers = [
+            'Access-Control-Allow-Headers' => 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+            'Access-Control-Allow-Methods' => 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Credentials' => 'true',
+            'Access-Control-Max-Age' => '86400',
+        ];
+
         if (in_array($origin, $allowedOrigins)) {
-            return $response
-                ->withHeader('Access-Control-Allow-Origin', $origin)
-                ->withHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
-                ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-                ->withHeader('Access-Control-Allow-Credentials', 'true');
+            $headers['Access-Control-Allow-Origin'] = $origin;
+        } else {
+            $headers['Access-Control-Allow-Origin'] = '*';
         }
 
-        return $response
-            ->withHeader('Access-Control-Allow-Origin', '*');
+        foreach ($headers as $key => $value) {
+            $response = $response->withHeader($key, $value);
+        }
+
+        return $response;
     }
 }

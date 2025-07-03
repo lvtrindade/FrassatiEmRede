@@ -1,26 +1,38 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, HostListener, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  ChangeDetectorRef,
+  OnDestroy,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AtividadesService } from '../../../../core/services/atividades.service';
 import { TagsService } from '../../../../core/services/tags.service';
+import { AtividadeUtilService } from '../../../../core/utils/atividade-util.service';
+import { CardAtividadeComponent } from '../../../../shared/components/cards/card-atividade/card-atividade.component';
+import { ModalEdicaoComponent } from '../../../../core/modals/modal-edicao/modal-edicao.component';
 
 @Component({
   selector: 'app-adm-atv',
-  imports: [FormsModule, CommonModule],
+  imports: [
+    FormsModule,
+    CommonModule,
+    CardAtividadeComponent,
+    ModalEdicaoComponent,
+  ],
   templateUrl: './adm-atv.component.html',
-  styleUrl: './adm-atv.component.css'
+  styleUrl: './adm-atv.component.css',
 })
-
 export class AdmAtvComponent implements OnDestroy {
-  tags: { id: number, nome: string }[] = [];
+  tags: { id: number; nome: string }[] = [];
   tagSelecionada: number | null = null;
   atividades: any[] = [];
   atividadesFiltradas: any[] = [];
   menuAberto: number | null = null;
   atividadeEditando: any = null;
-  imagens_galeria: {file: File, url: string}[] = [];
+  imagens_galeria: { file: File; url: string }[] = [];
   imagem_principal: File | null = null;
   imagensExistenteGaleria: any[] = [];
   imagensRemovidasGaleria: number[] = [];
@@ -31,11 +43,12 @@ export class AdmAtvComponent implements OnDestroy {
   totalPaginas: number = 1;
 
   constructor(
-    private tagService: TagsService, 
-    private atividadesService: AtividadesService, 
+    private tagService: TagsService,
+    private atividadesService: AtividadesService,
+    private atividadeUtil: AtividadeUtilService,
     private router: Router,
     private cdRef: ChangeDetectorRef
-  ) { }
+  ) {}
 
   navigateTo(path: string) {
     this.router.navigate([`/admin/dashboard/${path}`]);
@@ -48,7 +61,7 @@ export class AdmAtvComponent implements OnDestroy {
 
   ngOnDestroy() {
     // Limpeza de todas as URLs blob
-    this.imagens_galeria.forEach(img => URL.revokeObjectURL(img.url));
+    this.imagens_galeria.forEach((img) => URL.revokeObjectURL(img.url));
   }
 
   carregarTags() {
@@ -66,9 +79,8 @@ export class AdmAtvComponent implements OnDestroy {
   private loadAtividades(): void {
     this.atividadesService.getAtividades().subscribe({
       next: (response: any) => {
-        console.log('Atividades carregadas:', response);
-        if (response && response.atividades && response.atividades.length > 0) {
-          this.atividades = response.atividades;
+        if (response && response.data && response.data.length > 0) {
+          this.atividades = response.data;
           this.atividadesFiltradas = this.atividades;
           this.calcularTotalPaginas();
         } else {
@@ -78,36 +90,30 @@ export class AdmAtvComponent implements OnDestroy {
       },
       error: (err) => {
         console.error('Erro ao carregar atividades:', err);
-      }
+      },
     });
   }
 
   calcularTotalPaginas(): void {
-    this.totalPaginas = Math.ceil(this.atividadesFiltradas.length / this.atividadesPorPagina);
+    this.totalPaginas = Math.ceil(
+      this.atividadesFiltradas.length / this.atividadesPorPagina
+    );
   }
 
   filtrarAtividades(): void {
-    let atividadesFiltradas = this.atividades;
-
-    const termo = (document.querySelector('input[type="text"]') as HTMLInputElement).value.toLowerCase();
-    if (termo) {
-      atividadesFiltradas = atividadesFiltradas.filter(atividade =>
-        atividade.titulo.toLowerCase().includes(termo)
-      );
-    }
-
-    if (this.tagSelecionada) {
-      const tag_id = Number(this.tagSelecionada);
-      const tagSelecionadaObj = this.tags.find(tag => tag.id === tag_id);
-      if (tagSelecionadaObj) {
-        atividadesFiltradas = atividadesFiltradas.filter(atividade =>
-          atividade.tag_nome === tagSelecionadaObj.nome
-        );
-      }
-    }
-
-    this.atividadesFiltradas = atividadesFiltradas;
-    this.calcularTotalPaginas();
+    const termo = (
+      document.querySelector('input[type="text"]') as HTMLInputElement
+    ).value;
+    this.atividadesFiltradas = this.atividadeUtil.filtrarAtividadesPorTagETermo(
+      this.atividades,
+      this.tags,
+      termo,
+      this.tagSelecionada
+    );
+    this.totalPaginas = this.atividadeUtil.calcularTotalPaginas(
+      this.atividadesFiltradas,
+      this.atividadesPorPagina
+    );
     this.paginaAtual = 1;
   }
 
@@ -136,18 +142,7 @@ export class AdmAtvComponent implements OnDestroy {
   }
 
   formatarData(data: string): string {
-    if (!data || data === '0000-00-00') {
-      return 'Data não disponível';
-    }
-
-    const dataComFuso = `${data}T00:00:00-03:00`;
-    const date = new Date(dataComFuso);
-
-    if (isNaN(date.getTime())) {
-      return 'Data inválida';
-    }
-
-    return date.toLocaleDateString('pt-BR');
+    return this.atividadeUtil.formatarData(data);
   }
 
   toggleMenu(atividadeId: number, event: Event): void {
@@ -170,20 +165,21 @@ export class AdmAtvComponent implements OnDestroy {
 
   excluirAtividade(atividadeId: number): void {
     if (confirm('Tem certeza que deseja excluir esta atividade?')) {
-      console.log('Excluindo atividade com ID:', atividadeId);
       this.atividadesService.excluirAtividade(atividadeId).subscribe({
         next: (response: any) => {
-          console.log('Resposta do backend:', response);
-          if (response && response.success) {
-            console.log('Atividade excluída com sucesso. Recarregando atividades...');
+          if (response && response.cod === 200) {
             this.loadAtividades();
           } else {
-            console.error('Erro ao excluir atividade:', response.error);
+            console.error(
+              'Erro ao excluir atividade:',
+              response.mensagem || 'Erro desconhecido'
+            );
           }
         },
         error: (err) => {
           console.error('Erro ao excluir atividade:', err);
-        }
+          alert('Erro ao excluir atividade.');
+        },
       });
     }
   }
@@ -193,12 +189,14 @@ export class AdmAtvComponent implements OnDestroy {
   }
 
   editarAtividade(atividadeId: number): void {
-    const atividade = this.atividades.find(a => a.id === atividadeId);
+    const atividade = this.atividades.find((a) => a.id === atividadeId);
     if (atividade) {
       this.atividadeEditando = { ...atividade };
-      
+
       // Inicializa as listas de imagens
-      this.imagensExistenteGaleria = atividade.galeria ? [...atividade.galeria] : [];
+      this.imagensExistenteGaleria = atividade.galeria
+        ? [...atividade.galeria]
+        : [];
       this.imagensRemovidasGaleria = [];
       this.imagens_galeria = [];
       this.imagem_principal = null;
@@ -217,7 +215,7 @@ export class AdmAtvComponent implements OnDestroy {
 
   fecharModal(): void {
     this.atividadeEditando = null;
-    this.imagens_galeria.forEach(img => URL.revokeObjectURL(img.url));
+    this.imagens_galeria.forEach((img) => URL.revokeObjectURL(img.url));
     this.imagens_galeria = [];
     this.imagem_principal = null;
   }
@@ -231,14 +229,14 @@ export class AdmAtvComponent implements OnDestroy {
   onGaleriaSelecionada(event: any): void {
     const files: FileList = event.target.files;
     const newImages = [];
-    
+
     for (let i = 0; i < files.length; i++) {
       newImages.push({
         file: files[i],
-        url: URL.createObjectURL(files[i])
+        url: URL.createObjectURL(files[i]),
       });
     }
-    
+
     this.imagens_galeria = [...this.imagens_galeria, ...newImages];
     this.cdRef.detectChanges();
   }
@@ -254,59 +252,38 @@ export class AdmAtvComponent implements OnDestroy {
     this.cdRef.detectChanges();
   }
 
-  async salvarEdicao(): Promise<void> {
+  salvarEdicao(): void {
     if (!this.atividadeEditando) return;
-  
-    try {
-      const formData = new FormData();
-      
-      formData.append('id', this.atividadeEditando.id.toString());
-      formData.append('titulo', this.atividadeEditando.titulo);
-      formData.append('descricao', this.atividadeEditando.descricao);
-      formData.append('data_atividade', this.atividadeEditando.data_atividade);
-      formData.append('tag_id', this.atividadeEditando.tag_id.toString());
-      formData.append('imagens_removidas', JSON.stringify(this.imagensRemovidasGaleria));
-  
-      if (this.imagem_principal) {
-        formData.append('imagem_principal', this.imagem_principal);
-      }
-  
-      this.imagens_galeria.forEach((img, index) => {
-        formData.append(`imagens_galeria[${index}]`, img.file);
-      });
-  
-      this.atividadesService.editarAtividade(formData).subscribe({
+
+    const formData = this.atividadeUtil.gerarFormDataParaEdicao(
+      this.atividadeEditando,
+      this.imagem_principal,
+      this.imagens_galeria,
+      this.imagensRemovidasGaleria
+    );
+
+    for (const pair of formData.entries()) {
+      console.log(pair[0] + ':', pair[1]);
+    }
+
+    this.atividadesService
+      .editarAtividade(this.atividadeEditando.id, formData)
+      .subscribe({
         next: (response: any) => {
-          console.log('Resposta completa:', response);
-          if (response?.success) {
+          if (response?.cod == 200) {
             this.loadAtividades();
             this.fecharModal();
           } else {
-            alert('Erro ao editar: ' + (response?.error || 'Erro desconhecido'));
+            alert(
+              'Erro ao salvar edição: ' +
+                (response?.mensagem || 'Erro desconhecido')
+            );
           }
         },
         error: (err) => {
           console.error('Erro na requisição:', err);
-          if (err.status === 200) {
-            try {
-              const response = JSON.parse(err.error.text);
-              if (response.success) {
-                this.loadAtividades();
-                this.fecharModal();
-              } else {
-                alert('Erro ao editar: ' + (response.error || 'Erro desconhecido'));
-              }
-            } catch (e) {
-              alert('Erro ao processar resposta do servidor');
-            }
-          } else {
-            alert('Erro ao conectar com o servidor');
-          }
-        }
+          alert('Erro ao salvar edição.');
+        },
       });
-    } catch (error) {
-      console.error('Erro ao preparar dados:', error);
-      alert('Erro ao preparar os dados para envio');
-    }
   }
 }

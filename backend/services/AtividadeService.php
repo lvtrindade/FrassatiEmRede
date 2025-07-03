@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use Exception;
 use App\Repositories\AtividadeRepository;
 
 class AtividadeService {
@@ -19,19 +20,19 @@ class AtividadeService {
     }
 
     public function criar($dto) {
-        if (!$dto->isValid()) {
-            throw new Exception ("Dados inválidos");
+        if (!$dto->isValid('criar')) {
+            throw new \Exception("Dados inválidos (criar)");
         }
-        $idAtividade = $this->repo->create($dto);
 
+        $idAtividade = $this->repo->create($dto);
         $this->repo->criarGaleriaParaAtividade($idAtividade);
 
         return $this->repo->findById($idAtividade);
     }
 
     public function editar($id, $dto) {
-        if (!$dto->isValid()) {
-            throw new Exception("Dados Inválidos");
+        if (!$dto->isValid('editar')) {
+            throw new \Exception("Dados inválidos (editar)");
         }
 
         $this->repo->update($id, $dto);

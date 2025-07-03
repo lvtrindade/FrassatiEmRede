@@ -65,7 +65,7 @@ export class NovaAtividadeComponent {
     formData.append('titulo', this.titulo);
     formData.append('data_atividade', this.data_atividade);
     formData.append('descricao', this.descricao);
-    formData.append('tag_id', `${this.tag_selecionada}`);
+    formData.append('id_tag', `${this.tag_selecionada}`);
 
     if (this.imagem_principal) {
       formData.append('imagem_principal', this.imagem_principal);

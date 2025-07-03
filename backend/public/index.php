@@ -2,6 +2,7 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use Slim\Factory\AppFactory;
+use Slim\Middleware\MethodOverrideMiddleware;
 use App\Middleware\CorsMiddleware;
 
 $app = AppFactory::create();
@@ -14,5 +15,7 @@ require __DIR__ . '/routes.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
+
+$app->add(MethodOverrideMiddleware::class);
 
 $app->run();

@@ -27,15 +27,12 @@ class AuthController {
 
             unset($login['senha']);
 
-            $payload = ResponseFormatter::success("Login realizado", [
+            return ResponseFormatter::success($response, "Login realizado", [
                 'usuario' => $login,
                 'token' => $token
             ], 200);
         } catch (\Exception $e) {
-            $payload = ResponseFormatter::error($e->getMessage(), 400);
-        }
-
-        $response->getBody()->write($payload);
-        return $response->withHeader('Content-Type', 'application/json');
+            return ResponseFormatter::error($response, $e->getMessage(), 400);
+        }   
     }
 }

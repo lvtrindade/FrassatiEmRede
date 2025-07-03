@@ -16,6 +16,7 @@ $app->post('/login', [AuthController::class, 'login']);
 $app->get('/atividades[/{id}]', [AtividadeController::class, 'handle']);
 $app->group('/atividades', function (RouteCollectorProxy $group) {
     $group->post('', [AtividadeController::class, 'handle']);
+    $group->post('/{id}', [AtividadeController::class, 'handle']);
     $group->put('/{id}', [AtividadeController::class, 'handle']);
     $group->delete('/{id}', [AtividadeController::class, 'handle']);
 })->add(new JwtMiddleware());
@@ -23,6 +24,7 @@ $app->group('/atividades', function (RouteCollectorProxy $group) {
 $app->get('/evento[/{id}]', [CalendarioController::class, 'handle']);
 $app->group('/evento', function (RouteCollectorProxy $group) {
     $group->post('', [CalendarioController::class, 'handle']);
+    $group->post('/{id}', [CalendarioController::class, 'handle']);
     $group->put('/{id}', [CalendarioController::class, 'handle']);
     $group->delete('/{id}', [CalendarioController::class, 'handle']);
 })->add(new JwtMiddleware());

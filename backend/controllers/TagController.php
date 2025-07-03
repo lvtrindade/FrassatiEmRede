@@ -17,11 +17,9 @@ class TagController {
     public function listar(Request $request, Response $response): Response {
         try {
             $tags = $this->service->listarTodas();
-            $response->getBody()->write(ResponseFormatter::success("Tags recuperadas", $tags));
-            return $response->withHeader('Content-Type', 'application/json');
+            return ResponseFormatter::success($response, "Tags recuperadas", $tags);
         } catch (\Exception $e) {
-            $response->getBody()->write(ResponseFormatter::error($e->getMessage(), 500));
-            return $response->withStatus(500)->withHeader('Conten-Type', 'application/json');
+            return ResponseFormatter::error($response, $e->getMessage(), 500);
         }
     }
 }
