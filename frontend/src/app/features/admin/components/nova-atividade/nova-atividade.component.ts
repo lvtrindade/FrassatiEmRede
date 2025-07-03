@@ -13,12 +13,12 @@ import { AtividadesService } from '../../../../core/services/atividades.service'
 })
 export class NovaAtividadeComponent {
   titulo = '';
-  dataAtividade = '';
+  data_atividade = '';
   descricao = '';
-  imagemPrincipal: File | null = null;
-  imagensGaleria: File[] = [];
+  imagem_principal: File | null = null;
+  imagens_galeria: File[] = [];
   tags: { id: number; nome: string }[] = [];
-  tagSelecionada: number | null = null;
+  tag_selecionada: number | null = null;
 
   constructor(
     private tagService: TagsService,
@@ -42,18 +42,18 @@ export class NovaAtividadeComponent {
   }
 
   onImagemPrincipalSelecionada(event: any) {
-    this.imagemPrincipal = event.target.files[0];
+    this.imagem_principal = event.target.files[0];
   }
 
   onGaleriaSelecionada(event: any) {
     const files: FileList = event.target.files;
     for (let i = 0; i < files.length; i++) {
-      this.imagensGaleria.push(files[i]);
+      this.imagens_galeria.push(files[i]);
     }
   }
 
   removerImagemGaleria(index: number) {
-    this.imagensGaleria.splice(index, 1);
+    this.imagens_galeria.splice(index, 1);
   }
 
   getImagemUrl(file: File): string {
@@ -63,16 +63,16 @@ export class NovaAtividadeComponent {
   enviarAtividade() {
     const formData = new FormData();
     formData.append('titulo', this.titulo);
-    formData.append('dataAtividade', this.dataAtividade);
+    formData.append('data_atividade', this.data_atividade);
     formData.append('descricao', this.descricao);
-    formData.append('tag', this.tagSelecionada?.toString() || '');
+    formData.append('tag_id', `${this.tag_selecionada}`);
 
-    if (this.imagemPrincipal) {
-      formData.append('imagemPrincipal', this.imagemPrincipal);
+    if (this.imagem_principal) {
+      formData.append('imagem_principal', this.imagem_principal);
     }
 
-    this.imagensGaleria.forEach((imagem, index) => {
-      formData.append(`imagensGaleria[${index}]`, imagem);
+    this.imagens_galeria.forEach((imagem, index) => {
+      formData.append(`imagens_galeria[${index}]`, imagem);
     });
 
     this.atividadesService.criarAtividade(formData).subscribe({
@@ -90,10 +90,10 @@ export class NovaAtividadeComponent {
 
   resetarFormulario() {
     this.titulo = '';
-    this.dataAtividade = '';
+    this.data_atividade = '';
     this.descricao = '';
-    this.imagemPrincipal = null;
-    this.imagensGaleria = [];
-    this.tagSelecionada = null;
+    this.imagem_principal = null;
+    this.imagens_galeria = [];
+    this.tag_selecionada = null;
   }
 }

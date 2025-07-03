@@ -35,7 +35,7 @@ export class AtividadesService {
   criarAtividade(formData: FormData): Observable<any> {
     const headers = new HttpHeaders({ 'Accept': 'application/json' });
 
-    return this.http.post(`${this.apiUrl}/nova`, formData, {
+    return this.http.post(`${this.apiUrl}`, formData, {
       headers,
       responseType: 'json'
     }).pipe(

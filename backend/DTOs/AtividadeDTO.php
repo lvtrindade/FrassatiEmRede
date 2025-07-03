@@ -10,11 +10,11 @@ class AtividadeDTO {
     public $data;
 
     public function __construct($data) {
-        $this->$titulo = $data['titulo'] ?? null;
-        $this->$descricao = $data['descricao'] ?? null;
-        $this->$imagem_principal = $data['imagem_principal'] ?? null;
-        $this->$data_atividade = $data['data_atividade'] ?? null;
-        $this->$id_tag = $data['ramo'] ?? null;
+        $this->titulo = $data['titulo'] ?? null;
+        $this->descricao = $data['descricao'] ?? null;
+        $this->data_atividade = $data['data_atividade'] ?? null;
+        $this->id_tag = $data['tag_id'] ?? null;
+        $this->imagem_principal = $data['imagem_principal'] ?? null;
     }
 
     public function isVAlid() {

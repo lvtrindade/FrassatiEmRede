@@ -6,9 +6,9 @@ use App\Middleware\CorsMiddleware;
 
 $app = AppFactory::create();
 
-$app->add(new CorsMiddleware());
-
 $app->addErrorMiddleware(true, true, true);
+
+$app->add(new CorsMiddleware());
 
 require __DIR__ . '/routes.php';
 

@@ -10,18 +10,17 @@ use Slim\Psr7\Response as SlimResponse;
 class CorsMiddleware implements MiddlewareInterface {
     public function process(Request $request, Handler $handler): Response {
         $origin = $request->getHeaderLine('Origin');
-
         $allowedOrigins = [
             'http://localhost:4200',
             'http://127.0.0.1:4200',
             'http://localhost'
         ];
 
-        if (in_array($origin, $allowedOrigins)) {
-            $response = ($request->getMethod() === 'OPTIONS')
-                ? new SlimResponse()
-                : $handler->handle($request);
+        $response = ($request->getMethod() === 'OPTIONS')
+            ? new SlimResponse()
+            : $handler->handle($request);
 
+        if (in_array($origin, $allowedOrigins)) {
             return $response
                 ->withHeader('Access-Control-Allow-Origin', $origin)
                 ->withHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
@@ -29,6 +28,7 @@ class CorsMiddleware implements MiddlewareInterface {
                 ->withHeader('Access-Control-Allow-Credentials', 'true');
         }
 
-        return $handler->handle($request);
+        return $response
+            ->withHeader('Access-Control-Allow-Origin', '*');
     }
 }

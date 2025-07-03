@@ -3,15 +3,22 @@ namespace App\Middleware;
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
+use Slim\Psr7\Response as SlimResponse;
 
-class JWTMiddleware {
-    public function __invoke(Request $request, Response $response, $next) {
+class JWTMiddleware implements MiddlewareInterface {
+    public function process(Request $request, RequestHandler $handler): Response {
+        if ($request->getMethod() === 'OPTIONS') {
+            return $handler->handle($request);
+        }
+
         $authHeader = $request->getHeaderLine('Authorization');
 
         if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
-            return $this->unauthorized($response, 'Token ausente ou mal formatado');
+            return $this->unauthorized('Token ausente ou mal formatado');
         }
 
         $token = substr($authHeader, 7);
@@ -23,21 +30,15 @@ class JWTMiddleware {
             $requiresAdmin = in_array($method, ['POST', 'PUT', 'DELETE']);
 
             if ($requiresAdmin && ($decoded->role ?? '') !== 'ADMIN') {
-                return $this->unauthorized($response, 'Permissão negada');
+                return $this->unauthorized('Permissão negada');
             }
 
             $request = $request->withAttribute('user', $decoded);
 
-            return $next($request, $response);
+            return $handler->handle($request);
         } catch (\Exception $e) {
-            return $this->unauthorized($response, 'Token inválido: ' . $e->getMessage());
+            return $this->unauthorized('Token inválido: ' . $e->getMessage());
         }
     }
-
-    private function unauthorized(Response $response, string $message): Response {
-        $response->getBody()->write(json_encode([
-            'mensagem' => $message
-        ]));
-        return $response->withStatus(401)->withHeader('Content-Type', 'application/json');
-    }
 }
+

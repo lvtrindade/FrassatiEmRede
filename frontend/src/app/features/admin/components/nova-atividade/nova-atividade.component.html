@@ -13,7 +13,7 @@
 
         <!-- Data da Atividade -->
         <label>Quando essa atividade aconteceu?</label>
-        <input type="date" name="dataAtividade" [(ngModel)]="dataAtividade" required>
+        <input type="date" name="dataAtividade" [(ngModel)]="data_atividade" required>
 
         <!-- Descrição -->
         <label>O que aconteceu nessa atividade?</label>
@@ -21,7 +21,7 @@
 
         <!-- Tags -->
         <label>Selecione a tag:</label>
-        <select name="tags" [(ngModel)]="tagSelecionada" required>
+        <select name="tags" [(ngModel)]="tag_selecionada" required>
             <option *ngFor="let tag of tags" [value]="tag.id">{{ tag.nome }}</option>
         </select>
 
@@ -31,9 +31,9 @@
             multiple>
 
         <!-- Pré-visualização da Galeria -->
-        <div *ngIf="imagensGaleria.length > 0" class="galeria-preview">
+        <div *ngIf="imagens_galeria.length > 0" class="galeria-preview">
             <h2>Fotos da Galeria</h2>
-            <div *ngFor="let imagem of imagensGaleria; let i = index" class="imagem-container">
+            <div *ngFor="let imagem of imagens_galeria; let i = index" class="imagem-container">
                 <!-- Usando FileReader para exibir a pré-visualização -->
                 <img [src]="getImagemUrl(imagem)" alt="Imagem {{ i + 1 }}" class="thumbnail">
                 <button type="button" (click)="removerImagemGaleria(i)">Excluir</button>

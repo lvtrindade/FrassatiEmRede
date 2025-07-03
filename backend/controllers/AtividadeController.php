@@ -21,26 +21,42 @@ class AtividadeController {
         $id = $args['id'] ?? null;
 
         try {
-            switch ($method) {    
+            switch ($method) {
                 case 'GET':
                     $data = $id ? $this->service->buscarPorId($id) : $this->service->listarTodas();
                     $payload = ResponseFormatter::success("Sucesso", $data);
                     break;
-                    
+
                 case 'POST':
-                    $input = json_decode($request->getBody()->getContents(), true);
-                    $dto = new AtividadeDTO($input);
+                    $parsedBody = $request->getParsedBody();
+                    $uploadedFiles = $request->getUploadedFiles();
+
+                    $dto = new AtividadeDTO($parsedBody);
+
+                    if (isset($uploadedFiles['imagem_principal'])) {
+                        $imagem = $uploadedFiles['imagem_principal'];
+                        $dto->imagem_principal = base64_encode($imagem->getStream()->getContents());
+                    }
+
                     $nova = $this->service->criar($dto);
                     $payload = ResponseFormatter::success("Criada", $nova, 201);
                     break;
-                        
+
                 case 'PUT':
-                    $input = json_decode($request->getBody()->getContents(), true);
-                    $dto = new AtividadeDTO($input);
+                    $parsedBody = $request->getParsedBody();
+                    $uploadedFiles = $request->getUploadedFiles();
+
+                    $dto = new AtividadeDTO($parsedBody);
+
+                    if (isset($uploadedFiles['imagem_principal'])) {
+                        $imagem = $uploadedFiles['imagem_principal'];
+                        $dto->imagem_principal = base64_encode($imagem->getStream()->getContents());
+                    }
+
                     $atualizada = $this->service->editar($id, $dto);
                     $payload = ResponseFormatter::success("Atividade atualizada", $atualizada);
                     break;
-                            
+
                 case 'DELETE':
                     $this->service->excluir($id);
                     $payload = ResponseFormatter::success("Atividade excluída");
@@ -49,7 +65,7 @@ class AtividadeController {
                 default:
                     $payload = ResponseFormatter::error("Método não suportado", 405);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $payload = ResponseFormatter::error($e->getMessage(), 400);
         }
 

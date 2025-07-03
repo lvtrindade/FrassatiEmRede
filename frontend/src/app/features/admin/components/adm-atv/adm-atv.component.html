@@ -91,7 +91,7 @@
                         (change)="onGaleriaSelecionada($event)" multiple>
 
                     <!-- Pré-visualização da Galeria -->
-                    <div *ngIf="(imagensExistenteGaleria.length > 0) || (imagensGaleria.length > 0)"
+                    <div *ngIf="(imagensExistenteGaleria.length > 0) || (imagens_galeria.length > 0)"
                         class="galeria-preview">
                         <h3>Fotos da Galeria</h3>
 
@@ -105,7 +105,7 @@
                             </div>
 
                             <!-- Novas imagens -->
-                            <div *ngFor="let imagem of imagensGaleria; let i = index" class="imagem-container">
+                            <div *ngFor="let imagem of imagens_galeria; let i = index" class="imagem-container">
                                 <img [src]="imagem.url" alt="Nova Imagem {{i+1}}" class="thumbnail">
                                 <button type="button" class="btn-remover"
                                     (click)="removerNovaImagemGaleria(i)">Remover</button>

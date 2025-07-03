@@ -20,8 +20,8 @@ export class AdmAtvComponent implements OnDestroy {
   atividadesFiltradas: any[] = [];
   menuAberto: number | null = null;
   atividadeEditando: any = null;
-  imagensGaleria: {file: File, url: string}[] = [];
-  imagemPrincipal: File | null = null;
+  imagens_galeria: {file: File, url: string}[] = [];
+  imagem_principal: File | null = null;
   imagensExistenteGaleria: any[] = [];
   imagensRemovidasGaleria: number[] = [];
 
@@ -48,7 +48,7 @@ export class AdmAtvComponent implements OnDestroy {
 
   ngOnDestroy() {
     // Limpeza de todas as URLs blob
-    this.imagensGaleria.forEach(img => URL.revokeObjectURL(img.url));
+    this.imagens_galeria.forEach(img => URL.revokeObjectURL(img.url));
   }
 
   carregarTags() {
@@ -97,8 +97,8 @@ export class AdmAtvComponent implements OnDestroy {
     }
 
     if (this.tagSelecionada) {
-      const tagId = Number(this.tagSelecionada);
-      const tagSelecionadaObj = this.tags.find(tag => tag.id === tagId);
+      const tag_id = Number(this.tagSelecionada);
+      const tagSelecionadaObj = this.tags.find(tag => tag.id === tag_id);
       if (tagSelecionadaObj) {
         atividadesFiltradas = atividadesFiltradas.filter(atividade =>
           atividade.tag_nome === tagSelecionadaObj.nome
@@ -200,8 +200,8 @@ export class AdmAtvComponent implements OnDestroy {
       // Inicializa as listas de imagens
       this.imagensExistenteGaleria = atividade.galeria ? [...atividade.galeria] : [];
       this.imagensRemovidasGaleria = [];
-      this.imagensGaleria = [];
-      this.imagemPrincipal = null;
+      this.imagens_galeria = [];
+      this.imagem_principal = null;
     }
   }
 
@@ -217,14 +217,14 @@ export class AdmAtvComponent implements OnDestroy {
 
   fecharModal(): void {
     this.atividadeEditando = null;
-    this.imagensGaleria.forEach(img => URL.revokeObjectURL(img.url));
-    this.imagensGaleria = [];
-    this.imagemPrincipal = null;
+    this.imagens_galeria.forEach(img => URL.revokeObjectURL(img.url));
+    this.imagens_galeria = [];
+    this.imagem_principal = null;
   }
 
   onImagemPrincipalSelecionada(event: any): void {
     const file: File = event.target.files[0];
-    this.imagemPrincipal = file;
+    this.imagem_principal = file;
     this.cdRef.detectChanges();
   }
 
@@ -239,7 +239,7 @@ export class AdmAtvComponent implements OnDestroy {
       });
     }
     
-    this.imagensGaleria = [...this.imagensGaleria, ...newImages];
+    this.imagens_galeria = [...this.imagens_galeria, ...newImages];
     this.cdRef.detectChanges();
   }
 
@@ -249,8 +249,8 @@ export class AdmAtvComponent implements OnDestroy {
   }
 
   removerNovaImagemGaleria(index: number): void {
-    URL.revokeObjectURL(this.imagensGaleria[index].url);
-    this.imagensGaleria.splice(index, 1);
+    URL.revokeObjectURL(this.imagens_galeria[index].url);
+    this.imagens_galeria.splice(index, 1);
     this.cdRef.detectChanges();
   }
 
@@ -260,24 +260,19 @@ export class AdmAtvComponent implements OnDestroy {
     try {
       const formData = new FormData();
       
-      // Dados básicos
       formData.append('id', this.atividadeEditando.id.toString());
       formData.append('titulo', this.atividadeEditando.titulo);
       formData.append('descricao', this.atividadeEditando.descricao);
-      formData.append('dataAtividade', this.atividadeEditando.data_atividade);
+      formData.append('data_atividade', this.atividadeEditando.data_atividade);
       formData.append('tag_id', this.atividadeEditando.tag_id.toString());
+      formData.append('imagens_removidas', JSON.stringify(this.imagensRemovidasGaleria));
   
-      // Imagens removidas
-      formData.append('imagensRemovidas', JSON.stringify(this.imagensRemovidasGaleria));
-  
-      // Imagem principal (se alterada)
-      if (this.imagemPrincipal) {
-        formData.append('imagemPrincipal', this.imagemPrincipal);
+      if (this.imagem_principal) {
+        formData.append('imagem_principal', this.imagem_principal);
       }
   
-      // Novas imagens da galeria
-      this.imagensGaleria.forEach((img, index) => {
-        formData.append(`imagensGaleria[${index}]`, img.file);
+      this.imagens_galeria.forEach((img, index) => {
+        formData.append(`imagens_galeria[${index}]`, img.file);
       });
   
       this.atividadesService.editarAtividade(formData).subscribe({
@@ -293,7 +288,6 @@ export class AdmAtvComponent implements OnDestroy {
         error: (err) => {
           console.error('Erro na requisição:', err);
           if (err.status === 200) {
-            // Tentar parsear manualmente se for um erro de parsing
             try {
               const response = JSON.parse(err.error.text);
               if (response.success) {
