@@ -6,6 +6,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 use App\Services\AuthService;
+use App\Services\TokenService;
 use App\DTOs\UsuarioDTO;
 use App\Utils\ResponseFormatter;
 
@@ -21,7 +22,15 @@ class AuthController {
             $input = json_decode($request->getBody()->getContents(), true);
             $dto = new UsuarioDTO($input);
             $login = $this->service->autenticar($dto);
-            $payload = ResponseFormatter::success("Login realizado", $login, 200);
+
+            $token = TokenService::gerarToken($login);
+
+            unset($login['senha']);
+
+            $payload = ResponseFormatter::success("Login realizado", [
+                'usuario' => $login,
+                'token' => $token
+            ], 200);
         } catch (\Exception $e) {
             $payload = ResponseFormatter::error($e->getMessage(), 400);
         }

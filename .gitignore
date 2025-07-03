@@ -50,4 +50,7 @@ Thumbs.db
 
 #PHP vendor/
 backend/vendor/*
-backend/vendor/composer/
+/vendor/composer/
+*/vendor/*
+vendor/firebase/*
+vendor/composer/

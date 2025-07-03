@@ -3,16 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AtividadesService } from '../../../../core/services/atividades.service';
+import { TagsService } from '../../../../core/services/tags.service';
 
 @Component({
   selector: 'app-blog',
   imports: [FormsModule, CommonModule],
   templateUrl: './blog.component.html',
-  styleUrl: './blog.component.css'
+  styleUrl: './blog.component.css',
 })
 export class BlogComponent {
   // Propriedades para tags e atividades
-  tags: { id: number, nome: string }[] = [];
+  tags: { id: number; nome: string }[] = [];
   tagSelecionada: number | null = null;
   atividades: any[] = [];
   atividadesFiltradas: any[] = [];
@@ -22,25 +23,27 @@ export class BlogComponent {
   paginaAtual: number = 1; // Página atual
   totalPaginas: number = 1; // Total de páginas
 
-  constructor(private http: HttpClient, private atividadesService: AtividadesService) { }
+  constructor(
+    private http: HttpClient,
+    private tagService: TagsService,
+    private atividadesService: AtividadesService
+  ) {}
 
   ngOnInit() {
     this.carregarTags();
     this.loadAtividades();
   }
 
-  // Método para carregar as tags
   carregarTags() {
-    this.http.get('http://localhost/src/app/backend/listarTags.php')
-      .subscribe({
-        next: (res: any) => {
-          this.tags = res;
-          console.log('Tags carregadas:', this.tags);
-        },
-        error: (err) => {
-          console.error('Erro ao carregar tags:', err);
-        }
-      });
+    this.tagService.getTags().subscribe({
+      next: (res) => {
+        this.tags = res.data;
+        console.log('Tags carregadas: ', this.tags);
+      },
+      error: (err) => {
+        console.error('Erro ao carregar tags: ', err);
+      },
+    });
   }
 
   // Método para carregar as atividades
@@ -60,13 +63,15 @@ export class BlogComponent {
       },
       error: (err) => {
         console.error('Erro ao carregar atividades:', err);
-      }
+      },
     });
   }
 
   // Método para calcular o total de páginas
   calcularTotalPaginas(): void {
-    this.totalPaginas = Math.ceil(this.atividadesFiltradas.length / this.atividadesPorPagina);
+    this.totalPaginas = Math.ceil(
+      this.atividadesFiltradas.length / this.atividadesPorPagina
+    );
   }
 
   // Método para filtrar as atividades por título e tag
@@ -74,9 +79,11 @@ export class BlogComponent {
     let atividadesFiltradas = this.atividades;
 
     // Filtro por título
-    const termo = (document.querySelector('input[type="text"]') as HTMLInputElement).value.toLowerCase();
+    const termo = (
+      document.querySelector('input[type="text"]') as HTMLInputElement
+    ).value.toLowerCase();
     if (termo) {
-      atividadesFiltradas = atividadesFiltradas.filter(atividade =>
+      atividadesFiltradas = atividadesFiltradas.filter((atividade) =>
         atividade.titulo.toLowerCase().includes(termo)
       );
     }
@@ -84,10 +91,10 @@ export class BlogComponent {
     // Filtro por tag
     if (this.tagSelecionada) {
       const tagId = Number(this.tagSelecionada);
-      const tagSelecionadaObj = this.tags.find(tag => tag.id === tagId);
+      const tagSelecionadaObj = this.tags.find((tag) => tag.id === tagId);
       if (tagSelecionadaObj) {
-        atividadesFiltradas = atividadesFiltradas.filter(atividade =>
-          atividade.tag_nome === tagSelecionadaObj.nome
+        atividadesFiltradas = atividadesFiltradas.filter(
+          (atividade) => atividade.tag_nome === tagSelecionadaObj.nome
         );
       }
     }

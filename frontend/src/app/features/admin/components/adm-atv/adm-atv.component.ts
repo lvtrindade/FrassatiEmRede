@@ -4,6 +4,7 @@ import { Component, HostListener, ChangeDetectorRef, OnDestroy } from '@angular/
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AtividadesService } from '../../../../core/services/atividades.service';
+import { TagsService } from '../../../../core/services/tags.service';
 
 @Component({
   selector: 'app-adm-atv',
@@ -19,7 +20,7 @@ export class AdmAtvComponent implements OnDestroy {
   atividadesFiltradas: any[] = [];
   menuAberto: number | null = null;
   atividadeEditando: any = null;
-  imagensGaleria: {file: File, url: string}[] = []; // Alterado para armazenar file e URL
+  imagensGaleria: {file: File, url: string}[] = [];
   imagemPrincipal: File | null = null;
   imagensExistenteGaleria: any[] = [];
   imagensRemovidasGaleria: number[] = [];
@@ -30,7 +31,7 @@ export class AdmAtvComponent implements OnDestroy {
   totalPaginas: number = 1;
 
   constructor(
-    private http: HttpClient, 
+    private tagService: TagsService, 
     private atividadesService: AtividadesService, 
     private router: Router,
     private cdRef: ChangeDetectorRef
@@ -51,16 +52,15 @@ export class AdmAtvComponent implements OnDestroy {
   }
 
   carregarTags() {
-    this.http.get('http://localhost/src/app/backend/listarTags.php')
-      .subscribe({
-        next: (res: any) => {
-          this.tags = res;
-          console.log('Tags carregadas:', this.tags);
-        },
-        error: (err) => {
-          console.error('Erro ao carregar tags:', err);
-        }
-      });
+    this.tagService.getTags().subscribe({
+      next: (res) => {
+        this.tags = res.data;
+        console.log('Tags carregadas: ', this.tags);
+      },
+      error: (err) => {
+        console.error('Erro ao carregar tags: ', err);
+      },
+    });
   }
 
   private loadAtividades(): void {
