@@ -3,18 +3,22 @@ import { RouterLink } from '@angular/router';
 import { BackgroundService } from '../../../../core/services/background.service';
 import { AtividadesService } from '../../../../core/services/atividades.service';
 import { CommonModule } from '@angular/common';
+import { CardAtividadeComponent } from '../../../../shared/components/cards/card-atividade/card-atividade.component';
 
 @Component({
   selector: 'app-inicio',
-  imports: [RouterLink, CommonModule],
+  standalone: true,
+  imports: [RouterLink, CommonModule, CardAtividadeComponent],
   templateUrl: './inicio.component.html',
-  styleUrl: './inicio.component.css'
+  styleUrls: ['./inicio.component.css'],
 })
-
 export class InicioComponent implements AfterViewInit {
   atividades: any[] = [];
 
-  constructor(private BackgroundService: BackgroundService, private atividadesService: AtividadesService) { }
+  constructor(
+    private backgroundService: BackgroundService,
+    private atividadesService: AtividadesService
+  ) {}
 
   ngAfterViewInit(): void {
     this.loadBackgroundImage();
@@ -23,8 +27,8 @@ export class InicioComponent implements AfterViewInit {
   }
 
   private loadBackgroundImage(): void {
-    this.BackgroundService.getBackgroundImage().subscribe({
-      next: (response: { imagem: any; }) => {
+    this.backgroundService.getBackgroundImage().subscribe({
+      next: (response: { imagem: string | null }) => {
         if (response.imagem) {
           const heroesPage = document.getElementById('heroes_page');
           if (heroesPage) {
@@ -36,8 +40,7 @@ export class InicioComponent implements AfterViewInit {
       },
       error: (error: any) => {
         console.error('Erro ao carregar imagem de fundo', error);
-        // Exiba uma mensagem de erro para o usuário ou use uma imagem de fallback
-      }
+      },
     });
   }
 
@@ -46,10 +49,10 @@ export class InicioComponent implements AfterViewInit {
     scrollLinks.forEach((link) => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
-
         const targetId = (link as HTMLAnchorElement).getAttribute('href');
-        const targetElement = targetId ? document.querySelector(targetId) : null;
-
+        const targetElement = targetId
+          ? document.querySelector(targetId)
+          : null;
         if (targetElement) {
           const startPosition = window.pageYOffset;
           const targetPosition =
@@ -57,10 +60,8 @@ export class InicioComponent implements AfterViewInit {
           const distance = targetPosition - startPosition;
           const duration = 1500;
           let startTime: number | null = null;
-
           const animationScroll = (currentTime: number) => {
             if (!startTime) startTime = currentTime;
-
             const timeElapsed = currentTime - startTime;
             const run = this.easeInOutCubic(
               timeElapsed,
@@ -68,14 +69,11 @@ export class InicioComponent implements AfterViewInit {
               distance,
               duration
             );
-
             window.scrollTo(0, run);
-
             if (timeElapsed < duration) {
               requestAnimationFrame(animationScroll);
             }
           };
-
           requestAnimationFrame(animationScroll);
         }
       });
@@ -92,11 +90,8 @@ export class InicioComponent implements AfterViewInit {
   private loadAtividades(): void {
     this.atividadesService.getAtividades().subscribe({
       next: (response: any) => {
-        console.log('Dados recebidos:', response); // Log para depuração
-        if (response && response.atividades && response.atividades.length > 0) {
-          this.atividades = response.atividades.slice(0, 3);
-          console.log('Atividades carregadas:', this.atividades); // Log para depuração
-          console.log('Imagem da primeira atividade:', this.atividades[0].caminho_imagem_destaque); // Log para depuração
+        if (response && response.data && response.data.length > 0) {
+          this.atividades = response.data.slice(0, 3);
         } else {
           this.atividades = [];
         }
@@ -104,23 +99,7 @@ export class InicioComponent implements AfterViewInit {
       error: (error: any) => {
         console.error('Erro ao carregar atividades', error);
         this.atividades = [];
-      }
+      },
     });
   }
-
-  formatarData(data: string): string {
-    if (!data || data === '0000-00-00') {
-        return 'Data não disponível'; // Mensagem de fallback
-    }
-
-    // Adiciona o fuso horário manualmente (assumindo que a data está no formato 'YYYY-MM-DD HH:mm:ss')
-    const dataComFuso = `${data}T00:00:00-03:00`; // Ajuste para o fuso horário de São Paulo
-
-    const date = new Date(dataComFuso);
-    if (isNaN(date.getTime())) {
-        return 'Data inválida'; // Mensagem de fallback
-    }
-
-    return date.toLocaleDateString('pt-BR'); // Formata a data no padrão brasileiro
-}
 }

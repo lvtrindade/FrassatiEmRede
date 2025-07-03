@@ -17,23 +17,28 @@ class BackgroundController {
     }
 
     public function upload(Request $request, Response $response): Response {
-        $body = $request->getParsedBody();
-        $base64 = $body['imagem64'] ?? null;
+        $uploadedFiles = $request->getUploadedFiles();
 
-        if (!$base64) {
-            $response->getBody()->write(json_encode(["erro" => "Imagem não enviada"]));
-            return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+        if (!isset($uploadedFiles['background'])) {
+            return ResponseFormatter::error($response, "Imagem não enviada", 400);
         }
+
+        $file = $uploadedFiles['background'];
+
+        if ($file->getError() !== UPLOAD_ERR_OK) {
+            return ResponseFormatter::error($response, "Erro no upload da imagem", 400);
+        }
+
+        $base64 = base64_encode($file->getStream()->getContents());
 
         try {
             $imagem = $this->service->salvarImagemBase64($base64);
-            $response->getBody()->write(json_encode(["mensagem" => "Imagem salva com sucesso", "data" => $imagem]));
-            return $response->withHeader('Content-Type', 'application/json');
+            return ResponseFormatter::success($response, "Imagem salva com sucesso", $imagem);
         } catch (\Exception $e) {
-            $response->getBody()->write(json_encode(["erro" => $e->getMessage()]));
-            return $response->withStatus(500)->withHeader('Content-Type', 'application/json');
+            return ResponseFormatter::error($response, $e->getMessage(), 500);
         }
     }
+
 
     public function obter(Request $request, Response $response): Response {
     try {

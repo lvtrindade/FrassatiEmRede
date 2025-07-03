@@ -30,6 +30,6 @@ $app->group('/evento', function (RouteCollectorProxy $group) {
 })->add(new JwtMiddleware());
 
 $app->get('/background', [BackgroundController::class, 'obter']);
-$app->put('/background', [BackgroundController::class, 'upload'])->add(new JwtMiddleware());
+$app->post('/background', [BackgroundController::class, 'upload'])->add(new JwtMiddleware());
 
 $app->get('/tags', [TagController::class, 'listar']);

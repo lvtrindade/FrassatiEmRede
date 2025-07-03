@@ -1,5 +1,8 @@
 <div class="atividade-item">
-  <div class="imagem" [style.background-image]="'url(data:image/*;base64,' + atividade.imagem_destaque + ')'"></div>
+  <div
+    class="imagem"
+    [style.backgroundImage]="'url(data:image/*;base64,' + atividade.imagem_destaque + ')'"
+  ></div>
 
   <div class="informacoes">
     <div class="tag" [style.backgroundColor]="atividade.cor_tag">
@@ -15,7 +18,6 @@
     </div>
   </div>
 
-  <!-- Menu de opções -->
   <div *ngIf="modoAdmin" class="opcoes">
     <span class="dots" (click)="menuAberto = !menuAberto">&#8942;</span>
 
