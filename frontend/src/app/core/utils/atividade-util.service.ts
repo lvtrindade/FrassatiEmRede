@@ -49,8 +49,7 @@ export class AtividadeUtilService {
         ? +atividade.id_tag === +tagSelecionada
         : true;
       const correspondeTermo = termo
-        ? atividade.titulo?.toLowerCase().includes(termo.toLowerCase()) ||
-          atividade.descricao?.toLowerCase().includes(termo.toLowerCase())
+        ? atividade.titulo?.toLowerCase().includes(termo.toLowerCase())
         : true;
 
       return correspondeTag && correspondeTermo;
