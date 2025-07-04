@@ -19,7 +19,7 @@ class CalendarioService {
     }
 
     public function criar($dto) {
-        if (!dto->isValid()) {
+        if (!$dto->isValid()) {
             throw new Exception ("Dados inválidos");
         }
         $idEvento = $this->repo->create($dto);

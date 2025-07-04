@@ -24,30 +24,30 @@ class CalendarioController {
             switch ($method) {
                 case 'GET':
                     $data = $id ? $this->service->buscarPorId($id) : $this->service->listarTodos();
-                    $payload = ResponseFormatter::success("Sucesso", $data);
+                    $payload = ResponseFormatter::success($response, "Sucesso", $data);
                     break;
 
                 case 'POST':
                     $input = json_decode($request->getBody()->getContents(), true);
                     $dto = new EventoDTO($input);
                     $nova = $this->service->criar($dto);
-                    $payload = ResponseFormatter::success("Criado", $nova, 201);
+                    $payload = ResponseFormatter::success($response, "Criado", $nova, 201);
                     break;
                 
                 case 'PUT':
                     $input = json_decode($request->getBody()->getContents(), true);
                     $dto = new EventoDTO($input);
                     $atualizado = $this->service->editar($id, $dto);
-                    $payload = ResponseFormatter::success("Evento atualizado", $atualizado);
+                    $payload = ResponseFormatter::success($response, "Evento atualizado", $atualizado);
                     break;
                 
                 case 'DELETE':
                     $this->service->excluir($id);
-                    $payload = ResponseFormatter::success("Evento excluído");
+                    $payload = ResponseFormatter::success($response, "Evento excluído");
                     break;
 
                 default:
-                    $payload = ResponseFormatter::error("Método não suportado", 405);
+                    $payload = ResponseFormatter::error($response, "Método não suportado", 405);
             }
         } catch (Exception $e) {
             $payload = ResponseFormatter::error($e->getMessage(), 400);

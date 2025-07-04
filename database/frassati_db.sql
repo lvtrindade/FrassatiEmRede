@@ -40,8 +40,10 @@ CREATE TABLE ImagemGaleria (
 
 CREATE TABLE Eventos (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    data_evento DATE NOT NULL,
-    horario TIME,
+    data_inicio DATE NOT NULL,
+    data_fim DATE NOT NULL,
+    horario_inicio TIME NOT NULL,
+    horario_fim TIME NOT NULL,
     titulo VARCHAR(50) NOT NULL,
     descricao TEXT,
     id_tag INT NOT NULL,
@@ -55,7 +57,8 @@ CREATE TABLE Background (
 
 CREATE INDEX idx_data_atividade ON Atividade(data_atividade);
 CREATE INDEX idx_titulo ON Atividade(titulo);
-CREATE INDEX idx_data_calendario ON Eventos(data_evento);
+CREATE INDEX idx_eventos_data_inicio ON Eventos(data_inicio);
+CREATE INDEX idx_eventos_data_fim ON Eventos(data_fim);
 CREATE INDEX idx_atividade_tag_fk ON Atividade(id_tag);
 
 INSERT INTO Tag (nome, cor) VALUES
