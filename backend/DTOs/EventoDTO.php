@@ -16,8 +16,9 @@ class EventoDTO {
         $this->descricao = $data['descricao'] ?? null;
         $this->data_inicio = $data['data_inicio'] ?? null;
         $this->data_fim = $data['data_fim'] ?? null;
-        $this->horario = $data['horario'] ?? null;
-        $this->id_tag = $data['ramo'] ?? null;
+        $this->horario_inicio = $data['horario_inicio'] ?? null;
+        $this->horario_fim = $data['horario_fim'] ?? null;
+        $this->id_tag = $data['id_tag'] ?? null;
     }
 
     public function isValid(): bool {

@@ -1,6 +1,8 @@
 <?php
 namespace App\Services;
 
+use Exception;
+
 use App\Repositories\CalendarioRepository;
 
 class CalendarioService {

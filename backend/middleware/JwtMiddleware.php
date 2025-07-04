@@ -40,5 +40,16 @@ class JWTMiddleware implements MiddlewareInterface {
             return $this->unauthorized('Token inválido: ' . $e->getMessage());
         }
     }
+
+    private function unauthorized(string $mensagem): Response {
+        $response = new SlimResponse();
+        $response->getBody()->write(json_encode([
+          'cod' => 401,
+            'mensagem' => $mensagem
+        ]));
+
+        return $response->withHeader('Content-Type', 'application/json')
+                        ->withStatus(401);
+    }
 }
 
