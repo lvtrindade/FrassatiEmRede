@@ -1,6 +1,10 @@
 div {
     position: relative;
+<<<<<<< HEAD
     height: 54.5vh;
+=======
+    height: 63vh;
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -29,10 +29,21 @@ class BackgroundService {
     }
 
     public function obterImagemDeFundo() {
+<<<<<<< HEAD
         $imagemCustom = $this->repo->buscarPorId(2);
         return $imagemCustom ?? $this->repo->buscarPorId(1);
     }
 
+=======
+        $imagem = $this->repo->buscarPorId(2);
+        if (!$imagem) {
+            $imagem = $this->repo->buscarPorId(1);
+        }
+        return $imagem;
+    }
+
+
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
     private function isValidBase64 ($str) {
         return base64_encode(base64_decode($str, true)) === $str;
     }

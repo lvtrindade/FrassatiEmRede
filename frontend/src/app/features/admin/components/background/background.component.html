@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="content">
     <h1>Atualizar o plano de fundo</h1>
 
@@ -10,4 +11,16 @@
         <button type="submit">Enviar</button>
     </form>
 
+=======
+<div class="content content-background">
+    <h1>Atualizar plano de fundo</h1>
+
+    <form class="upload-form" (submit)="uploadFile($event)">
+        <h2>Selecione uma imagem:</h2>
+
+        <input type="file" name="background" class="input-file" accept="image/*" (change)="onFileChange($event)" />
+
+        <button type="submit" [disabled]="!selectedFile">Enviar</button>
+    </form>
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
 </div>

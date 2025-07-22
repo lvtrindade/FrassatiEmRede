@@ -1,6 +1,11 @@
 <?php
 namespace App\Services;
 
+<<<<<<< HEAD
+=======
+use Exception;
+
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
 use App\Repositories\CalendarioRepository;
 
 class CalendarioService {
@@ -19,7 +24,11 @@ class CalendarioService {
     }
 
     public function criar($dto) {
+<<<<<<< HEAD
         if (!dto->isValid()) {
+=======
+        if (!$dto->isValid()) {
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
             throw new Exception ("Dados inválidos");
         }
         $idEvento = $this->repo->create($dto);

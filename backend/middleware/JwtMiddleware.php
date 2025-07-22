@@ -3,6 +3,7 @@ namespace App\Middleware;
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+<<<<<<< HEAD
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -12,6 +13,24 @@ class JWTMiddleware {
 
         if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
             return $this->unauthorized($response, 'Token ausente ou mal formatado');
+=======
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
+use Slim\Psr7\Response as SlimResponse;
+
+class JWTMiddleware implements MiddlewareInterface {
+    public function process(Request $request, RequestHandler $handler): Response {
+        if ($request->getMethod() === 'OPTIONS') {
+            return $handler->handle($request);
+        }
+
+        $authHeader = $request->getHeaderLine('Authorization');
+
+        if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
+            return $this->unauthorized('Token ausente ou mal formatado');
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
         }
 
         $token = substr($authHeader, 7);
@@ -23,11 +42,16 @@ class JWTMiddleware {
             $requiresAdmin = in_array($method, ['POST', 'PUT', 'DELETE']);
 
             if ($requiresAdmin && ($decoded->role ?? '') !== 'ADMIN') {
+<<<<<<< HEAD
                 return $this->unauthorized($response, 'Permissão negada');
+=======
+                return $this->unauthorized('Permissão negada');
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
             }
 
             $request = $request->withAttribute('user', $decoded);
 
+<<<<<<< HEAD
             return $next($request, $response);
         } catch (\Exception $e) {
             return $this->unauthorized($response, 'Token inválido: ' . $e->getMessage());
@@ -41,3 +65,23 @@ class JWTMiddleware {
         return $response->withStatus(401)->withHeader('Content-Type', 'application/json');
     }
 }
+=======
+            return $handler->handle($request);
+        } catch (\Exception $e) {
+            return $this->unauthorized('Token inválido: ' . $e->getMessage());
+        }
+    }
+
+    private function unauthorized(string $mensagem): Response {
+        $response = new SlimResponse();
+        $response->getBody()->write(json_encode([
+          'cod' => 401,
+            'mensagem' => $mensagem
+        ]));
+
+        return $response->withHeader('Content-Type', 'application/json')
+                        ->withStatus(401);
+    }
+}
+
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)

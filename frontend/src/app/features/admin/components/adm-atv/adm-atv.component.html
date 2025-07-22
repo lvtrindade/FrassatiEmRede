@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="content">
     <div class="header">
         <a (click)="navigateTo('nova-atividade')" class="nova-atividade">Nova Atividade</a>
@@ -51,11 +52,43 @@
             </div>
         </div>
 
+=======
+<div class="content content-atividades">
+    <div class="pagina-container">
+        <div class="top-bar">
+            <a (click)="navigateTo('nova-atividade')" class="btn-nova-atividade">
+                <span class="material-symbols-outlined">add_circle</span> Nova Atividade
+            </a>
+        </div>
+
+        <div class="filtros">
+            <input type="text" placeholder="Pesquisar..." class="input-pesquisa" (input)="filtrarAtividades()" />
+
+            <select [(ngModel)]="tagSelecionada" (change)="filtrarAtividades()" class="select-tag">
+                <option [ngValue]="null">Todas as Tags</option>
+                <option *ngFor="let tag of tags" [value]="tag.id">{{ tag.nome }}</option>
+            </select>
+        </div>
+
+        <div class="lista-atividades">
+            <div *ngIf="!atividadesFiltradas || atividadesFiltradas.length === 0" class="mensagem-vazia">
+                Não temos atividades disponíveis.
+            </div>
+
+            <app-card-atividade *ngFor="let atividade of getAtividadesPaginaAtual()" [atividade]="atividade"
+                [modoAdmin]="true" (editar)="editarAtividade($event)"
+                (excluir)="excluirAtividade($event)"></app-card-atividade>
+        </div>
+
+        <div class="spacer"></div>
+
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
         <div class="paginacao">
             <button (click)="paginaAnterior()" [disabled]="paginaAtual === 1">Anterior</button>
             <span>{{ paginaAtual }} .. {{ totalPaginas }}</span>
             <button (click)="proximaPagina()" [disabled]="paginaAtual === totalPaginas">Próximo</button>
         </div>
+<<<<<<< HEAD
 
         <div *ngIf="atividadeEditando" class="modal">
             <div class="modal-content">
@@ -121,6 +154,21 @@
                     </div>
                 </form>
             </div>
+=======
+    </div>
+
+    <div *ngIf="atividadeEditando" class="modal">
+        <div class="modal-content">
+            <span class="close" (click)="fecharModal()">&times;</span>
+            <h2>Editar Atividade</h2>
+            <app-modal-edicao *ngIf="atividadeEditando" [atividadeEditando]="atividadeEditando" [tags]="tags"
+                [imagensGaleria]="imagens_galeria" [imagensExistenteGaleria]="imagensExistenteGaleria"
+                (salvar)="salvarEdicao()" (fecharModal)="fecharModal()"
+                (onImagemPrincipalSelecionada)="onImagemPrincipalSelecionada($event)"
+                (onGaleriaSelecionada)="onGaleriaSelecionada($event)"
+                (removerImagemExistente)="removerImagemExistente($event)"
+                (removerNovaImagemGaleria)="removerNovaImagemGaleria($event)"></app-modal-edicao>
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
         </div>
     </div>
 </div>

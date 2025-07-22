@@ -1,0 +1,35 @@
+<div class="modal-backdrop" (click)="fechar.emit()"></div>
+
+<div class="modal">
+  <h2>{{ evento ? 'Editar Evento' : 'Novo Evento' }}</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label>Título:</label>
+    <input formControlName="titulo" type="text" />
+
+    <label>Descrição:</label>
+    <textarea formControlName="descricao"></textarea>
+
+    <label>Data de Início:</label>
+    <input formControlName="data_inicio" type="date" />
+
+    <label>Data de Término:</label>
+    <input formControlName="data_fim" type="date" />
+
+    <label>Horário de Início:</label>
+    <input formControlName="horario_inicio" type="time" />
+
+    <label>Horário de Término:</label>
+    <input formControlName="horario_fim" type="time" />
+
+    <label>Tag:</label>
+    <select formControlName="id_tag">
+      <option *ngFor="let tag of tags" [value]="tag.id">{{ tag.nome }}</option>
+    </select>
+
+    <div class="botoes">
+      <button type="submit">Salvar</button>
+      <button type="button" (click)="fechar.emit()">Cancelar</button>
+    </div>
+  </form>
+</div>

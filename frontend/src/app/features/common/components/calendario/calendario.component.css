@@ -1,0 +1,132 @@
+.controle-modo {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.controle-modo button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #fe0002;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.controle-modo button:hover {
+  background-color: #cc0000;
+}
+
+.grade {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 2rem;
+}
+
+.cabecalho {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: bold;
+  background-color: #f0f0f0;
+  padding: 0.5rem 0;
+  border-radius: 8px;
+}
+
+.titulo-mes {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #000;
+}
+
+.dias {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.dia {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 0.4rem;
+  min-height: 90px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.dia.fora {
+  background-color: #f5f5f5;
+  color: #999;
+}
+
+.numero {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.titulo {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.75rem;
+}
+
+.evento {
+  border-radius: 6px;
+  padding: 4px 6px;
+  margin-bottom: 1px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.3s ease;
+}
+
+.evento .tag {
+  color: white;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 4px;
+  margin-bottom: 3px;
+  text-align: center;
+}
+
+.evento .titulo {
+  font-size: 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+
+  .cabecalho,
+  .dias {
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .controle-modo {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .dia {
+    min-height: 70px;
+  }
+
+  .evento {
+    font-size: 0.7rem;
+  }
+}

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+<<<<<<< HEAD
 import { Component, HostListener, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,13 +15,47 @@ import { AtividadesService } from '../../../../core/services/atividades.service'
 
 export class AdmAtvComponent implements OnDestroy {
   tags: { id: number, nome: string }[] = [];
+=======
+import {
+  Component,
+  HostListener,
+  ChangeDetectorRef,
+  OnDestroy,
+} from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AtividadesService } from '../../../../core/services/atividades.service';
+import { TagsService } from '../../../../core/services/tags.service';
+import { AtividadeUtilService } from '../../../../core/utils/atividade-util.service';
+import { CardAtividadeComponent } from '../../../../shared/components/cards/card-atividade/card-atividade.component';
+import { ModalEdicaoComponent } from '../../../../core/modals/modal-edicao/modal-edicao.component';
+
+@Component({
+  selector: 'app-adm-atv',
+  imports: [
+    FormsModule,
+    CommonModule,
+    CardAtividadeComponent,
+    ModalEdicaoComponent,
+  ],
+  templateUrl: './adm-atv.component.html',
+  styleUrl: './adm-atv.component.css',
+})
+export class AdmAtvComponent implements OnDestroy {
+  tags: { id: number; nome: string }[] = [];
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
   tagSelecionada: number | null = null;
   atividades: any[] = [];
   atividadesFiltradas: any[] = [];
   menuAberto: number | null = null;
   atividadeEditando: any = null;
+<<<<<<< HEAD
   imagensGaleria: {file: File, url: string}[] = []; // Alterado para armazenar file e URL
   imagemPrincipal: File | null = null;
+=======
+  imagens_galeria: { file: File; url: string }[] = [];
+  imagem_principal: File | null = null;
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
   imagensExistenteGaleria: any[] = [];
   imagensRemovidasGaleria: number[] = [];
 
@@ -30,11 +65,20 @@ export class AdmAtvComponent implements OnDestroy {
   totalPaginas: number = 1;
 
   constructor(
+<<<<<<< HEAD
     private http: HttpClient, 
     private atividadesService: AtividadesService, 
     private router: Router,
     private cdRef: ChangeDetectorRef
   ) { }
+=======
+    private tagService: TagsService,
+    private atividadesService: AtividadesService,
+    private atividadeUtil: AtividadeUtilService,
+    private router: Router,
+    private cdRef: ChangeDetectorRef
+  ) {}
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
 
   navigateTo(path: string) {
     this.router.navigate([`/admin/dashboard/${path}`]);
@@ -47,6 +91,7 @@ export class AdmAtvComponent implements OnDestroy {
 
   ngOnDestroy() {
     // Limpeza de todas as URLs blob
+<<<<<<< HEAD
     this.imagensGaleria.forEach(img => URL.revokeObjectURL(img.url));
   }
 
@@ -61,14 +106,34 @@ export class AdmAtvComponent implements OnDestroy {
           console.error('Erro ao carregar tags:', err);
         }
       });
+=======
+    this.imagens_galeria.forEach((img) => URL.revokeObjectURL(img.url));
+  }
+
+  carregarTags() {
+    this.tagService.getTags().subscribe({
+      next: (res) => {
+        this.tags = res.data;
+        console.log('Tags carregadas: ', this.tags);
+      },
+      error: (err) => {
+        console.error('Erro ao carregar tags: ', err);
+      },
+    });
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
   }
 
   private loadAtividades(): void {
     this.atividadesService.getAtividades().subscribe({
       next: (response: any) => {
+<<<<<<< HEAD
         console.log('Atividades carregadas:', response);
         if (response && response.atividades && response.atividades.length > 0) {
           this.atividades = response.atividades;
+=======
+        if (response && response.data && response.data.length > 0) {
+          this.atividades = response.data;
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
           this.atividadesFiltradas = this.atividades;
           this.calcularTotalPaginas();
         } else {
@@ -78,11 +143,16 @@ export class AdmAtvComponent implements OnDestroy {
       },
       error: (err) => {
         console.error('Erro ao carregar atividades:', err);
+<<<<<<< HEAD
       }
+=======
+      },
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
     });
   }
 
   calcularTotalPaginas(): void {
+<<<<<<< HEAD
     this.totalPaginas = Math.ceil(this.atividadesFiltradas.length / this.atividadesPorPagina);
   }
 
@@ -108,6 +178,27 @@ export class AdmAtvComponent implements OnDestroy {
 
     this.atividadesFiltradas = atividadesFiltradas;
     this.calcularTotalPaginas();
+=======
+    this.totalPaginas = Math.ceil(
+      this.atividadesFiltradas.length / this.atividadesPorPagina
+    );
+  }
+
+  filtrarAtividades(): void {
+    const termo = (
+      document.querySelector('input[type="text"]') as HTMLInputElement
+    ).value;
+    this.atividadesFiltradas = this.atividadeUtil.filtrarAtividadesPorTagETermo(
+      this.atividades,
+      this.tags,
+      termo,
+      this.tagSelecionada
+    );
+    this.totalPaginas = this.atividadeUtil.calcularTotalPaginas(
+      this.atividadesFiltradas,
+      this.atividadesPorPagina
+    );
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
     this.paginaAtual = 1;
   }
 
@@ -136,6 +227,7 @@ export class AdmAtvComponent implements OnDestroy {
   }
 
   formatarData(data: string): string {
+<<<<<<< HEAD
     if (!data || data === '0000-00-00') {
       return 'Data não disponível';
     }
@@ -148,6 +240,9 @@ export class AdmAtvComponent implements OnDestroy {
     }
 
     return date.toLocaleDateString('pt-BR');
+=======
+    return this.atividadeUtil.formatarData(data);
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
   }
 
   toggleMenu(atividadeId: number, event: Event): void {
@@ -170,6 +265,7 @@ export class AdmAtvComponent implements OnDestroy {
 
   excluirAtividade(atividadeId: number): void {
     if (confirm('Tem certeza que deseja excluir esta atividade?')) {
+<<<<<<< HEAD
       console.log('Excluindo atividade com ID:', atividadeId);
       this.atividadesService.excluirAtividade(atividadeId).subscribe({
         next: (response: any) => {
@@ -179,11 +275,27 @@ export class AdmAtvComponent implements OnDestroy {
             this.loadAtividades();
           } else {
             console.error('Erro ao excluir atividade:', response.error);
+=======
+      this.atividadesService.excluirAtividade(atividadeId).subscribe({
+        next: (response: any) => {
+          if (response && response.cod === 200) {
+            this.loadAtividades();
+          } else {
+            console.error(
+              'Erro ao excluir atividade:',
+              response.mensagem || 'Erro desconhecido'
+            );
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
           }
         },
         error: (err) => {
           console.error('Erro ao excluir atividade:', err);
+<<<<<<< HEAD
         }
+=======
+          alert('Erro ao excluir atividade.');
+        },
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
       });
     }
   }
@@ -193,6 +305,7 @@ export class AdmAtvComponent implements OnDestroy {
   }
 
   editarAtividade(atividadeId: number): void {
+<<<<<<< HEAD
     const atividade = this.atividades.find(a => a.id === atividadeId);
     if (atividade) {
       this.atividadeEditando = { ...atividade };
@@ -202,6 +315,19 @@ export class AdmAtvComponent implements OnDestroy {
       this.imagensRemovidasGaleria = [];
       this.imagensGaleria = [];
       this.imagemPrincipal = null;
+=======
+    const atividade = this.atividades.find((a) => a.id === atividadeId);
+    if (atividade) {
+      this.atividadeEditando = { ...atividade };
+
+      // Inicializa as listas de imagens
+      this.imagensExistenteGaleria = atividade.galeria
+        ? [...atividade.galeria]
+        : [];
+      this.imagensRemovidasGaleria = [];
+      this.imagens_galeria = [];
+      this.imagem_principal = null;
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
     }
   }
 
@@ -217,20 +343,31 @@ export class AdmAtvComponent implements OnDestroy {
 
   fecharModal(): void {
     this.atividadeEditando = null;
+<<<<<<< HEAD
     this.imagensGaleria.forEach(img => URL.revokeObjectURL(img.url));
     this.imagensGaleria = [];
     this.imagemPrincipal = null;
+=======
+    this.imagens_galeria.forEach((img) => URL.revokeObjectURL(img.url));
+    this.imagens_galeria = [];
+    this.imagem_principal = null;
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
   }
 
   onImagemPrincipalSelecionada(event: any): void {
     const file: File = event.target.files[0];
+<<<<<<< HEAD
     this.imagemPrincipal = file;
+=======
+    this.imagem_principal = file;
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
     this.cdRef.detectChanges();
   }
 
   onGaleriaSelecionada(event: any): void {
     const files: FileList = event.target.files;
     const newImages = [];
+<<<<<<< HEAD
     
     for (let i = 0; i < files.length; i++) {
       newImages.push({
@@ -240,6 +377,17 @@ export class AdmAtvComponent implements OnDestroy {
     }
     
     this.imagensGaleria = [...this.imagensGaleria, ...newImages];
+=======
+
+    for (let i = 0; i < files.length; i++) {
+      newImages.push({
+        file: files[i],
+        url: URL.createObjectURL(files[i]),
+      });
+    }
+
+    this.imagens_galeria = [...this.imagens_galeria, ...newImages];
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
     this.cdRef.detectChanges();
   }
 
@@ -249,6 +397,7 @@ export class AdmAtvComponent implements OnDestroy {
   }
 
   removerNovaImagemGaleria(index: number): void {
+<<<<<<< HEAD
     URL.revokeObjectURL(this.imagensGaleria[index].url);
     this.imagensGaleria.splice(index, 1);
     this.cdRef.detectChanges();
@@ -288,10 +437,44 @@ export class AdmAtvComponent implements OnDestroy {
             this.fecharModal();
           } else {
             alert('Erro ao editar: ' + (response?.error || 'Erro desconhecido'));
+=======
+    URL.revokeObjectURL(this.imagens_galeria[index].url);
+    this.imagens_galeria.splice(index, 1);
+    this.cdRef.detectChanges();
+  }
+
+  salvarEdicao(): void {
+    if (!this.atividadeEditando) return;
+
+    const formData = this.atividadeUtil.gerarFormDataParaEdicao(
+      this.atividadeEditando,
+      this.imagem_principal,
+      this.imagens_galeria,
+      this.imagensRemovidasGaleria
+    );
+
+    for (const pair of formData.entries()) {
+      console.log(pair[0] + ':', pair[1]);
+    }
+
+    this.atividadesService
+      .editarAtividade(this.atividadeEditando.id, formData)
+      .subscribe({
+        next: (response: any) => {
+          if (response?.cod == 200) {
+            this.loadAtividades();
+            this.fecharModal();
+          } else {
+            alert(
+              'Erro ao salvar edição: ' +
+                (response?.mensagem || 'Erro desconhecido')
+            );
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
           }
         },
         error: (err) => {
           console.error('Erro na requisição:', err);
+<<<<<<< HEAD
           if (err.status === 200) {
             // Tentar parsear manualmente se for um erro de parsing
             try {
@@ -316,3 +499,10 @@ export class AdmAtvComponent implements OnDestroy {
     }
   }
 }
+=======
+          alert('Erro ao salvar edição.');
+        },
+      });
+  }
+}
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)

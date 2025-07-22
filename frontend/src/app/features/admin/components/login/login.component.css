@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .login-container {
     display: flex;
     flex-direction: column;
@@ -104,3 +105,248 @@ button {
 button:hover {
     background-color: #bbb;
 }
+=======
+.tela-login {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+  background: linear-gradient(-130deg, #fff, #fee6e6);
+  font-family: 'Reddit Sans', sans-serif;
+}
+
+.gradient-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.gradient-bg svg {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.gradients-container {
+  filter: url(#goo) blur(40px);
+  width: 100%;
+  height: 100%;
+}
+
+.g1 {
+  position: absolute;
+  background: radial-gradient(circle at center, rgba(254, 0, 2, 0.8) 0, rgba(254, 0, 2, 0) 50%);
+  mix-blend-mode: hard-light;
+  width: 40%;
+  height: 40%;
+  top: calc(50% - 40%);
+  left: 50%;
+  transform-origin: center center;
+  animation: moveVertical 30s ease infinite;
+  opacity: 1;
+}
+
+.g2 {
+  position: absolute;
+  background: radial-gradient(circle at center, rgba(122, 122, 122, 0.8) 0, rgba(0, 0, 0, 0) 50%);
+  mix-blend-mode: hard-light;
+  width: 40%;
+  height: 40%;
+  top: calc(50% - 40%);
+  left: 50%;
+  transform-origin: calc(50% - 400px);
+  animation: moveInCircle 20s reverse infinite;
+  opacity: 1;
+}
+
+/* Você pode repetir ou ajustar as outras .g3 .g4 .g5 como quiser para tons combinando */
+
+.interactive {
+  position: absolute;
+  background: radial-gradient(circle at center, rgba(254, 0, 2, 0.8) 0, rgba(254, 0, 2, 0) 50%);
+  mix-blend-mode: hard-light;
+  width: 100%;
+  height: 100%;
+  top: -50%;
+  left: -50%;
+  opacity: 0.7;
+}
+
+@keyframes moveInCircle {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(180deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes moveVertical {
+  0% {
+    transform: translateY(-50%);
+  }
+
+  50% {
+    transform: translateY(50%);
+  }
+
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.centro-login {
+  background-color: rgba(255, 255, 255, 0.85);
+  display: flex;
+  flex-direction: row;
+  height: 70vh;
+  max-width: 1200px;
+  width: 90%;
+  border-radius: 30px;
+  box-shadow: 0 0 25px rgba(254, 0, 2, 0.3);
+  position: relative;
+  z-index: 10;
+}
+
+.login-form {
+  width: 50%;
+  padding: 40px 40px 40px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.link-retorno {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  color: #fe0002;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 28px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.login-form h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #fe0002;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.campo {
+  margin-bottom: 25px;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  border: 2px solid #fe0002;
+  border-radius: 20px;
+  padding: 8px 12px;
+  background-color: white;
+  transition: border-color 0.3s ease;
+}
+
+.input-container.focused {
+  border-color: #ff5a5a;
+}
+
+.input-container .icon {
+  color: #fe0002;
+  font-size: 28px;
+  display: flex;
+  justify-content: center;
+  width: 40px;
+}
+
+.input-container .divider {
+  font-size: 20px;
+  margin: 0 10px;
+  color: #fe0002;
+}
+
+.input-container input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  font-family: 'Reddit Sans', sans-serif;
+  color: #333;
+}
+
+.botao {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  width: 50%;
+  height: 45px;
+  background-color: #fe0002;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Reddit Sans', sans-serif;
+}
+
+button:hover:not(:disabled) {
+  background-color: #c70000;
+}
+
+button:disabled {
+  background-color: #f3a4a4;
+  cursor: not-allowed;
+}
+
+.erro-login {
+  margin-top: 20px;
+  color: #b00000;
+  font-weight: 600;
+  text-align: center;
+}
+
+.logo-container {
+  width: 50%;
+  background: #ffffff63;
+  border-radius: 0 30px 30px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  padding: 20px;
+}
+
+.logo-container .logo {
+  width: 200px;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.logo-container .logo:hover {
+  transform: scale(1.05);
+}
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)

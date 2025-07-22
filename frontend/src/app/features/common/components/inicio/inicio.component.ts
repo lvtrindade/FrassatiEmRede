@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { BackgroundService } from '../../../../core/services/background.service';
 import { AtividadesService } from '../../../../core/services/atividades.service';
 import { CommonModule } from '@angular/common';
+<<<<<<< HEAD
 
 @Component({
   selector: 'app-inicio',
@@ -15,6 +16,24 @@ export class InicioComponent implements AfterViewInit {
   atividades: any[] = [];
 
   constructor(private BackgroundService: BackgroundService, private atividadesService: AtividadesService) { }
+=======
+import { CardAtividadeComponent } from '../../../../shared/components/cards/card-atividade/card-atividade.component';
+
+@Component({
+  selector: 'app-inicio',
+  standalone: true,
+  imports: [RouterLink, CommonModule, CardAtividadeComponent],
+  templateUrl: './inicio.component.html',
+  styleUrls: ['./inicio.component.css'],
+})
+export class InicioComponent implements AfterViewInit {
+  atividades: any[] = [];
+
+  constructor(
+    private backgroundService: BackgroundService,
+    private atividadesService: AtividadesService
+  ) {}
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
 
   ngAfterViewInit(): void {
     this.loadBackgroundImage();
@@ -23,8 +42,13 @@ export class InicioComponent implements AfterViewInit {
   }
 
   private loadBackgroundImage(): void {
+<<<<<<< HEAD
     this.BackgroundService.getBackgroundImage().subscribe({
       next: (response: { imagem: any; }) => {
+=======
+    this.backgroundService.getBackgroundImage().subscribe({
+      next: (response: { imagem: string | null }) => {
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
         if (response.imagem) {
           const heroesPage = document.getElementById('heroes_page');
           if (heroesPage) {
@@ -36,8 +60,12 @@ export class InicioComponent implements AfterViewInit {
       },
       error: (error: any) => {
         console.error('Erro ao carregar imagem de fundo', error);
+<<<<<<< HEAD
         // Exiba uma mensagem de erro para o usuário ou use uma imagem de fallback
       }
+=======
+      },
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
     });
   }
 
@@ -46,10 +74,17 @@ export class InicioComponent implements AfterViewInit {
     scrollLinks.forEach((link) => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
+<<<<<<< HEAD
 
         const targetId = (link as HTMLAnchorElement).getAttribute('href');
         const targetElement = targetId ? document.querySelector(targetId) : null;
 
+=======
+        const targetId = (link as HTMLAnchorElement).getAttribute('href');
+        const targetElement = targetId
+          ? document.querySelector(targetId)
+          : null;
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
         if (targetElement) {
           const startPosition = window.pageYOffset;
           const targetPosition =
@@ -57,10 +92,15 @@ export class InicioComponent implements AfterViewInit {
           const distance = targetPosition - startPosition;
           const duration = 1500;
           let startTime: number | null = null;
+<<<<<<< HEAD
 
           const animationScroll = (currentTime: number) => {
             if (!startTime) startTime = currentTime;
 
+=======
+          const animationScroll = (currentTime: number) => {
+            if (!startTime) startTime = currentTime;
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
             const timeElapsed = currentTime - startTime;
             const run = this.easeInOutCubic(
               timeElapsed,
@@ -68,14 +108,21 @@ export class InicioComponent implements AfterViewInit {
               distance,
               duration
             );
+<<<<<<< HEAD
 
             window.scrollTo(0, run);
 
+=======
+            window.scrollTo(0, run);
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
             if (timeElapsed < duration) {
               requestAnimationFrame(animationScroll);
             }
           };
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
           requestAnimationFrame(animationScroll);
         }
       });
@@ -92,11 +139,16 @@ export class InicioComponent implements AfterViewInit {
   private loadAtividades(): void {
     this.atividadesService.getAtividades().subscribe({
       next: (response: any) => {
+<<<<<<< HEAD
         console.log('Dados recebidos:', response); // Log para depuração
         if (response && response.atividades && response.atividades.length > 0) {
           this.atividades = response.atividades.slice(0, 3);
           console.log('Atividades carregadas:', this.atividades); // Log para depuração
           console.log('Imagem da primeira atividade:', this.atividades[0].caminho_imagem_destaque); // Log para depuração
+=======
+        if (response && response.data && response.data.length > 0) {
+          this.atividades = response.data.slice(0, 3);
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
         } else {
           this.atividades = [];
         }
@@ -104,6 +156,7 @@ export class InicioComponent implements AfterViewInit {
       error: (error: any) => {
         console.error('Erro ao carregar atividades', error);
         this.atividades = [];
+<<<<<<< HEAD
       }
     });
   }
@@ -123,4 +176,9 @@ export class InicioComponent implements AfterViewInit {
 
     return date.toLocaleDateString('pt-BR'); // Formata a data no padrão brasileiro
 }
+=======
+      },
+    });
+  }
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
 }

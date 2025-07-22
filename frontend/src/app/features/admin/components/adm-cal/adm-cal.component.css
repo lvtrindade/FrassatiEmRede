@@ -1,0 +1,129 @@
+.controle-modo {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+}
+
+.controle-modo button {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.controle-modo button:hover {
+  background-color: #e0e0e0;
+}
+
+.controle-modo .novo-evento {
+  background-color: #fe0002;
+  color: white;
+}
+
+.controle-modo .novo-evento:hover {
+  background-color: #c60000;
+}
+
+.titulo-mes {
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.grade {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-width: 100%;
+  padding: 0 0.5rem;
+}
+
+.cabecalho {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: bold;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid #ccc;
+}
+
+.dias {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.25rem;
+}
+
+.dia {
+  border: 1px solid #ddd;
+  min-height: 100px;
+  padding: 0.3rem;
+  position: relative;
+  background-color: white;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.dia:hover {
+  background-color: #f9f9f9;
+}
+
+.dia.fora {
+  background-color: #f1f1f1;
+  color: #999;
+}
+
+.numero {
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.evento {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  background-color: #666;
+  transition: transform 0.2s;
+}
+
+.evento .tag:hover {
+  transform: scale(1.02);
+}
+
+/* Responsivo básico */
+@media (max-width: 768px) {
+  .cabecalho {
+    font-size: 0.8rem;
+  }
+
+  .numero {
+    font-size: 0.75rem;
+  }
+
+  .tag {
+    font-size: 0.65rem;
+  }
+}

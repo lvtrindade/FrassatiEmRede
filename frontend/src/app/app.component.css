@@ -1,8 +1,24 @@
+<<<<<<< HEAD
 main {
     display: flex;
     flex-direction: column;
 }
 
+=======
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
 footer {
     background-color: var(--red);
 }

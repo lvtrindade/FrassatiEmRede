@@ -1,0 +1,97 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+.titulo {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.titulo h1 {
+  font-size: 2.5rem;
+  color: var(--red);
+}
+
+.formulario {
+  min-width: 70vh;
+  width: fit-content;
+  max-width: 80vh;
+  background: #f9f9f9;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+form > div {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+  color: #333;
+}
+
+input,
+select,
+textarea {
+  min-width: 100%;
+  max-width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  font-family: 'Reddit Sans', sans-serif;
+  transition: border-color 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--red);
+  outline: none;
+}
+
+h2 {
+  margin: 1rem 0 0.5rem;
+  font-size: 1.25rem;
+  color: #444;
+}
+
+small {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+button {
+  background-color: var(--red);
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+button:hover:not(:disabled) {
+  background-color: #b80000;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .content {
     display: flex;
     flex-direction: column;
@@ -33,4 +34,75 @@
     border-radius: 5px; 
     outline: none;
     transition: border-color 0.3s ease;
+=======
+.content-background {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.content-background h1 {
+    font-family: 'Reddit Sans', sans-serif;
+    font-size: 2.5rem;
+    color: #cc263c;
+    margin-bottom: 30px;
+}
+
+.upload-form {
+    background-color: #fff;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(204, 38, 60, 0.1);
+    border: 1px solid rgba(204, 38, 60, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.upload-form h2 {
+    font-size: 1.2rem;
+    color: #333;
+    font-family: 'Reddit Sans', sans-serif;
+}
+
+.input-file {
+    padding: 10px 15px;
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 400px;
+    transition: border-color 0.3s ease;
+    cursor: pointer;
+}
+
+.input-file:hover {
+    border-color: #cc263c;
+}
+
+button[type="submit"] {
+    font-family: 'Reddit Sans', sans-serif;
+    font-size: 16px;
+    background-color: #cc263c;
+    color: white;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #a9192f;
+}
+
+button[type="submit"]:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
 }

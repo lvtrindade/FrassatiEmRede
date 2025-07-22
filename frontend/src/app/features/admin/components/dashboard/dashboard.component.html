@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="header">
     <button (click)="logout()">logout</button>
 </div>
@@ -13,5 +14,40 @@
 
     <div class="content">
         <router-outlet/>
+=======
+<div class="admin-layout">
+    <div class="side-bar">
+        <div class="logo-container">
+            <img src="logo.png" alt="Logo do Grupo" />
+        </div>
+        <ul>
+            <li routerLink="/admin/dashboard/background" routerLinkActive="ativo"
+                [routerLinkActiveOptions]="{ exact: true }">
+                <span class="material-symbols-outlined">layers</span>
+                <span>Background</span>
+            </li>
+            <li routerLink="/admin/dashboard/calendario" routerLinkActive="ativo"
+                [routerLinkActiveOptions]="{ exact: false }">
+                <span class="material-symbols-outlined">calendar_month</span>
+                <span>Calendário</span>
+            </li>
+            <li routerLink="/admin/dashboard/atividades" routerLinkActive="ativo"
+                [routerLinkActiveOptions]="{ exact: false }">
+                <span class="material-symbols-outlined">event</span>
+                <span>Atividades</span>
+            </li>
+        </ul>
+
+        <div class="logout-container">
+            <button (click)="logout()">
+                <span class="material-symbols-outlined">logout</span>
+                Sair
+            </button>
+        </div>
+    </div>
+
+    <div class="content">
+        <router-outlet></router-outlet>
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
     </div>
 </div>

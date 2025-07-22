@@ -1,1 +1,46 @@
+<<<<<<< HEAD
 <p>adm-cal works!</p>
+=======
+<div class="controle-modo">
+  <button (click)="mudarModo('mes')">Mês</button>
+  <button (click)="mudarModo('semana')">Semana</button>
+  <button (click)="anterior()">◀</button>
+  <button (click)="proximo()">▶</button>
+  <button class="novo-evento" (click)="abrirNovoEvento()">Novo evento</button>
+</div>
+
+<div class="titulo-mes">
+  {{ nomeDoMes(dataAtual) }} - {{ dataAtual.getFullYear() }}
+</div>
+
+<div class="grade" [ngClass]="modo">
+  <div class="cabecalho">
+    <div *ngFor="let dia of ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']">{{ dia }}</div>
+  </div>
+
+  <div class="dias">
+    <div *ngFor="let dia of diasDoCalendario"
+         class="dia"
+         [class.fora]="dia.fora"
+         (click)="clicarDia(dia.data, $event)">
+      <div class="numero">{{ dia.data.getDate() }}</div>
+
+      <div class="evento"
+           *ngFor="let evento of dia.eventos"
+           (click)="editarEvento(evento, $event)">
+        <span class="tag" [style.backgroundColor]="evento.cor_tag" title="{{ evento.titulo }}">
+          {{ evento.titulo | slice:0:20 }}{{ evento.titulo.length > 20 ? '...' : '' }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal-evento-form
+  *ngIf="eventoModalAberto"
+  [evento]="eventoSelecionado"
+  [dataSelecionada]="dataSelecionada"
+  (fechar)="fecharModal()"
+  (salvar)="recarregarEventos()"
+/>
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)

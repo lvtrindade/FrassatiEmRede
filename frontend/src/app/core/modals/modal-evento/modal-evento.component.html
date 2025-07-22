@@ -1,0 +1,27 @@
+<div class="backdrop" (click)="fechar.emit()"></div>
+
+<div class="modal">
+  <h2>{{ evento.titulo }}</h2>
+  <p><strong>Data:</strong>
+    {{ formatarData(evento.data_inicio) }}
+    <ng-container *ngIf="evento.data_inicio !== evento.data_fim">
+      até {{ formatarData(evento.data_fim) }}
+    </ng-container>
+  </p>
+
+  <p><strong>Horário:</strong>
+    {{ formatarHorario(evento.horario_inicio) }}
+    até {{ formatarHorario(evento.horario_fim) }}
+  </p>
+
+  <p><strong>Ramo:</strong>
+    <span class="tag" [style.backgroundColor]="evento.cor_tag">
+      {{ evento.nome_tag }}
+    </span>
+  </p>
+
+  <p><strong>Descrição:</strong></p>
+  <p>{{ evento.descricao }}</p>
+
+  <button (click)="fechar.emit()">Fechar</button>
+</div>

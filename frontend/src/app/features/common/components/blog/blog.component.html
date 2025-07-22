@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="blog">
     <h1>Frassatão</h1>
 
@@ -47,4 +48,41 @@
         <span>{{ paginaAtual }} .. {{ totalPaginas }}</span>
         <button (click)="proximaPagina()" [disabled]="paginaAtual === totalPaginas">Próximo</button>
     </div>
+=======
+<div class="public-content">
+  <div class="pagina-container">
+
+    <div class="search">
+      <div class="search-bar">
+        <input type="text" placeholder="Pesquisar..." (input)="filtrarAtividades()" />
+      </div>
+
+      <div class="filtro">
+        <select [(ngModel)]="tagSelecionada" (change)="filtrarAtividades()">
+          <option [ngValue]="null">Todas</option>
+          <option *ngFor="let tag of tags" [value]="tag.id">{{ tag.nome }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="lista-atividades">
+      <div *ngIf="atividadesFiltradas.length === 0" class="no-atividades-message">
+        Não temos atividades disponíveis.
+      </div>
+
+      <app-card-atividade *ngFor="let atividade of getAtividadesPaginaAtual()" [atividade]="atividade"
+        [modoAdmin]="false">
+      </app-card-atividade>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="paginacao">
+      <button (click)="paginaAnterior()" [disabled]="paginaAtual === 1">Anterior</button>
+      <span>{{ paginaAtual }} .. {{ totalPaginas }}</span>
+      <button (click)="proximaPagina()" [disabled]="paginaAtual === totalPaginas">Próximo</button>
+    </div>
+
+  </div>
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
 </div>

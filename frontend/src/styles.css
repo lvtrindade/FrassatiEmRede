@@ -139,6 +139,20 @@ html {
     scroll-behavior: smooth;
 }
 
+<<<<<<< HEAD
+=======
+html, body {
+  height: 100%;
+  min-height: 100vh;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
 :root {
     --red: #FF0002;
 }

@@ -1,1 +1,37 @@
+<<<<<<< HEAD
 <p>calendario works!</p>
+=======
+<div class="controle-modo">
+    <button (click)="mudarModo('mes')">Mês</button>
+    <button (click)="mudarModo('semana')">Semana</button>
+    <button (click)="anterior()">◀</button>
+    <button (click)="proximo()">▶</button>
+</div>
+
+<div class="grade" [ngClass]="modo">
+    <div class="titulo-mes">
+        {{ nomeDoMes(dataAtual) }} - {{ dataAtual.getFullYear() }}
+    </div>
+
+
+    <div class="cabecalho">
+        <div *ngFor="let dia of ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']">{{ dia }}</div>
+    </div>
+
+    <div class="dias">
+        <div *ngFor="let dia of diasDoCalendario" class="dia" [class.fora]="dia.fora">
+
+            <div class="numero">{{ dia.data.getDate() }}</div>
+
+            <div class="evento" *ngFor="let evento of dia.eventos" (click)="abrirModal(evento)">
+                <div class="tag" [style.backgroundColor]="evento.cor_tag">
+                    {{ evento.titulo }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<app-modal-evento *ngIf="eventoSelecionado" [evento]="eventoSelecionado" (fechar)="fecharModal()" />
+>>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
