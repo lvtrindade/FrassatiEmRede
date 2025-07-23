@@ -13,11 +13,7 @@
 
         <!-- Data da Atividade -->
         <label>Quando essa atividade aconteceu?</label>
-<<<<<<< HEAD
-        <input type="date" name="dataAtividade" [(ngModel)]="dataAtividade" required>
-=======
         <input type="date" name="dataAtividade" [(ngModel)]="data_atividade" required>
->>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
 
         <!-- Descrição -->
         <label>O que aconteceu nessa atividade?</label>
@@ -25,11 +21,7 @@
 
         <!-- Tags -->
         <label>Selecione a tag:</label>
-<<<<<<< HEAD
-        <select name="tags" [(ngModel)]="tagSelecionada" required>
-=======
         <select name="tags" [(ngModel)]="tag_selecionada" required>
->>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
             <option *ngFor="let tag of tags" [value]="tag.id">{{ tag.nome }}</option>
         </select>
 
@@ -39,15 +31,9 @@
             multiple>
 
         <!-- Pré-visualização da Galeria -->
-<<<<<<< HEAD
-        <div *ngIf="imagensGaleria.length > 0" class="galeria-preview">
-            <h2>Fotos da Galeria</h2>
-            <div *ngFor="let imagem of imagensGaleria; let i = index" class="imagem-container">
-=======
         <div *ngIf="imagens_galeria.length > 0" class="galeria-preview">
             <h2>Fotos da Galeria</h2>
             <div *ngFor="let imagem of imagens_galeria; let i = index" class="imagem-container">
->>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
                 <!-- Usando FileReader para exibir a pré-visualização -->
                 <img [src]="getImagemUrl(imagem)" alt="Imagem {{ i + 1 }}" class="thumbnail">
                 <button type="button" (click)="removerImagemGaleria(i)">Excluir</button>

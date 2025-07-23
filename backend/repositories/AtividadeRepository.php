@@ -30,12 +30,6 @@ class AtividadeRepository {
     }
 
     public function update($id, $atividadeDTO) {
-<<<<<<< HEAD
-        $stmt = $this->conn->prepare("UPDATE Atividade SET titutlo=?, descricao=?, imagem_destaque=?, data_atividade=?, id_tag=? WHERE id=?");
-        return $stmt->execute([$atividadeDTO->titulo, $atividadeDTO->descricao, $atividadeDTO->imagem_principal, $atividadeDTO->data_atividade, $atividadeDTO->id_tag, $id]);
-    }
-
-=======
         if ($atividadeDTO->imagem_principal) {
             $stmt = $this->conn->prepare("UPDATE Atividade SET titulo=?, descricao=?, imagem_destaque=?, data_atividade=?, id_tag=? WHERE id=?");
             return $stmt->execute([
@@ -59,7 +53,6 @@ class AtividadeRepository {
     }
 
 
->>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
     public function delete($id) {
         $stmt = $this->conn->prepare("DELETE FROM Atividade WHERE id=?");
         return $stmt->execute([$id]);

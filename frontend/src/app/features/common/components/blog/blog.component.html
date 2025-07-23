@@ -1,54 +1,3 @@
-<<<<<<< HEAD
-<div class="blog">
-    <h1>Frassatão</h1>
-
-    <div class="search">
-        <div class="search-bar">
-            <input type="text" placeholder="Pesquisar..." (input)="filtrarAtividades()">
-        </div>
-
-        <div class="filtro">
-            <select name="tags" [(ngModel)]="tagSelecionada" (change)="filtrarAtividades()">
-                <option value="">Todas as Tags</option>
-                <option *ngFor="let tag of tags" [value]="tag.id">{{ tag.nome }}</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="content">
-        <div *ngIf="!atividadesFiltradas || atividadesFiltradas.length === 0" class="no-atividades-message">
-            Não temos atividades disponíveis.
-        </div>
-
-        <!-- Exibe apenas as atividades da página atual -->
-        <div *ngFor="let atividade of getAtividadesPaginaAtual()" class="atividade-item">
-            <div class="imagem"
-                [style.background-image]="'url(data:image/*;base64,' + atividade.caminho_imagem_destaque + ')'">
-            </div>
-
-            <div class="informacoes">
-                <div class="tag" [style.backgroundColor]="atividade.tag_cor">
-                    {{ atividade.tag_nome }}
-                </div>
-
-                <div class="data">
-                    {{ formatarData(atividade.data_atividade) }}
-                </div>
-
-                <div class="titulo">
-                    {{ atividade.titulo }}
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Navegação de paginação -->
-    <div class="paginacao">
-        <button (click)="paginaAnterior()" [disabled]="paginaAtual === 1">Anterior</button>
-        <span>{{ paginaAtual }} .. {{ totalPaginas }}</span>
-        <button (click)="proximaPagina()" [disabled]="paginaAtual === totalPaginas">Próximo</button>
-    </div>
-=======
 <div class="public-content">
   <div class="pagina-container">
 
@@ -84,5 +33,4 @@
     </div>
 
   </div>
->>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
 </div>

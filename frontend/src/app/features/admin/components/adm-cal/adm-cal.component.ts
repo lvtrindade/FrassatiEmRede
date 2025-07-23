@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-
-@Component({
-  selector: 'app-adm-cal',
-  imports: [],
-  templateUrl: './adm-cal.component.html',
-  styleUrl: './adm-cal.component.css'
-})
-export class AdmCalComponent {
-    constructor () {}
-=======
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Evento } from '../../../../models/evento.model';
@@ -178,5 +165,4 @@ export class AdmCalComponent implements OnInit {
     this.eventoModalAberto = false;
     this.dataSelecionada = null;
   }
->>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
 }

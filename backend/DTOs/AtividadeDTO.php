@@ -7,22 +7,6 @@ class AtividadeDTO {
     public $imagem_principal;
     public $data_atividade;
     public $id_tag;
-<<<<<<< HEAD
-    public $data;
-
-    public function __construct($data) {
-        $this->$titulo = $data['titulo'] ?? null;
-        $this->$descricao = $data['descricao'] ?? null;
-        $this->$imagem_principal = $data['imagem_principal'] ?? null;
-        $this->$data_atividade = $data['data_atividade'] ?? null;
-        $this->$id_tag = $data['ramo'] ?? null;
-    }
-
-    public function isVAlid() {
-        return $this->titulo && $this->descricao && $this->imagem_principal && $this->data_atividade && $this->id_tag;
-    }
-}
-=======
 
     public function __construct($data) {
         $this->titulo = $data['titulo'] ?? null;
@@ -50,4 +34,3 @@ class AtividadeDTO {
             : $this->titulo && $this->descricao && $this->data_atividade && $this->id_tag;
     }
 }
->>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)

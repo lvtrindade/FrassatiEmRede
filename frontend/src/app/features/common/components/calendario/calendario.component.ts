@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-import { Component } from '@angular/core';
-import { CalendarEvent } from 'angular-calendar';
-
-@Component({
-  selector: 'app-calendario',
-  imports: [],
-  templateUrl: './calendario.component.html',
-  styleUrl: './calendario.component.css'
-})
-
-export class CalendarioComponent {
-  viewDate: Date = new Date();
-  events: CalendarEvent[] = [];
-=======
 import { Component, OnInit } from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
 import { Evento } from '../../../../models/evento.model';
@@ -167,5 +152,4 @@ export class CalendarioComponent implements OnInit {
     }
     this.gerarCalendario();
   }
->>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
 }

@@ -17,20 +17,6 @@ class BackgroundController {
     }
 
     public function upload(Request $request, Response $response): Response {
-<<<<<<< HEAD
-        $body = $request->getParsedBody();
-        $base64 = $body['imagem64'] ?? null;
-
-        if (!$base64) {
-            $response->getBody()->write(json_encode(["erro" => "Imagem não enviada"]));
-            return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
-        }
-
-        try {
-            $imagem = $this->service->salvarImagemBase64($base64);
-            $response->getBody()->write(json_encode(["mensagem" => "Imagem salva com sucesso", "data" => $imagem]));
-            return $response->withHeader('Content-Type', 'application/json');
-=======
         $uploadedFiles = $request->getUploadedFiles();
 
         if (!isset($uploadedFiles['background'])) {
@@ -66,19 +52,9 @@ class BackgroundController {
         $response->getBody()->write(json_encode($imagem));
         return $response->withHeader('Content-Type', 'application/json');
         
->>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
         } catch (\Exception $e) {
             $response->getBody()->write(json_encode(["erro" => $e->getMessage()]));
             return $response->withStatus(500)->withHeader('Content-Type', 'application/json');
         }
     }
-<<<<<<< HEAD
-
-    public function obter(Request $request, Response $response): Response {
-        $imagem = $this->service->obterImagemDeFundo();
-        $response->getBody()->write(json_encode($imagem));
-        return $response->withHeader('Content-Type', 'application/json');
-    }
-=======
->>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
 }

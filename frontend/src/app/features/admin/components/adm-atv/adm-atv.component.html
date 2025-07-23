@@ -1,58 +1,3 @@
-<<<<<<< HEAD
-<div class="content">
-    <div class="header">
-        <a (click)="navigateTo('nova-atividade')" class="nova-atividade">Nova Atividade</a>
-    </div>
-
-    <div class="posts">
-        <div class="search">
-            <div class="search-bar">
-                <input type="text" placeholder="Pesquisar..." (input)="filtrarAtividades()">
-            </div>
-
-            <div class="filtro">
-                <select name="tags" [(ngModel)]="tagSelecionada" (change)="filtrarAtividades()">
-                    <option value="">Todas as Tags</option>
-                    <option *ngFor="let tag of tags" [value]="tag.id">{{ tag.nome }}</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="content">
-            <div *ngIf="!atividadesFiltradas || atividadesFiltradas.length === 0" class="no-atividades-message">
-                Não temos atividades disponíveis.
-            </div>
-
-            <div *ngFor="let atividade of getAtividadesPaginaAtual()" class="atividade-item">
-                <div class="imagem"
-                    [style.background-image]="'url(data:image/*;base64,' + atividade.caminho_imagem_destaque + ')'">
-                </div>
-
-                <div class="informacoes">
-                    <div class="tag" [style.backgroundColor]="atividade.tag_cor">
-                        {{ atividade.tag_nome }}
-                    </div>
-
-                    <div class="data">
-                        {{ formatarData(atividade.data_atividade) }}
-                    </div>
-
-                    <div class="titulo">
-                        {{ atividade.titulo }}
-                    </div>
-                </div>
-
-                <div class="opcoes" (click)="toggleMenu(atividade.id, $event)" [attr.data-id]="atividade.id">
-                    <span class="dots">...</span>
-                    <div class="menu-opcoes" *ngIf="menuAberto === atividade.id">
-                        <div (click)="editarAtividade(atividade.id)">Editar atividade</div>
-                        <div (click)="excluirAtividade(atividade.id)">Excluir atividade</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-=======
 <div class="content content-atividades">
     <div class="pagina-container">
         <div class="top-bar">
@@ -82,79 +27,11 @@
 
         <div class="spacer"></div>
 
->>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
         <div class="paginacao">
             <button (click)="paginaAnterior()" [disabled]="paginaAtual === 1">Anterior</button>
             <span>{{ paginaAtual }} .. {{ totalPaginas }}</span>
             <button (click)="proximaPagina()" [disabled]="paginaAtual === totalPaginas">Próximo</button>
         </div>
-<<<<<<< HEAD
-
-        <div *ngIf="atividadeEditando" class="modal">
-            <div class="modal-content">
-                <span class="close" (click)="fecharModal()">&times;</span>
-                <h2>Editar Atividade</h2>
-                <form (ngSubmit)="salvarEdicao()" #editarForm="ngForm">
-                    <!-- Imagem Principal -->
-                    <label>Escolha a sua imagem principal</label>
-                    <input type="file" name="principal" class="principal" accept="image/*"
-                        (change)="onImagemPrincipalSelecionada($event)">
-
-                    <!-- Título -->
-                    <label>Título</label>
-                    <input type="text" name="titulo" [(ngModel)]="atividadeEditando.titulo" required>
-
-                    <!-- Data da Atividade -->
-                    <label>Quando essa atividade aconteceu?</label>
-                    <input type="date" name="dataAtividade" [(ngModel)]="atividadeEditando.data_atividade" required>
-
-                    <!-- Descrição -->
-                    <label>O que aconteceu nessa atividade?</label>
-                    <textarea name="descricao" [(ngModel)]="atividadeEditando.descricao" required></textarea>
-
-                    <!-- Tags -->
-                    <label>Selecione a tag:</label>
-                    <select name="tags" [(ngModel)]="atividadeEditando.tag_id" required>
-                        <option *ngFor="let tag of tags" [value]="tag.id">{{ tag.nome }}</option>
-                    </select>
-
-                    <!-- Galeria de Imagens -->
-                    <label>Adicione fotos à galeria (opcional)</label>
-                    <input type="file" name="galeria" class="galeria" accept="image/*"
-                        (change)="onGaleriaSelecionada($event)" multiple>
-
-                    <!-- Pré-visualização da Galeria -->
-                    <div *ngIf="(imagensExistenteGaleria.length > 0) || (imagensGaleria.length > 0)"
-                        class="galeria-preview">
-                        <h3>Fotos da Galeria</h3>
-
-                        <!-- Imagens existentes -->
-                        <div class="galeria-container">
-                            <div *ngFor="let imagem of imagensExistenteGaleria; let i = index" class="imagem-container">
-                                <img [src]="'data:image/*;base64,' + imagem.caminho" alt="Imagem {{i+1}}"
-                                    class="thumbnail">
-                                <button type="button" class="btn-remover"
-                                    (click)="removerImagemExistente(i)">Remover</button>
-                            </div>
-
-                            <!-- Novas imagens -->
-                            <div *ngFor="let imagem of imagensGaleria; let i = index" class="imagem-container">
-                                <img [src]="imagem.url" alt="Nova Imagem {{i+1}}" class="thumbnail">
-                                <button type="button" class="btn-remover"
-                                    (click)="removerNovaImagemGaleria(i)">Remover</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Botão de Envio -->
-                    <div class="form-actions">
-                        <button type="button" class="btn-cancelar" (click)="fecharModal()">Cancelar</button>
-                        <button type="submit" class="btn-salvar" [disabled]="!editarForm.form.valid">Salvar
-                            Alterações</button>
-                    </div>
-                </form>
-            </div>
-=======
     </div>
 
     <div *ngIf="atividadeEditando" class="modal">
@@ -168,7 +45,6 @@
                 (onGaleriaSelecionada)="onGaleriaSelecionada($event)"
                 (removerImagemExistente)="removerImagemExistente($event)"
                 (removerNovaImagemGaleria)="removerNovaImagemGaleria($event)"></app-modal-edicao>
->>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
         </div>
     </div>
 </div>

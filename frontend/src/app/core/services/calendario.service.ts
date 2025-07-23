@@ -1,20 +1,13 @@
 import { Injectable } from '@angular/core';
-<<<<<<< HEAD
-=======
 import { environment } from '../../environments/environments';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Evento } from '../../models/evento.model';
->>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
 
 @Injectable({
   providedIn: 'root'
 })
 export class CalendarioService {
-<<<<<<< HEAD
-
-  constructor() { }
-=======
   private apiUrl = `${environment.apiUrl}/evento`;
 
   constructor(private http: HttpClient) { }
@@ -38,5 +31,4 @@ export class CalendarioService {
   excluirEvento(id: number): Observable<{ cod: number, mensagem: string, data: Evento[] }> {
     return this.http.delete<{ cod:number, mensagem: string, data: Evento[] }>(`this.apiUrl/${id}`);
   }
->>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
 }

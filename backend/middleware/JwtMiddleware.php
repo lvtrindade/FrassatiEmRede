@@ -3,17 +3,6 @@ namespace App\Middleware;
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-<<<<<<< HEAD
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
-
-class JWTMiddleware {
-    public function __invoke(Request $request, Response $response, $next) {
-        $authHeader = $request->getHeaderLine('Authorization');
-
-        if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
-            return $this->unauthorized($response, 'Token ausente ou mal formatado');
-=======
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Server\MiddlewareInterface;
@@ -30,7 +19,6 @@ class JWTMiddleware implements MiddlewareInterface {
 
         if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
             return $this->unauthorized('Token ausente ou mal formatado');
->>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
         }
 
         $token = substr($authHeader, 7);
@@ -42,30 +30,11 @@ class JWTMiddleware implements MiddlewareInterface {
             $requiresAdmin = in_array($method, ['POST', 'PUT', 'DELETE']);
 
             if ($requiresAdmin && ($decoded->role ?? '') !== 'ADMIN') {
-<<<<<<< HEAD
-                return $this->unauthorized($response, 'Permissão negada');
-=======
                 return $this->unauthorized('Permissão negada');
->>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
             }
 
             $request = $request->withAttribute('user', $decoded);
 
-<<<<<<< HEAD
-            return $next($request, $response);
-        } catch (\Exception $e) {
-            return $this->unauthorized($response, 'Token inválido: ' . $e->getMessage());
-        }
-    }
-
-    private function unauthorized(Response $response, string $message): Response {
-        $response->getBody()->write(json_encode([
-            'mensagem' => $message
-        ]));
-        return $response->withStatus(401)->withHeader('Content-Type', 'application/json');
-    }
-}
-=======
             return $handler->handle($request);
         } catch (\Exception $e) {
             return $this->unauthorized('Token inválido: ' . $e->getMessage());
@@ -84,4 +53,3 @@ class JWTMiddleware implements MiddlewareInterface {
     }
 }
 
->>>>>>> 1d831a65 (Recuperando projeto após corrupção do Git)
