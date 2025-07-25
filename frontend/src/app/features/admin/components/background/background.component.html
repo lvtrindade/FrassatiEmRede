@@ -4,7 +4,16 @@
     <form class="upload-form" (submit)="uploadFile($event)">
         <h2>Selecione uma imagem:</h2>
 
-        <input type="file" name="background" class="input-file" accept="image/*" (change)="onFileChange($event)" />
+        <div class="upload-box" (click)="fileInput.click()" [class.has-image]="previewUrl">
+            <input type="file" #fileInput name="background" accept="image/*" (change)="onFileChange($event)" hidden />
+
+            <ng-container *ngIf="!previewUrl">
+                <span class="upload-plus">+</span>
+                <span class="upload-text">Clique para adicionar imagem</span>
+            </ng-container>
+
+            <img *ngIf="previewUrl" [src]="previewUrl" alt="Prévia da imagem" class="preview-image" />
+        </div>
 
         <button type="submit" [disabled]="!selectedFile">Enviar</button>
     </form>
