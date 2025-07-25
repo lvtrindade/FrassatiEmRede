@@ -1,29 +1,38 @@
-<div class="atividade-item">
-  <div
-    class="imagem"
-    [style.backgroundImage]="'url(data:image/*;base64,' + atividade.imagem_destaque + ')'"
-  ></div>
+<a *ngIf="link; else semLink" [routerLink]="link" class="atividade-link">
+  <ng-container *ngTemplateOutlet="conteudo"></ng-container>
+</a>
 
-  <div class="informacoes">
-    <div class="tag" [style.backgroundColor]="atividade.cor_tag">
-      {{ atividade.nome_tag }}
+<ng-template #semLink>
+  <div class="atividade-link">
+    <ng-container *ngTemplateOutlet="conteudo"></ng-container>
+  </div>
+</ng-template>
+
+<ng-template #conteudo>
+  <div class="atividade-item">
+    <div class="imagem" [style.backgroundImage]="'url(data:image/*;base64,' + atividade.imagem_destaque + ')'"></div>
+
+    <div class="informacoes">
+      <div class="tag" [style.backgroundColor]="atividade.cor_tag">
+        {{ atividade.nome_tag }}
+      </div>
+
+      <div class="data">
+        {{ formatarData(atividade.data_atividade) }}
+      </div>
+
+      <div class="titulo">
+        {{ atividade.titulo }}
+      </div>
     </div>
 
-    <div class="data">
-      {{ formatarData(atividade.data_atividade) }}
-    </div>
+    <div *ngIf="modoAdmin" class="opcoes">
+      <span class="dots" (click)="menuAberto = !menuAberto">&#8942;</span>
 
-    <div class="titulo">
-      {{ atividade.titulo }}
+      <div *ngIf="menuAberto" class="menu-opcoes">
+        <div (click)="onEditar()">Editar</div>
+        <div (click)="onExcluir()">Excluir</div>
+      </div>
     </div>
   </div>
-
-  <div *ngIf="modoAdmin" class="opcoes">
-    <span class="dots" (click)="menuAberto = !menuAberto">&#8942;</span>
-
-    <div *ngIf="menuAberto" class="menu-opcoes">
-      <div (click)="onEditar()">Editar</div>
-      <div (click)="onExcluir()">Excluir</div>
-    </div>
-  </div>
-</div>
+</ng-template>

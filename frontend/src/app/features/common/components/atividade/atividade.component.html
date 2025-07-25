@@ -1,1 +1,29 @@
-<p>atividade works!</p>
+<div *ngIf="atividade" class="atividade-noticia-container">
+  <article class="atividade-noticia">
+
+    <header class="noticia-header">
+      <h1 class="titulo">{{ atividade.titulo }}</h1>
+      <div class="info-meta">
+        <span class="data">{{ formatarData(atividade.data_atividade) }}</span>
+        <span class="tag" [style.backgroundColor]="atividade.cor_tag">{{ atividade.nome_tag }}</span>
+      </div>
+    </header>
+
+    <figure class="imagem-destaque"
+      [style.backgroundImage]="'url(data:image/*;base64,' + atividade.imagem_destaque + ')'"></figure>
+
+    <section class="descricao" [innerText]="atividade.descricao"></section>
+
+    <section class="galeria" *ngIf="atividade.galeria && atividade.galeria.length > 0">
+      <h2>Fotos da Galeria</h2>
+      <div class="galeria-container">
+        <img *ngFor="let foto of atividade.galeria" [src]="'data:image/*;base64,' + foto.imagem" alt="Foto da galeria"
+          loading="lazy" />
+      </div>
+    </section>
+  </article>
+</div>
+
+<div *ngIf="!atividade" class="loading">
+  Carregando atividade...
+</div>

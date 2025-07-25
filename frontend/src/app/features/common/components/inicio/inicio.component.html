@@ -67,7 +67,7 @@
 
             <div class="cards-home-container">
                 <app-card-atividade *ngFor="let atividade of atividades" [atividade]="atividade" [modoAdmin]="false"
-                    class="modo-home">
+                    class="modo-home" [routerLink]="['/blog/atividade', atividade.id]">
                 </app-card-atividade>
             </div>
 

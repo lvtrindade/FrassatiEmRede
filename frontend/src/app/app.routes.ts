@@ -16,117 +16,121 @@ import { AdmAtvComponent } from './features/admin/components/adm-atv/adm-atv.com
 import { AuthGuard } from './core/guard/auth.guard';
 import { NovaAtividadeComponent } from './features/admin/components/nova-atividade/nova-atividade.component';
 import { AtividadeComponent } from './features/common/components/atividade/atividade.component';
+import { BlogListaComponent } from './features/common/components/blog-lista/blog-lista.component';
 
 export const routes: Routes = [
-    {
+  {
+    path: '',
+    redirectTo: 'inicio',
+    pathMatch: 'full',
+  },
+
+  {
+    path: 'inicio',
+    component: InicioComponent,
+  },
+
+  {
+    path: 'grupo',
+    children: [
+      {
+        path: 'historia',
+        component: HistoriaComponent,
+      },
+
+      {
+        path: 'escotismo',
+        component: EscotismoComponent,
+      },
+
+      {
+        path: 'documentos',
+        component: DocumentosComponent,
+      },
+    ],
+  },
+
+  {
+    path: 'calendario',
+    component: CalendarioComponent,
+  },
+
+  {
+    path: 'como-chegar',
+    component: ComoChegarComponent,
+  },
+
+  {
+    path: 'fale-conosco',
+    component: FaleConoscoComponent,
+  },
+
+  {
+    path: 'blog',
+    component: BlogComponent,
+    children: [
+      {
         path: '',
-        redirectTo: 'inicio',
-        pathMatch: 'full'
-    },
+        component: BlogListaComponent,
+      },
+      {
+        path: 'atividade/:id',
+        component: AtividadeComponent,
+      },
+    ],
+  },
 
-    {
-        path: 'inicio',
-        component: InicioComponent
-    },
+  {
+    path: 'admin',
+    children: [
+      {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full',
+      },
 
-    {
-        path: 'grupo',
+      {
+        path: 'login',
+        component: LoginComponent,
+      },
+
+      {
+        path: 'dashboard',
+        canActivate: [AuthGuard],
+        component: DashboardComponent,
         children: [
-            {
-                path: 'historia',
-                component: HistoriaComponent
-            },
+          {
+            path: 'background',
+            component: BackgroundComponent,
+          },
 
-            {
-                path: 'escotismo',
-                component: EscotismoComponent
-            },
+          {
+            path: 'calendario',
+            component: AdmCalComponent,
+          },
 
-            {
-                path: 'documentos',
-                component: DocumentosComponent
-            }
-        ]
-    },
+          {
+            path: 'atividades',
+            component: AdmAtvComponent,
+          },
 
-    {
-        path: 'calendario',
-        component: CalendarioComponent
-    },
+          {
+            path: 'nova-atividade',
+            component: NovaAtividadeComponent,
+          },
 
-    {
-        path: 'como-chegar',
-        component: ComoChegarComponent
-    },
+          {
+            path: '',
+            redirectTo: 'background',
+            pathMatch: 'full',
+          },
+        ],
+      },
+    ],
+  },
 
-    {
-        path: 'fale-conosco',
-        component: FaleConoscoComponent
-    },
-
-    {
-        path: 'blog',
-        component: BlogComponent,
-        children: [
-            {
-                path: 'atividade/:id',
-                component: AtividadeComponent
-            }
-        ]
-    },
-
-    {
-        path: 'admin',
-        children: [
-
-            {
-                path: '',
-                redirectTo: 'login',
-                pathMatch: 'full'
-            },
-
-            {
-                path: 'login',
-                component: LoginComponent
-            },
-
-            {
-                path: 'dashboard',
-                canActivate: [AuthGuard],
-                component: DashboardComponent,
-                children: [
-                    {
-                        path: 'background',
-                        component: BackgroundComponent
-                    },
-
-                    {
-                        path: 'calendario',
-                        component: AdmCalComponent
-                    },
-
-                    {
-                        path: 'atividades',
-                        component: AdmAtvComponent,
-                    },
-
-                    {
-                        path: 'nova-atividade',
-                        component: NovaAtividadeComponent
-                    },
-
-                    {
-                        path: '',
-                        redirectTo: 'background',
-                        pathMatch: 'full'
-                    },
-                ]
-            }
-        ]
-    },
-
-    {
-        path: '**',
-        component: NotFoundComponent
-    }
+  {
+    path: '**',
+    component: NotFoundComponent,
+  },
 ];
