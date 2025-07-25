@@ -15,6 +15,7 @@ import { AdmCalComponent } from './features/admin/components/adm-cal/adm-cal.com
 import { AdmAtvComponent } from './features/admin/components/adm-atv/adm-atv.component';
 import { AuthGuard } from './core/guard/auth.guard';
 import { NovaAtividadeComponent } from './features/admin/components/nova-atividade/nova-atividade.component';
+import { AtividadeComponent } from './features/common/components/atividade/atividade.component';
 
 export const routes: Routes = [
     {
@@ -68,7 +69,8 @@ export const routes: Routes = [
         component: BlogComponent,
         children: [
             {
-                path: 'atividade/'
+                path: 'atividade/:id',
+                component: AtividadeComponent
             }
         ]
     },
