@@ -1,8 +1,8 @@
 import { AfterViewInit, Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { BackgroundService } from '../../../../core/services/background.service';
 import { AtividadesService } from '../../../../core/services/atividades.service';
-import { CommonModule } from '@angular/common';
 import { CardAtividadeComponent } from '../../../../shared/components/cards/card-atividade/card-atividade.component';
 
 @Component({

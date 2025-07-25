@@ -65,7 +65,12 @@ export const routes: Routes = [
 
     {
         path: 'blog',
-        component: BlogComponent
+        component: BlogComponent,
+        children: [
+            {
+                path: 'atividade/'
+            }
+        ]
     },
 
     {

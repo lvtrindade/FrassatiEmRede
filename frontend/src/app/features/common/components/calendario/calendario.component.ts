@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CalendarEvent } from 'angular-calendar';
+import { CommonModule } from '@angular/common';
 import { Evento } from '../../../../models/evento.model';
 import { CalendarioService } from '../../../../core/services/calendario.service';
-import { CommonModule } from '@angular/common';
 import { ModalEventoComponent } from '../../../../core/modals/modal-evento/modal-evento.component';
 
 @Component({

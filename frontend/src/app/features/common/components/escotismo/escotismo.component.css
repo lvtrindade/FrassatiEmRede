@@ -4,101 +4,167 @@
     align-items: center;
     align-self: center;
     margin: 0 auto;
-    position: relative;
+    max-width: 1300px;
     padding-bottom: 80px;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: #fafafa;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.05);
 }
 
 .text {
     display: flex;
     flex-direction: column;
-    align-self: center;
-    width: 80%;
+    width: 100%;
 }
 
 .text h1 {
     align-self: flex-start;
-    padding: 2% 0 2% 4%;
-    font-size: 22px;
-    font-weight: bolder;
+    padding: 1.5% 0 1.5% 4%;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--black);
+    margin-bottom: 1rem;
 }
 
 .text h2 {
     align-self: flex-start;
-    padding: 2% 0 3% 5%;
-    font-size: 20px;
-    font-weight: bold;
+    padding: 1.5% 0 1.5% 5%;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--black);
+    margin-top: 1.8rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid var(--red);
+    padding-left: 1rem;
 }
 
 .text h3 {
     align-self: flex-start;
-    padding: 3% 0% 1% 6%;
-    font-size: 18px;
-    font-weight: bold;
+    padding: 1.8% 0 1% 6%;
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 1.5rem;
+    margin-bottom: 0.7rem;
+    color: var(--black);
 }
 
 .text h4 {
     align-self: center;
-    padding: 3% 0% 1% 0%;
-    font-size: 18px;
+    padding: 3% 0 0.5% 0%;
+    font-size: 20px;
     font-style: italic;
+    color: #555;
+    margin-bottom: 1rem;
 }
 
 .text p {
-    text-indent: 5%;
-    font-size: 16px;
+    text-indent: 3em;
+    font-size: 17px;
     text-align: justify;
-    padding-bottom: 1%;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 1rem;
 }
 
 .text .obs {
     font-size: 16px;
     text-align: center;
-    padding-bottom: 3%
+    padding-bottom: 3%;
+    font-style: italic;
+    color: #666;
 }
 
 .text a {
-    font-size: 16px;
+    font-size: 17px;
     text-align: center;
-    margin: 3% 0 3% 0;
+    margin: 2rem auto;
     color: var(--red);
     text-decoration: none;
+    font-weight: 700;
     transition: color 0.3s ease, transform 0.3s ease;
-    width: 100%;
+    display: inline-block;
+    max-width: 400px;
 }
 
 .text a:hover {
-    transform: scale(105%);
+    transform: scale(1.05);
+    color: #a30000;
 }
 
 .text .quote {
     text-indent: 0;
     align-self: center;
-    font-size: 16px;
+    font-size: 18px;
     text-align: center;
-    padding: 3% 0 3% 0;
+    padding: 2% 0 3% 0;
     font-style: italic;
-    width: 60%;
+    font-weight: 600;
+    color: var(--red);
+    max-width: 700px;
+    border-left: 4px solid var(--red);
+    padding-left: 1rem;
+    margin: 2rem 0;
 }
 
 .text .leis {
     display: flex;
     flex-direction: column;
     align-self: center;
+    max-width: 700px;
+    margin: 2rem auto;
 }
 
 .text .leis .list {
     align-self: center;
-    padding: 1% 0 1% 0;
+    padding: 8px 0;
     font-style: italic;
     text-align: center;
     width: 100%;
+    border-bottom: 1px solid #ddd;
+    color: #444;
 }
 
 .text #promessa {
     text-indent: 0;
     align-self: center;
-    padding: 1% 0 3% 0;
+    padding: 1rem 0 3rem 0;
     font-style: italic;
     text-align: center;
-    line-height: 140%;
+    line-height: 1.4;
+    max-width: 700px;
+    color: #555;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .text h1 {
+        font-size: 24px;
+        padding-left: 2%;
+    }
+
+    .text h2 {
+        font-size: 20px;
+        padding-left: 3%;
+        border-left-width: 3px;
+    }
+
+    .text h3 {
+        font-size: 18px;
+        padding-left: 4%;
+    }
+
+    .text h4 {
+        padding-left: 4%;
+    }
+
+    .text p,
+    .text .quote,
+    .text .leis .list,
+    .text #promessa {
+        max-width: 100%;
+        padding-left: 2%;
+        padding-right: 2%;
+    }
 }

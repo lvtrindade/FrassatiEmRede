@@ -1,0 +1,86 @@
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Escurece o fundo */
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+}
+
+/* Estilo do modal */
+.modal {
+    animation: fadeInScale 0.3s ease forwards;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    font-family: 'Reddit Sans', sans-serif;
+}
+
+/* Título */
+.modal h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #000000;
+}
+
+/* Textos e parágrafos */
+.modal p {
+    font-size: 1rem;
+    color: #333;
+    margin: 0.5rem 0;
+    line-height: 1.5;
+}
+
+/* Negrito nos labels */
+.modal p strong {
+    color: #000000;
+}
+
+/* Tag com cor dinâmica */
+.modal .tag {
+    display: inline-block;
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-left: 6px;
+}
+
+/* Botão */
+.modal button {
+    margin-top: 1.5rem;
+    padding: 10px 20px;
+    background-color: #fe0002;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal button:hover {
+    background-color: #cc0000;
+}

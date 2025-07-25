@@ -1,35 +1,62 @@
-a {
-    text-decoration: none;
-    color: var(--red);
-}
-
 #documentos {
     display: flex;
     flex-direction: column;
-    align-self: center;
     align-items: center;
-    padding-bottom: 4.1%;
+    padding: 4% 8%;
+    background-color: #f8f8f8;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
 }
 
 #documentos h1 {
-    padding-top: 1%;
-    font-size: 30px;
-    font-weight: bolder;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--black);
+    margin-bottom: 24px;
 }
 
-#documentos h2 {
-    padding: 1.5% 0;
-    font-size: 24px;
-    font-weight: bold;
+.documento-bloco {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.3s ease;
 }
 
-#documentos h3 {
-    padding-top: 1.5%;
-    padding-bottom: 1%;
-    font-size: 24px;
-    font-weight: bold;
+.documento-bloco:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
-#documentos h4 {
-    padding-bottom: 1.5%;
+.documento-header h3,
+.documento-bloco h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--black);
+}
+
+.documento-header h4 {
+    margin: 4px 0 12px 0;
+    font-size: 16px;
+    font-weight: 400;
+    color: #555;
+}
+
+.documento-link {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 16px;
+    color: var(--red);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.documento-link:hover {
+    color: #a30000;
+    text-decoration: underline;
 }
