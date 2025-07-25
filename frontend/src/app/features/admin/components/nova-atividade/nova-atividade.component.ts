@@ -19,6 +19,8 @@ export class NovaAtividadeComponent {
   imagens_galeria: File[] = [];
   tags: { id: number; nome: string }[] = [];
   tag_selecionada: number | null = null;
+  imagem_principal_url: string | null = null;
+  galeria_urls: string[] = [];
 
   constructor(
     private tagService: TagsService,
@@ -37,23 +39,30 @@ export class NovaAtividadeComponent {
       },
       error: (err) => {
         console.error('Erro ao carregar tags: ', err);
-      }
+      },
     });
   }
 
   onImagemPrincipalSelecionada(event: any) {
-    this.imagem_principal = event.target.files[0];
+    const file = event.target.files[0];
+    if (file) {
+      this.imagem_principal = file;
+      this.imagem_principal_url = URL.createObjectURL(file);
+    }
   }
 
   onGaleriaSelecionada(event: any) {
     const files: FileList = event.target.files;
     for (let i = 0; i < files.length; i++) {
-      this.imagens_galeria.push(files[i]);
+      const file = files[i];
+      this.imagens_galeria.push(file);
+      this.galeria_urls.push(URL.createObjectURL(file));
     }
   }
 
   removerImagemGaleria(index: number) {
     this.imagens_galeria.splice(index, 1);
+    this.galeria_urls.splice(index, 1);
   }
 
   getImagemUrl(file: File): string {
@@ -84,7 +93,7 @@ export class NovaAtividadeComponent {
       error: (err) => {
         console.error('Erro ao criar atividade:', err);
         alert('Erro ao criar atividade.');
-      }
+      },
     });
   }
 
@@ -95,5 +104,10 @@ export class NovaAtividadeComponent {
     this.imagem_principal = null;
     this.imagens_galeria = [];
     this.tag_selecionada = null;
+  }
+
+  removerImagemPrincipal() {
+    this.imagem_principal = null;
+    this.imagem_principal_url = null;
   }
 }

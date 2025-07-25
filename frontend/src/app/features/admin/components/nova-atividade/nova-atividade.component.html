@@ -2,10 +2,23 @@
     <h1>Publique a sua atividade:</h1>
 
     <form class="upload" (ngSubmit)="enviarAtividade()" #atividadeForm="ngForm">
+
         <!-- Imagem Principal -->
-        <label>Escolha a sua imagem principal</label>
-        <input type="file" name="principal" class="principal" accept="image/*"
-            (change)="onImagemPrincipalSelecionada($event)" required>
+        <div class="imagem-principal-box">
+            <label>Imagem principal:</label>
+
+            <div class="upload-box" (click)="fileInputPrincipal.click()" *ngIf="!imagem_principal">
+                <span class="upload-plus">+</span>
+                <span class="upload-text">Adicionar imagem</span>
+                <input type="file" accept="image/*" #fileInputPrincipal hidden
+                    (change)="onImagemPrincipalSelecionada($event)">
+            </div>
+
+            <div class="imagem-container" *ngIf="imagem_principal">
+                <img *ngIf="imagem_principal_url" [src]="imagem_principal_url" class="thumbnail">
+                <button type="button" (click)="removerImagemPrincipal()">×</button>
+            </div>
+        </div>
 
         <!-- Título -->
         <label>Título</label>
@@ -25,18 +38,21 @@
             <option *ngFor="let tag of tags" [value]="tag.id">{{ tag.nome }}</option>
         </select>
 
-        <!-- Galeria de Imagens -->
-        <label>Adicione fotos à galeria (opcional)</label>
-        <input type="file" name="galeria" class="galeria" accept="image/*" (change)="onGaleriaSelecionada($event)"
-            multiple>
+        <!-- Galeria -->
+        <label>Fotos da Galeria:</label>
+        <div class="galeria-container">
+            <!-- Botão de adicionar -->
+            <div class="upload-box" (click)="fileInputGaleria.click()">
+                <span class="upload-plus">+</span>
+                <span class="upload-text">Adicionar imagens</span>
+                <input type="file" #fileInputGaleria hidden accept="image/*" (change)="onGaleriaSelecionada($event)"
+                    multiple>
+            </div>
 
-        <!-- Pré-visualização da Galeria -->
-        <div *ngIf="imagens_galeria.length > 0" class="galeria-preview">
-            <h2>Fotos da Galeria</h2>
-            <div *ngFor="let imagem of imagens_galeria; let i = index" class="imagem-container">
-                <!-- Usando FileReader para exibir a pré-visualização -->
-                <img [src]="getImagemUrl(imagem)" alt="Imagem {{ i + 1 }}" class="thumbnail">
-                <button type="button" (click)="removerImagemGaleria(i)">Excluir</button>
+            <!-- Pré-visualização -->
+            <div class="imagem-container" *ngFor="let imagem of imagens_galeria; let i = index">
+                <img [src]="galeria_urls[i]" class="thumbnail">
+                <button type="button" (click)="removerImagemGaleria(i)">×</button>
             </div>
         </div>
 
