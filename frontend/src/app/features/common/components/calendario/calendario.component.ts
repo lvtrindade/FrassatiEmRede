@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { Evento } from '../../../../models/evento.model';
 import { CalendarioService } from '../../../../core/services/calendario.service';
 import { ModalEventoComponent } from '../../../../core/modals/modal-evento/modal-evento.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-calendario',
-  imports: [CommonModule, ModalEventoComponent],
+  imports: [CommonModule, FormsModule, ModalEventoComponent],
   templateUrl: './calendario.component.html',
   styleUrl: './calendario.component.css',
 })
@@ -22,6 +23,7 @@ export class CalendarioComponent implements OnInit {
   constructor(private calendarioService: CalendarioService) {}
 
   ngOnInit(): void {
+    this.gerarAnosDisponiveis();
     this.carregarEventos();
     this.gerarCalendario();
   }
@@ -137,18 +139,67 @@ export class CalendarioComponent implements OnInit {
   proximo() {
     if (this.modo === 'mes') {
       this.dataAtual.setMonth(this.dataAtual.getMonth() + 1);
-    } else if (this.modo === 'semana') {
+    } else {
       this.dataAtual.setDate(this.dataAtual.getDate() + 7);
     }
+    this.sincronizarDataSelecionada();
     this.gerarCalendario();
   }
 
   anterior() {
     if (this.modo === 'mes') {
       this.dataAtual.setMonth(this.dataAtual.getMonth() - 1);
-    } else if (this.modo === 'semana') {
+    } else {
       this.dataAtual.setDate(this.dataAtual.getDate() - 7);
     }
+    this.sincronizarDataSelecionada();
     this.gerarCalendario();
+  }
+
+  sincronizarDataSelecionada() {
+    this.dataAtualMes = this.dataAtual.getMonth();
+    this.dataAtualAno = this.dataAtual.getFullYear();
+  }
+
+  meses = [
+    'Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril',
+    'Maio',
+    'Junho',
+    'Julho',
+    'Agosto',
+    'Setembro',
+    'Outubro',
+    'Novembro',
+    'Dezembro',
+  ];
+
+  anosDisponiveis: number[] = [];
+
+  dataAtualMes = this.dataAtual.getMonth();
+  dataAtualAno = this.dataAtual.getFullYear();
+
+  gerarAnosDisponiveis() {
+    const anoAtual = new Date().getFullYear();
+    this.anosDisponiveis = Array.from(
+      { length: 10 },
+      (_, i) => anoAtual - 5 + i
+    );
+  }
+
+  atualizarData() {
+    this.dataAtual = new Date(this.dataAtualAno, this.dataAtualMes, 1);
+    this.gerarCalendario();
+  }
+
+  ehHoje(data: Date): boolean {
+    const hoje = new Date();
+    return (
+      data.getDate() === hoje.getDate() &&
+      data.getMonth() === hoje.getMonth() &&
+      data.getFullYear() === hoje.getFullYear()
+    );
   }
 }
