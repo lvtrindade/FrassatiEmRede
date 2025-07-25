@@ -16,12 +16,16 @@
         <div class="titulo-central">
             <span class="mes">
                 {{ meses[dataAtual.getMonth()] }}
-                <select [(ngModel)]="dataAtualMes" (change)="atualizarData()" class="select-invisivel"></select>
+                <select [(ngModel)]="dataAtualMes" (change)="atualizarData()" class="select-invisivel">
+                    <option *ngFor="let mes of meses; let i = index" [value]="i">{{ mes }}</option>
+                </select>
             </span>
 
             <span class="ano">
                 {{ dataAtual.getFullYear() }}
-                <select [(ngModel)]="dataAtualAno" (change)="atualizarData()" class="select-invisivel"></select>
+                <select [(ngModel)]="dataAtualAno" (change)="atualizarData()" class="select-invisivel">
+                    <option *ngFor="let ano of anosDisponiveis" [value]="ano">{{ ano }}</option>
+                </select>
             </span>
         </div>
 

@@ -35,6 +35,7 @@
   background-color: #f0f0f0;
   padding: 0.5rem 0;
   border-radius: 8px;
+  margin: 0 1rem;
 }
 
 .titulo-central {
@@ -46,7 +47,6 @@
   font-weight: bold;
   color: #000;
   position: relative;
-  margin-bottom: 1rem;
 }
 
 .titulo-central .mes,
@@ -59,6 +59,18 @@
 .titulo-central .ano:hover {
   opacity: 0.85;
   cursor: pointer;
+}
+
+.titulo-central .mes select,
+.titulo-central .ano select {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
 }
 
 .select-invisivel {
@@ -84,6 +96,7 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 4px;
+  padding: 0 1rem 1rem 1rem;
 }
 
 .dia {
@@ -97,6 +110,7 @@
   font-size: 0.9rem;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .dia.fora {
@@ -146,19 +160,18 @@
 
 .cabecalho-calendario {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  padding: 1rem 2rem;
-  flex-wrap: wrap;
-  gap: 1rem;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .navegacao {
   display: flex;
-  justify-content: space-around;
   align-items: center;
-  align-self: center;
-  gap: 2rem;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 1.2rem;
 }
 
 .seletor-tempo select {
@@ -172,20 +185,24 @@
 
 .seta {
   cursor: pointer;
-  font-size: 1.4rem;
-  color: #ccc;
   user-select: none;
+  font-size: 1.5rem;
+  padding: 0 0.5rem;
+  transition: transform 0.2s;
+}
+
+.seta:hover {
+  transform: scale(1.2);
 }
 
 .modo-switch {
   display: flex;
   gap: 1rem;
   font-weight: bold;
-  align-self: flex-start;
 }
 
-.modo-switch input {
-  margin-right: 0.25rem;
+.modo-switch input[type='radio'] {
+  margin-right: 0.3rem;
 }
 
 .dia.hoje {
@@ -203,6 +220,7 @@
 
 /* Responsividade */
 @media (max-width: 768px) {
+
   .cabecalho,
   .dias {
     grid-template-columns: repeat(7, 1fr);
@@ -223,5 +241,9 @@
 
   .titulo-central {
     flex-direction: column;
+  }
+
+  .dias {
+    padding: 0 0.5rem;
   }
 }
