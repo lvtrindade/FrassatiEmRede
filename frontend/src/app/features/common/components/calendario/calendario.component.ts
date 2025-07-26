@@ -120,23 +120,29 @@ export class CalendarioComponent implements OnInit {
   gerarDiasDaSemana(): any[] {
     const dias: any[] = [];
     const base = new Date(this.dataAtual);
+
+    // Obtemos o domingo da semana atual (primeiro dia visível na semana)
     const domingo = new Date(base);
-    domingo.setDate(base.getDate() - base.getDay());
+    domingo.setDate(domingo.getDate() - domingo.getDay());
 
     for (let i = 0; i < 7; i++) {
       const dia = new Date(domingo);
       dia.setDate(domingo.getDate() + i);
-
       const dataISO = this.formatarDataISO(dia);
 
       const eventosDoDia = this.eventos
         .filter((ev) => dataISO >= ev.data_inicio && dataISO <= ev.data_fim)
-        .map((evento) => ({
-          ...evento,
-          isInicio: evento.data_inicio === dataISO,
-          isFim: evento.data_fim === dataISO,
-          mostrarTitulo: evento.data_inicio === dataISO || dia.getDay() === 0,
-        }));
+        .map((ev) => {
+          const isPrimeiraAparicaoNaSemana =
+            ev.data_inicio === dataISO ||
+            (new Date(ev.data_inicio) < domingo && i === 0);
+          return {
+            ...ev,
+            isInicio: ev.data_inicio === dataISO,
+            isFim: ev.data_fim === dataISO,
+            mostrarTitulo: isPrimeiraAparicaoNaSemana,
+          };
+        });
 
       dias.push({
         data: new Date(dia),
@@ -149,7 +155,10 @@ export class CalendarioComponent implements OnInit {
   }
 
   formatarDataISO(date: Date): string {
-    return date.toISOString().split('T')[0];
+    const ano = date.getFullYear();
+    const mes = (date.getMonth() + 1).toString().padStart(2, '0');
+    const dia = date.getDate().toString().padStart(2, '0');
+    return `${ano}-${mes}-${dia}`;
   }
 
   mudarModo(novoModo: 'mes' | 'semana') {
