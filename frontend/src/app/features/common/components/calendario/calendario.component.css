@@ -33,6 +33,10 @@
   font-weight: bold;
 }
 
+.modo-switch label {
+  cursor: pointer;
+}
+
 .modo-switch input[type='radio'] {
   margin-right: 0.3rem;
 }

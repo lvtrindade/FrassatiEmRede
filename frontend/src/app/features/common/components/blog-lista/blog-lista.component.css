@@ -23,6 +23,10 @@
     margin-bottom: 30px;
 }
 
+.filtro select{
+    cursor: pointer;
+}
+
 .search-bar input,
 .filtro select {
     padding: 10px 15px;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Atividade } from '../../../../models/atividade.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AtividadesService } from '../../../../core/services/atividades.service';
 import { CommonModule } from '@angular/common';
 
@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-atividade',
   templateUrl: './atividade.component.html',
   styleUrls: ['./atividade.component.css'],
-  imports: [CommonModule]
+  imports: [CommonModule, RouterLink],
 })
 export class AtividadeComponent implements OnInit {
   atividadeId!: number;
@@ -16,6 +16,7 @@ export class AtividadeComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private atividadeService: AtividadesService
   ) {}
 
@@ -32,9 +33,15 @@ export class AtividadeComponent implements OnInit {
   buscarAtividade(id: number): void {
     this.atividadeService.buscarPorId(id).subscribe({
       next: (res) => {
-        this.atividade = res.data;
+        if (res.data) {
+          this.atividade = res.data;
+        } else {
+          this.router.navigate(['/not-found']); // <--- REDIRECIONA
+        }
       },
-      error: (err) => console.error('Erro ao carregar atividade:', err),
+      error: () => {
+        this.router.navigate(['/not-found']); // <--- TAMBÉM EM CASO DE ERRO
+      },
     });
   }
 

@@ -8,6 +8,20 @@
   min-height: 100vh;
 }
 
+.material-symbols-outlined[routerLink] {
+  display: inline-block;
+  font-size: 32px;
+  color: #cc263c;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  transition: color 0.3s ease;
+  user-select: none;
+}
+
+.material-symbols-outlined[routerLink]:hover {
+  color: #a9192f;
+}
+
 .atividade-noticia {
   max-width: 900px;
   margin: 0 auto;
