@@ -30,6 +30,7 @@
     <div class="botoes">
       <button type="submit">Salvar</button>
       <button type="button" (click)="fechar.emit()">Cancelar</button>
+      <button *ngIf="evento" type="button" class="excluir" (click)="onExcluir()">Excluir</button>
     </div>
   </form>
 </div>
