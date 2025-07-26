@@ -1,41 +1,40 @@
-.controle-modo {
+/* --- Layout Básico e Cabeçalho --- */
+.cabecalho-calendario {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
   margin-bottom: 1rem;
 }
 
-.controle-modo button {
-  padding: 0.5rem 1rem;
-  border: none;
-  background-color: #fe0002;
-  color: #fff;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.controle-modo button:hover {
-  background-color: #cc0000;
-}
-
-.grade {
+.navegacao {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin: 2rem;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 1.2rem;
 }
 
-.cabecalho {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  text-align: center;
+.seta {
+  cursor: pointer;
+  user-select: none;
+  font-size: 1.5rem;
+  padding: 0 0.5rem;
+  transition: transform 0.2s;
+}
+
+.seta:hover {
+  transform: scale(1.2);
+}
+
+.modo-switch {
+  display: flex;
+  gap: 1rem;
   font-weight: bold;
-  background-color: #f0f0f0;
-  padding: 0.5rem 0;
-  border-radius: 8px;
-  margin: 0 1rem;
+}
+
+.modo-switch input[type='radio'] {
+  margin-right: 0.3rem;
 }
 
 .titulo-central {
@@ -61,18 +60,6 @@
   cursor: pointer;
 }
 
-.titulo-central .mes select,
-.titulo-central .ano select {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
-  z-index: 2;
-}
-
 .select-invisivel {
   position: absolute;
   top: 0;
@@ -84,14 +71,19 @@
   z-index: 2;
 }
 
-.titulo-mes {
+/* --- Cabeçalho dos Dias da Semana --- */
+.cabecalho {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
   text-align: center;
-  font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 0.5rem;
-  color: #000;
+  background-color: #f0f0f0;
+  padding: 0.5rem 0;
+  border-radius: 8px;
+  margin: 0 1rem;
 }
 
+/* --- Grade dos Dias --- */
 .dias {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -118,117 +110,64 @@
   color: #999;
 }
 
-.numero {
-  font-weight: bold;
-  margin-bottom: 4px;
-}
-
-.titulo {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 0.75rem;
-}
-
-.evento {
-  border-radius: 6px;
-  padding: 4px 6px;
-  margin-bottom: 1px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  display: flex;
-  flex-direction: column;
-  transition: background-color 0.3s ease;
-}
-
-.evento .tag {
-  color: white;
-  padding: 2px 6px;
-  font-size: 12px;
-  font-weight: bold;
-  border-radius: 4px;
-  margin-bottom: 3px;
-  text-align: center;
-}
-
-.evento .titulo {
-  font-size: 0.75rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.cabecalho-calendario {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.navegacao {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  font-size: 1.2rem;
-}
-
-.seletor-tempo select {
-  padding: 0.4rem 0.6rem;
-  font-size: 1rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background: #fff;
-  margin-right: 0.5rem;
-}
-
-.seta {
-  cursor: pointer;
-  user-select: none;
-  font-size: 1.5rem;
-  padding: 0 0.5rem;
-  transition: transform 0.2s;
-}
-
-.seta:hover {
-  transform: scale(1.2);
-}
-
-.modo-switch {
-  display: flex;
-  gap: 1rem;
-  font-weight: bold;
-}
-
-.modo-switch input[type='radio'] {
-  margin-right: 0.3rem;
-}
-
 .dia.hoje {
   border: 2px solid #fe0002;
   box-shadow: 0 0 4px rgba(254, 0, 2, 0.5);
 }
 
-.dias.semana-expandida {
-  grid-template-columns: repeat(7, 1fr);
+.numero {
+  font-weight: bold;
+  margin-bottom: 4px;
 }
 
-.dias.semana-expandida .dia {
-  min-height: 300px;
+/* --- Eventos --- */
+.evento {
+  color: white;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  margin: 2px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  min-height: 15px;
+  line-height: 1.2em;
+  border-radius: 0;
+  transition: transform 0.2s ease;
+  position: relative;
 }
 
-/* Responsividade */
+/* Bordas específicas para eventos de múltiplos dias */
+.evento-inicio {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.evento-fim {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.evento-meio {
+  border-radius: 0;
+}
+
+.evento-unico {
+  border-radius: 6px;
+}
+
+/* Hover coletivo via classe adicionada pelo Angular */
+.evento.hover-ativo {
+  transform: scale(1.05);
+  z-index: 10;
+}
+
+/* --- Responsividade --- */
 @media (max-width: 768px) {
 
   .cabecalho,
   .dias {
     grid-template-columns: repeat(7, 1fr);
-  }
-
-  .controle-modo {
-    flex-wrap: wrap;
-    gap: 0.5rem;
   }
 
   .dia {
@@ -241,9 +180,23 @@
 
   .titulo-central {
     flex-direction: column;
+    font-size: 1.2rem;
   }
 
   .dias {
     padding: 0 0.5rem;
   }
+
+  .cabecalho-calendario {
+    gap: 0.3rem;
+  }
+}
+
+/* --- Modo Semana --- */
+.dias.semana-expandida {
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.dias.semana-expandida .dia {
+  min-height: 300px;
 }
