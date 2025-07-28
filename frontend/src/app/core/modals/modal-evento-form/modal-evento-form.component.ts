@@ -1,6 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Evento } from '../../../models/evento.model';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CalendarioService } from '../../services/calendario.service';
 import { TagsService } from '../../services/tags.service';
 import { CommonModule } from '@angular/common';
@@ -16,6 +21,7 @@ export class ModalEventoFormComponent implements OnInit {
   @Input() dataSelecionada: Date | null = null;
   @Output() fechar: EventEmitter<void> = new EventEmitter<void>();
   @Output() salvar: EventEmitter<void> = new EventEmitter<void>();
+  @Output() excluir = new EventEmitter<void>();
 
   form: FormGroup;
   tags: any[] = [];
@@ -71,5 +77,11 @@ export class ModalEventoFormComponent implements OnInit {
   finalizar() {
     this.salvar.emit();
     this.fechar.emit();
+  }
+
+  onExcluir() {
+    if (confirm('Tem certeza que deseja excluir este evento?')) {
+      this.excluir.emit();
+    }
   }
 }

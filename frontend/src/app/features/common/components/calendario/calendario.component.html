@@ -1,32 +1,58 @@
-<div class="controle-modo">
-    <button (click)="mudarModo('mes')">Mês</button>
-    <button (click)="mudarModo('semana')">Semana</button>
-    <button (click)="anterior()">◀</button>
-    <button (click)="proximo()">▶</button>
+<div class="cabecalho-calendario">
+    <div class="modo-switch">
+        <label>
+            <input type="radio" name="modo" value="mes" [(ngModel)]="modo" (change)="gerarCalendario()" />
+            Mês
+        </label>
+        <label>
+            <input type="radio" name="modo" value="semana" [(ngModel)]="modo" (change)="gerarCalendario()" />
+            Semana
+        </label>
+    </div>
+
+    <div class="navegacao">
+        <span class="seta" (click)="anterior()">◀</span>
+
+        <div class="titulo-central">
+            <span class="mes">
+                {{ meses[dataAtual.getMonth()] }}
+                <select [(ngModel)]="dataAtualMes" (change)="atualizarData()" class="select-invisivel">
+                    <option *ngFor="let mes of meses; let i = index" [value]="i">{{ mes }}</option>
+                </select>
+            </span>
+
+            <span class="ano">
+                {{ dataAtual.getFullYear() }}
+                <select [(ngModel)]="dataAtualAno" (change)="atualizarData()" class="select-invisivel">
+                    <option *ngFor="let ano of anosDisponiveis" [value]="ano">{{ ano }}</option>
+                </select>
+            </span>
+        </div>
+
+        <span class="seta" (click)="proximo()">▶</span>
+    </div>
 </div>
 
-<div class="grade" [ngClass]="modo">
-    <div class="titulo-mes">
-        {{ nomeDoMes(dataAtual) }} - {{ dataAtual.getFullYear() }}
-    </div>
+<div class="cabecalho">
+    <div *ngFor="let dia of ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']">{{ dia }}</div>
+</div>
 
+<div class="dias" [ngClass]="{ 'semana-expandida': modo === 'semana' }">
+    <div *ngFor="let dia of diasDoCalendario" class="dia" [class.fora]="dia.fora" [class.hoje]="ehHoje(dia.data)">
+        <div class="numero">{{ dia.data.getDate() }}</div>
 
-    <div class="cabecalho">
-        <div *ngFor="let dia of ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']">{{ dia }}</div>
-    </div>
-
-    <div class="dias">
-        <div *ngFor="let dia of diasDoCalendario" class="dia" [class.fora]="dia.fora">
-
-            <div class="numero">{{ dia.data.getDate() }}</div>
-
-            <div class="evento" *ngFor="let evento of dia.eventos" (click)="abrirModal(evento)">
-                <div class="tag" [style.backgroundColor]="evento.cor_tag">
-                    {{ evento.titulo }}
-                </div>
-            </div>
-
+        <div class="evento" *ngFor="let evento of dia.eventos" (click)="abrirModal(evento)"
+            (mouseenter)="ativarHoverGrupo(evento.hoverGroupId)" (mouseleave)="desativarHoverGrupo()"
+            [attr.data-evento-id]="evento.id" [attr.data-hover-group]="evento.hoverGroupId" [ngClass]="{
+                'evento-inicio': evento.isInicio && !evento.isFim,
+                'evento-fim': evento.isFim && !evento.isInicio,
+                'evento-unico': evento.isInicio && evento.isFim,
+                'evento-meio': !evento.isInicio && !evento.isFim,
+                'hover-ativo': hoverGroupAtivo === evento.hoverGroupId
+            }" [style.backgroundColor]="evento.cor_tag">
+            <span *ngIf="evento.mostrarTitulo">{{ evento.titulo }}</span>
         </div>
+
     </div>
 </div>
 

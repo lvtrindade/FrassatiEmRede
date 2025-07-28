@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { Evento } from '../../../../models/evento.model';
 import { CalendarioService } from '../../../../core/services/calendario.service';
 import { ModalEventoComponent } from '../../../../core/modals/modal-evento/modal-evento.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-calendario',
-  imports: [CommonModule, ModalEventoComponent],
+  imports: [CommonModule, FormsModule, ModalEventoComponent],
   templateUrl: './calendario.component.html',
   styleUrl: './calendario.component.css',
 })
@@ -18,30 +19,36 @@ export class CalendarioComponent implements OnInit {
   modo: 'mes' | 'semana' = 'mes';
 
   eventoSelecionado: Evento | null = null;
+  hoverGroupAtivo: string | null = null;
+
+  meses = [
+    'Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril',
+    'Maio',
+    'Junho',
+    'Julho',
+    'Agosto',
+    'Setembro',
+    'Outubro',
+    'Novembro',
+    'Dezembro',
+  ];
+  anosDisponiveis: number[] = [];
+  dataAtualMes = this.dataAtual.getMonth();
+  dataAtualAno = this.dataAtual.getFullYear();
 
   constructor(private calendarioService: CalendarioService) {}
 
   ngOnInit(): void {
+    this.gerarAnosDisponiveis();
     this.carregarEventos();
     this.gerarCalendario();
   }
 
   nomeDoMes(data: Date): string {
-    const meses = [
-      'Janeiro',
-      'Fevereiro',
-      'Março',
-      'Abril',
-      'Maio',
-      'Junho',
-      'Julho',
-      'Agosto',
-      'Setembro',
-      'Outubro',
-      'Novembro',
-      'Dezembro',
-    ];
-    return meses[data.getMonth()];
+    return this.meses[data.getMonth()];
   }
 
   abrirModal(evento: Evento) {
@@ -54,19 +61,17 @@ export class CalendarioComponent implements OnInit {
 
   carregarEventos() {
     this.calendarioService.listarEventos().subscribe((response) => {
-      this.eventos = response.data;
+      this.eventos = response.data.map((evento, index) => ({
+        ...evento,
+        hoverGroupId: `${evento.id}_${index}`, // Único por evento
+      }));
       this.gerarCalendario();
     });
   }
 
   gerarCalendario() {
-    if (this.modo === 'mes') {
-      this.diasDoCalendario = this.gerarDiasDoMes();
-    } else if (this.modo === 'semana') {
-      this.diasDoCalendario = this.gerarDiasDaSemana();
-    } else {
-      console.log('Erro');
-    }
+    this.diasDoCalendario =
+      this.modo === 'mes' ? this.gerarDiasDoMes() : this.gerarDiasDaSemana();
   }
 
   gerarDiasDoMes(): any[] {
@@ -80,19 +85,27 @@ export class CalendarioComponent implements OnInit {
       this.dataAtual.getMonth() + 1,
       0
     );
-    const dias: any[] = [];
 
     const inicio = new Date(primeiroDia);
-    inicio.setDate(primeiroDia.getDate() - primeiroDia.getDay());
+    inicio.setDate(inicio.getDate() - inicio.getDay());
 
     const fim = new Date(ultimoDia);
-    fim.setDate(ultimoDia.getDate() + (6 - ultimoDia.getDay()));
+    fim.setDate(fim.getDate() + (6 - fim.getDay()));
+
+    const dias: any[] = [];
 
     for (let d = new Date(inicio); d <= fim; d.setDate(d.getDate() + 1)) {
       const dia = new Date(d);
+      const dataISO = this.formatarDataISO(dia);
+
       const eventosDoDia = this.eventos
-        .filter((ev) => ev.data_inicio === this.formatarDataISO(dia))
-        .sort((a, b) => a.horario_inicio.localeCompare(b.horario_inicio));
+        .filter((ev) => dataISO >= ev.data_inicio && dataISO <= ev.data_fim)
+        .map((evento) => ({
+          ...evento,
+          isInicio: evento.data_inicio === dataISO,
+          isFim: evento.data_fim === dataISO,
+          mostrarTitulo: evento.data_inicio === dataISO || dia.getDay() === 0,
+        }));
 
       dias.push({
         data: new Date(dia),
@@ -105,28 +118,47 @@ export class CalendarioComponent implements OnInit {
   }
 
   gerarDiasDaSemana(): any[] {
-    const diaBase = new Date(this.dataAtual);
-    const inicio = new Date(
-      diaBase.setDate(diaBase.getDate() - diaBase.getDay())
-    );
+    const dias: any[] = [];
+    const base = new Date(this.dataAtual);
 
-    return Array.from({ length: 7 }).map((_, i) => {
-      const dia = new Date(inicio);
-      dia.setDate(inicio.getDate() + i);
+    // Obtemos o domingo da semana atual (primeiro dia visível na semana)
+    const domingo = new Date(base);
+    domingo.setDate(domingo.getDate() - domingo.getDay());
+
+    for (let i = 0; i < 7; i++) {
+      const dia = new Date(domingo);
+      dia.setDate(domingo.getDate() + i);
+      const dataISO = this.formatarDataISO(dia);
 
       const eventosDoDia = this.eventos
-        .filter((ev) => ev.data_inicio === this.formatarDataISO(dia))
-        .sort((a, b) => a.horario_inicio.localeCompare(b.horario_inicio));
+        .filter((ev) => dataISO >= ev.data_inicio && dataISO <= ev.data_fim)
+        .map((ev) => {
+          const isPrimeiraAparicaoNaSemana =
+            ev.data_inicio === dataISO ||
+            (new Date(ev.data_inicio) < domingo && i === 0);
+          return {
+            ...ev,
+            isInicio: ev.data_inicio === dataISO,
+            isFim: ev.data_fim === dataISO,
+            mostrarTitulo: isPrimeiraAparicaoNaSemana,
+          };
+        });
 
-      return {
+      dias.push({
         data: new Date(dia),
+        fora: false,
         eventos: eventosDoDia,
-      };
-    });
+      });
+    }
+
+    return dias;
   }
 
   formatarDataISO(date: Date): string {
-    return date.toISOString().split('T')[0];
+    const ano = date.getFullYear();
+    const mes = (date.getMonth() + 1).toString().padStart(2, '0');
+    const dia = date.getDate().toString().padStart(2, '0');
+    return `${ano}-${mes}-${dia}`;
   }
 
   mudarModo(novoModo: 'mes' | 'semana') {
@@ -137,18 +169,63 @@ export class CalendarioComponent implements OnInit {
   proximo() {
     if (this.modo === 'mes') {
       this.dataAtual.setMonth(this.dataAtual.getMonth() + 1);
-    } else if (this.modo === 'semana') {
+    } else {
       this.dataAtual.setDate(this.dataAtual.getDate() + 7);
     }
+    this.sincronizarDataSelecionada();
     this.gerarCalendario();
   }
 
   anterior() {
     if (this.modo === 'mes') {
       this.dataAtual.setMonth(this.dataAtual.getMonth() - 1);
-    } else if (this.modo === 'semana') {
+    } else {
       this.dataAtual.setDate(this.dataAtual.getDate() - 7);
     }
+    this.sincronizarDataSelecionada();
     this.gerarCalendario();
+  }
+
+  sincronizarDataSelecionada() {
+    this.dataAtualMes = this.dataAtual.getMonth();
+    this.dataAtualAno = this.dataAtual.getFullYear();
+  }
+
+  gerarAnosDisponiveis() {
+    const anoAtual = new Date().getFullYear();
+    this.anosDisponiveis = Array.from(
+      { length: 10 },
+      (_, i) => anoAtual - 5 + i
+    );
+  }
+
+  atualizarData() {
+    this.dataAtual = new Date(this.dataAtualAno, this.dataAtualMes, 1);
+    this.gerarCalendario();
+  }
+
+  ehHoje(data: Date): boolean {
+    const hoje = new Date();
+    return (
+      data.getDate() === hoje.getDate() &&
+      data.getMonth() === hoje.getMonth() &&
+      data.getFullYear() === hoje.getFullYear()
+    );
+  }
+
+  isInicio(evento: Evento, dia: Date): boolean {
+    return this.formatarDataISO(dia) === evento.data_inicio;
+  }
+
+  isFim(evento: Evento, dia: Date): boolean {
+    return this.formatarDataISO(dia) === evento.data_fim;
+  }
+
+  ativarHoverGrupo(hoverGroupId: string) {
+    this.hoverGroupAtivo = hoverGroupId;
+  }
+
+  desativarHoverGrupo() {
+    this.hoverGroupAtivo = null;
   }
 }

@@ -1,32 +1,81 @@
-.controle-modo {
+/* --- Layout Básico e Cabeçalho --- */
+.cabecalho-calendario {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
   margin-bottom: 1rem;
 }
 
-.controle-modo button {
-  padding: 0.5rem 1rem;
-  border: none;
-  background-color: #fe0002;
-  color: #fff;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.controle-modo button:hover {
-  background-color: #cc0000;
-}
-
-.grade {
+.navegacao {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin: 2rem;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 1.2rem;
 }
 
+.seta {
+  cursor: pointer;
+  user-select: none;
+  font-size: 1.5rem;
+  padding: 0 0.5rem;
+  transition: transform 0.2s;
+}
+
+.seta:hover {
+  transform: scale(1.2);
+}
+
+.modo-switch {
+  display: flex;
+  gap: 1rem;
+  font-weight: bold;
+}
+
+.modo-switch label {
+  cursor: pointer;
+}
+
+.modo-switch input[type='radio'] {
+  margin-right: 0.3rem;
+}
+
+.titulo-central {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #000;
+  position: relative;
+}
+
+.titulo-central .mes,
+.titulo-central .ano {
+  position: relative;
+  padding: 0.2rem 0.6rem;
+}
+
+.titulo-central .mes:hover,
+.titulo-central .ano:hover {
+  opacity: 0.85;
+  cursor: pointer;
+}
+
+.select-invisivel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* --- Cabeçalho dos Dias da Semana --- */
 .cabecalho {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -35,20 +84,15 @@
   background-color: #f0f0f0;
   padding: 0.5rem 0;
   border-radius: 8px;
+  margin: 0 1rem;
 }
 
-.titulo-mes {
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  color: #000;
-}
-
+/* --- Grade dos Dias --- */
 .dias {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 4px;
+  padding: 0 1rem 1rem 1rem;
 }
 
 .dia {
@@ -62,6 +106,7 @@
   font-size: 0.9rem;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .dia.fora {
@@ -69,57 +114,64 @@
   color: #999;
 }
 
+.dia.hoje {
+  border: 2px solid #fe0002;
+  box-shadow: 0 0 4px rgba(254, 0, 2, 0.5);
+}
+
 .numero {
   font-weight: bold;
   margin-bottom: 4px;
 }
 
-.titulo {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 0.75rem;
-}
-
+/* --- Eventos --- */
 .evento {
-  border-radius: 6px;
-  padding: 4px 6px;
-  margin-bottom: 1px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  display: flex;
-  flex-direction: column;
-  transition: background-color 0.3s ease;
-}
-
-.evento .tag {
   color: white;
   padding: 2px 6px;
-  font-size: 12px;
-  font-weight: bold;
-  border-radius: 4px;
-  margin-bottom: 3px;
-  text-align: center;
-}
-
-.evento .titulo {
   font-size: 0.75rem;
+  margin: 2px 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: block;
+  min-height: 15px;
+  line-height: 1.2em;
+  border-radius: 0;
+  transition: transform 0.2s ease;
+  position: relative;
 }
 
-/* Responsividade */
+/* Bordas específicas para eventos de múltiplos dias */
+.evento-inicio {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.evento-fim {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.evento-meio {
+  border-radius: 0;
+}
+
+.evento-unico {
+  border-radius: 6px;
+}
+
+/* Hover coletivo via classe adicionada pelo Angular */
+.evento.hover-ativo {
+  transform: scale(1.05);
+  z-index: 10;
+}
+
+/* --- Responsividade --- */
 @media (max-width: 768px) {
 
   .cabecalho,
   .dias {
     grid-template-columns: repeat(7, 1fr);
-  }
-
-  .controle-modo {
-    flex-wrap: wrap;
-    gap: 0.5rem;
   }
 
   .dia {
@@ -129,4 +181,26 @@
   .evento {
     font-size: 0.7rem;
   }
+
+  .titulo-central {
+    flex-direction: column;
+    font-size: 1.2rem;
+  }
+
+  .dias {
+    padding: 0 0.5rem;
+  }
+
+  .cabecalho-calendario {
+    gap: 0.3rem;
+  }
+}
+
+/* --- Modo Semana --- */
+.dias.semana-expandida {
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.dias.semana-expandida .dia {
+  min-height: 300px;
 }

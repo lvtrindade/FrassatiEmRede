@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
       error: (err) => {
         console.error('Erro no login:', err);
         this.erroLogin = 'Erro ao tentar fazer login. Tente novamente.';
+        this.loading = false;
       },
       complete: () => {
         this.loading = false;

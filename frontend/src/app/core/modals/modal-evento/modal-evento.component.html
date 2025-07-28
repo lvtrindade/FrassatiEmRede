@@ -10,8 +10,13 @@
   </p>
 
   <p><strong>Horário:</strong>
-    {{ formatarHorario(evento.horario_inicio) }}
-    até {{ formatarHorario(evento.horario_fim) }}
+    <ng-container *ngIf="evento.data_inicio === evento.data_fim; else eventoLongo">
+      {{ formatarHorario(evento.horario_inicio) }} até {{ formatarHorario(evento.horario_fim) }}
+    </ng-container>
+    <ng-template #eventoLongo>
+      {{ formatarHorario(evento.horario_inicio) }} ({{ formatarData(evento.data_inicio) }})
+      até {{ formatarHorario(evento.horario_fim) }} ({{ formatarData(evento.data_fim) }})
+    </ng-template>
   </p>
 
   <p><strong>Ramo:</strong>

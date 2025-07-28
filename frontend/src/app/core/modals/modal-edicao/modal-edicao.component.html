@@ -4,33 +4,26 @@
     <h2>Editar Atividade</h2>
 
     <form (ngSubmit)="salvar.emit()" #editarForm="ngForm">
-      <!-- Imagem Principal -->
       <label>Escolha a sua imagem principal</label>
       <input type="file" accept="image/*" (change)="onImagemPrincipalSelecionada.emit($event)" />
 
-      <!-- Título -->
       <label>Título</label>
       <input type="text" [(ngModel)]="atividadeEditando.titulo" name="titulo" required />
 
-      <!-- Data da Atividade -->
       <label>Quando essa atividade aconteceu?</label>
       <input type="date" [(ngModel)]="atividadeEditando.data_atividade" name="data_atividade" required />
 
-      <!-- Descrição -->
       <label>O que aconteceu nessa atividade?</label>
       <textarea [(ngModel)]="atividadeEditando.descricao" name="descricao" required></textarea>
 
-      <!-- Tags -->
       <label>Selecione a tag:</label>
       <select [(ngModel)]="atividadeEditando.id_tag" name="id_tag" required>
         <option *ngFor="let tag of tags" [value]="tag.id">{{ tag.nome }}</option>
       </select>
 
-      <!-- Galeria -->
       <label>Adicione fotos à galeria (opcional)</label>
       <input type="file" accept="image/*" multiple (change)="onGaleriaSelecionada.emit($event)" />
 
-      <!-- Preview -->
       <div *ngIf="(imagensExistenteGaleria.length > 0) || (imagensGaleria.length > 0)" class="galeria-preview">
         <h3>Fotos da Galeria</h3>
 
@@ -47,7 +40,6 @@
         </div>
       </div>
 
-      <!-- Botões -->
       <div class="form-actions">
         <button type="button" (click)="fecharModal.emit()">Cancelar</button>
         <button type="submit" [disabled]="!editarForm.form.valid">Salvar Alterações</button>

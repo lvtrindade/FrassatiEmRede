@@ -1,0 +1,174 @@
+/* Container ocupa toda a tela com padding interno */
+.content {
+    width: 100%;
+    height: 100%;
+    padding: 3rem 5%;
+    background-color: #f8f9fa;
+    font-family: "Reddit Sans", sans-serif;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+/* Título principal */
+.content h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 2.5rem;
+    /* leve aumento para separação do título */
+    color: #000;
+    text-align: left;
+}
+
+/* Formulário geral */
+.upload {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Labels */
+.upload label {
+    font-weight: 600;
+    color: #333;
+}
+
+/* Inputs comuns */
+.upload input[type="text"],
+.upload input[type="date"],
+.upload textarea,
+.upload select {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.6rem;
+    background-color: #fff;
+    transition: border 0.2s;
+    outline: none;
+}
+
+.upload input[type="text"]:focus,
+.upload input[type="date"]:focus,
+.upload textarea:focus,
+.upload select:focus {
+    border-color: #fe0002;
+}
+
+/* Área de texto */
+.upload textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Inputs de arquivo */
+.upload input[type="file"] {
+    margin-top: 0.5rem;
+}
+
+/* Galeria */
+.galeria-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* Upload box com estilo pontilhado */
+.upload-box {
+    width: 140px;
+    height: 100px;
+    border: 2px dashed #fe0002;
+    border-radius: 0.6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fe0002;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.upload-box:hover {
+    background-color: rgba(254, 0, 2, 0.05);
+}
+
+.upload-plus {
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.upload-text {
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* Imagem com botão de remoção */
+.imagem-container {
+    position: relative;
+    width: 140px;
+    height: 100px;
+}
+
+.thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.6rem;
+    border: 2px solid #ccc;
+    transition: transform 0.2s ease;
+}
+
+.thumbnail:hover {
+    transform: scale(1.05);
+}
+
+.imagem-container button {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background-color: #fe0002;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+}
+
+/* Caixa da imagem principal */
+.imagem-principal-box {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Botão de envio */
+.upload button[type="submit"] {
+    margin-top: 2rem;
+    background-color: #fe0002;
+    color: #fff;
+    font-size: 1.1rem;
+    padding: 1rem;
+    border: none;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.upload button[type="submit"]:hover {
+    background-color: #cc0001;
+}
+
+.upload button[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

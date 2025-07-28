@@ -14,7 +14,7 @@
 </div>
 
 <div class="section" id="landing_grupo">
-    <h2>O grupo</h2>
+    <h2>O Grupo</h2>
 
     <p>
         O Grupo Escoteiro Jorge Frassati 02/PR é considerado o Grupo Escoteiro mais antigo em atividade no Estado do
@@ -67,7 +67,7 @@
 
             <div class="cards-home-container">
                 <app-card-atividade *ngFor="let atividade of atividades" [atividade]="atividade" [modoAdmin]="false"
-                    class="modo-home">
+                    class="modo-home" [routerLink]="['/blog/atividade', atividade.id]">
                 </app-card-atividade>
             </div>
 

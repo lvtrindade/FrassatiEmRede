@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, catchError } from 'rxjs';
+import { Inject, Injectable } from '@angular/core';
+import { Observable, catchError, map } from 'rxjs';
 import { environment } from '../../environments/environments';
 import { Atividade } from '../../models/atividade.model';
 import { ApiResponse } from '../../models/apiResponse.model';
@@ -11,10 +11,18 @@ import { ApiResponse } from '../../models/apiResponse.model';
 export class AtividadesService {
   private apiUrl = `${environment.apiUrl}/atividades`;
 
-  constructor(private http: HttpClient) {}
+  constructor(@Inject(HttpClient) private http: HttpClient) {}
 
   getAtividades(): Observable<ApiResponse<Atividade[]>> {
     return this.http.get<ApiResponse<Atividade[]>>(this.apiUrl);
+  }
+
+  buscarPorId(
+    id: number
+  ): Observable<{ cod: number; mensagem: string; data: Atividade }> {
+    return this.http.get<{ cod: number; mensagem: string; data: Atividade }>(
+      `${this.apiUrl}/${id}`
+    );
   }
 
   excluirAtividade(atividadeId: number): Observable<any> {

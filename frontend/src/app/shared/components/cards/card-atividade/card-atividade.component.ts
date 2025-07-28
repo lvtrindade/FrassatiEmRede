@@ -1,16 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-card-atividade',
   templateUrl: './card-atividade.component.html',
   styleUrls: ['./card-atividade.component.css'],
   standalone: true,
-  imports:[CommonModule]
+  imports:[CommonModule, RouterModule]
 })
 export class CardAtividadeComponent {
   @Input() atividade!: any;
   @Input() modoAdmin = false;
+  @Input() link?: any[];
 
   @Output() editar = new EventEmitter<number>();
   @Output() excluir = new EventEmitter<number>();

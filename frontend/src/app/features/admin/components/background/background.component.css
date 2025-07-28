@@ -22,49 +22,92 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 25px;
+    gap: 30px;
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
 }
 
 .upload-form h2 {
     font-size: 1.2rem;
     color: #333;
     font-family: 'Reddit Sans', sans-serif;
+    margin-bottom: 0;
 }
 
-.input-file {
-    padding: 10px 15px;
-    border: 2px solid #ccc;
-    border-radius: 12px;
-    font-size: 16px;
+/* Upload box estilo retângulo pontilhado */
+.upload-box {
     width: 100%;
-    max-width: 400px;
-    transition: border-color 0.3s ease;
+    height: 300px;
+    border: 3px dashed #cc263c;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #cc263c;
     cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
 }
 
-.input-file:hover {
-    border-color: #cc263c;
+.upload-box:hover {
+    background-color: rgba(204, 38, 60, 0.05);
+    border-color: #a9192f;
 }
 
-button[type="submit"] {
+/* Quando há imagem, remove os textos + e o texto e mostra a imagem */
+.upload-box.has-image {
+    border-style: solid;
+    padding: 0;
+    color: transparent;
+}
+
+/* Símbolo + centralizado */
+.upload-plus {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 12px;
+}
+
+/* Texto abaixo do + */
+.upload-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+/* Preview da imagem grande, ocupando todo o box */
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    pointer-events: none;
+    /* evita clicar na imagem e abrir dialog */
+}
+
+/* Botão de enviar */
+button[type='submit'] {
     font-family: 'Reddit Sans', sans-serif;
     font-size: 16px;
     background-color: #cc263c;
     color: white;
-    padding: 12px 32px;
+    padding: 14px 40px;
     border: none;
     border-radius: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 200px;
 }
 
-button[type="submit"]:hover {
+button[type='submit']:hover:not(:disabled) {
     background-color: #a9192f;
 }
 
-button[type="submit"]:disabled {
+button[type='submit']:disabled {
     background-color: #ccc;
     cursor: not-allowed;
 }
