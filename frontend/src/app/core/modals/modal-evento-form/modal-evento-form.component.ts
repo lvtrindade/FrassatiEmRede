@@ -9,18 +9,20 @@ import {
 import { CalendarioService } from '../../services/calendario.service';
 import { TagsService } from '../../services/tags.service';
 import { CommonModule } from '@angular/common';
+import { ModalConfirmacaoComponent } from "../../../shared/components/modal-confirmacao/modal-confirmacao.component";
 
 @Component({
   selector: 'app-modal-evento-form',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ModalConfirmacaoComponent],
   templateUrl: './modal-evento-form.component.html',
   styleUrl: './modal-evento-form.component.css',
 })
 export class ModalEventoFormComponent implements OnInit {
   @Input() evento: Evento | null = null;
   @Input() dataSelecionada: Date | null = null;
-  @Output() fechar: EventEmitter<void> = new EventEmitter<void>();
-  @Output() salvar: EventEmitter<void> = new EventEmitter<void>();
+  @Output() fechar = new EventEmitter<void>();
+  @Output() salvar = new EventEmitter<void>();
+  @Output() salvarFalhou = new EventEmitter<string>();
   @Output() excluir = new EventEmitter<void>();
 
   form: FormGroup;
@@ -60,17 +62,23 @@ export class ModalEventoFormComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.salvarFalhou.emit('Preencha todos os campos obrigatórios.');
+      this.form.markAllAsTouched();
+      return;
+    }
 
     const dados = this.form.value;
     if (this.evento) {
-      this.calendarioService
-        .editarEvento(this.evento!.id!, dados)
-        .subscribe(() => this.finalizar());
+      this.calendarioService.editarEvento(this.evento!.id!, dados).subscribe({
+        next: () => this.finalizar(),
+        error: () => this.salvarFalhou.emit('Erro ao editar evento.'),
+      });
     } else {
-      this.calendarioService
-        .criarEvento(dados)
-        .subscribe(() => this.finalizar());
+      this.calendarioService.criarEvento(dados).subscribe({
+        next: () => this.finalizar(),
+        error: () => this.salvarFalhou.emit('Erro ao criar evento.'),
+      });
     }
   }
 
@@ -79,9 +87,23 @@ export class ModalEventoFormComponent implements OnInit {
     this.fechar.emit();
   }
 
+  mostrarConfirmacaoExclusao = false;
+
   onExcluir() {
-    if (confirm('Tem certeza que deseja excluir este evento?')) {
-      this.excluir.emit();
-    }
+    this.mostrarConfirmacaoExclusao = true;
+  }
+
+  confirmarExclusao() {
+    this.excluir.emit();
+    this.mostrarConfirmacaoExclusao = false;
+  }
+
+  cancelarExclusao() {
+    this.mostrarConfirmacaoExclusao = false;
+  }
+
+  campoInvalido(campo: string): boolean {
+    const control = this.form.get(campo);
+    return !!(control && control.invalid && control.touched);
   }
 }

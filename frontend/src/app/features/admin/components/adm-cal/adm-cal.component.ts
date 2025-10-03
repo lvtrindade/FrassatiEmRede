@@ -4,11 +4,12 @@ import { Evento } from '../../../../models/evento.model';
 import { CalendarioService } from '../../../../core/services/calendario.service';
 import { ModalEventoFormComponent } from '../../../../core/modals/modal-evento-form/modal-evento-form.component';
 import { FormsModule } from '@angular/forms';
+import { AlertaMensagemComponent } from "../../../../shared/components/alerta-mensagem/alerta-mensagem.component";
 
 @Component({
   selector: 'app-adm-cal',
   standalone: true,
-  imports: [CommonModule, FormsModule, ModalEventoFormComponent],
+  imports: [CommonModule, FormsModule, ModalEventoFormComponent, AlertaMensagemComponent],
   templateUrl: './adm-cal.component.html',
   styleUrl: './adm-cal.component.css',
 })
@@ -259,9 +260,24 @@ export class AdmCalComponent implements OnInit {
 
   excluirEvento() {
     if (!this.eventoSelecionado?.id) return;
-    this.calendarioService.excluirEvento(this.eventoSelecionado.id).subscribe(() => {
-      this.carregarEventos();
-      this.fecharModal();
-    });
+    this.calendarioService
+      .excluirEvento(this.eventoSelecionado.id)
+      .subscribe(() => {
+        this.carregarEventos();
+        this.fecharModal();
+      });
+  }
+
+  mensagem: string = '';
+  tipoMensagem: 'sucesso' | 'erro' | 'aviso' | '' = '';
+
+  mostrarMensagem(mensagem: string, tipo: 'sucesso' | 'erro' | 'aviso') {
+    this.mensagem = mensagem;
+    this.tipoMensagem = tipo;
+
+    setTimeout(() => {
+      this.mensagem = '';
+      this.tipoMensagem = '';
+    }, 4000);
   }
 }

@@ -80,8 +80,8 @@ export class NovaAtividadeComponent {
       formData.append('imagem_principal', this.imagem_principal);
     }
 
-    this.imagens_galeria.forEach((imagem, index) => {
-      formData.append(`imagens_galeria[${index}]`, imagem);
+    this.imagens_galeria.forEach((imagem) => {
+      formData.append('imagens_galeria[]', imagem);
     });
 
     this.atividadesService.criarAtividade(formData).subscribe({

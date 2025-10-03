@@ -6,31 +6,45 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <label>Título:</label>
     <input formControlName="titulo" type="text" />
+    <small *ngIf="campoInvalido('titulo')" class="erro">Título é obrigatório.</small>
 
     <label>Descrição:</label>
     <textarea formControlName="descricao"></textarea>
+    <small *ngIf="campoInvalido('descricao')" class="erro">Descrição é obrigatória.</small>
 
     <label>Data de Início:</label>
     <input formControlName="data_inicio" type="date" />
+    <small *ngIf="campoInvalido('data_inicio')" class="erro">Data de início é obrigatória.</small>
 
     <label>Data de Término:</label>
     <input formControlName="data_fim" type="date" />
+    <small *ngIf="campoInvalido('data_fim')" class="erro">Data de término é obrigatória.</small>
 
     <label>Horário de Início:</label>
     <input formControlName="horario_inicio" type="time" />
+    <small *ngIf="campoInvalido('horario_inicio')" class="erro">Horário de início é obrigatório.</small>
 
     <label>Horário de Término:</label>
     <input formControlName="horario_fim" type="time" />
+    <small *ngIf="campoInvalido('horario_fim')" class="erro">Horário de término é obrigatório.</small>
 
     <label>Tag:</label>
     <select formControlName="id_tag">
       <option *ngFor="let tag of tags" [value]="tag.id">{{ tag.nome }}</option>
     </select>
+    <small *ngIf="campoInvalido('id_tag')" class="erro">Selecione uma tag.</small>
 
     <div class="botoes">
       <button type="submit">Salvar</button>
       <button type="button" (click)="fechar.emit()">Cancelar</button>
-      <button *ngIf="evento" type="button" class="excluir" (click)="onExcluir()">Excluir</button>
+      <button *ngIf="evento" type="button" class="excluir" (click)="onExcluir()">
+        Excluir
+      </button>
     </div>
   </form>
 </div>
+
+<app-modal-confirmacao *ngIf="mostrarConfirmacaoExclusao" titulo="Excluir Evento"
+  mensagem="Tem certeza que deseja excluir este evento? Essa ação não pode ser desfeita." textoConfirmar="Excluir"
+  textoCancelar="Cancelar" (confirmar)="confirmarExclusao()" (cancelar)="cancelarExclusao()">
+</app-modal-confirmacao>

@@ -52,6 +52,18 @@ class AtividadeController {
                     }
 
                     $nova = $this->service->criar($dto);
+
+                    if (isset($uploadedFiles['imagens_galeria']) && is_array($uploadedFiles['imagens_galeria'])) {
+                        foreach ($uploadedFiles['imagens_galeria'] as $file) {
+                            if ($file->getError() === UPLOAD_ERR_OK) {
+                                $base64 = base64_encode($file->getStream()->getContents());
+                                $this->service->adicionarImagemGaleria($nova['id'], $base64);
+                            }
+                        }
+                    }
+
+                    $nova = $this->service->buscarPorId($nova['id']);
+
                     return ResponseFormatter::success($response, "Criada", $nova, 201);
 
                 case 'PUT':

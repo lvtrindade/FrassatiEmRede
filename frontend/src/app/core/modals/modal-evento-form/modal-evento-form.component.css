@@ -21,13 +21,16 @@
   z-index: 50;
   width: 90%;
   max-width: 540px;
+  max-height: 90vh;
+  /* 🔹 limite de altura */
+  overflow-y: auto;
+  /* 🔹 scroll interno se ultrapassar */
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   font-family: 'Reddit Sans', sans-serif;
   justify-content: center;
   align-items: stretch;
-  /* campos ocupam toda largura */
 }
 
 .modal h2 {
@@ -59,15 +62,13 @@ textarea {
   line-height: 1.2;
   height: 38px;
   box-sizing: border-box;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
   font-family: 'Reddit Sans', sans-serif;
   resize: none;
-  /* textarea resize vertical só se for textarea, veja abaixo */
 }
 
 textarea {
   height: 80px;
-  /* maior que inputs, para conforto */
   resize: vertical;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -78,7 +79,30 @@ select:focus,
 textarea:focus {
   outline: none;
   border-color: #fe0002;
-  box-shadow: 0 0 0 3px rgba(254, 0, 2, 0.2);
+  box-shadow: 0 0 0 3px rgba(254, 0, 2, 0.15);
+  background-color: #fff;
+}
+
+/* 🔹 mensagens de erro */
+.erro {
+  color: #b91c1c;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  margin-bottom: -0.5rem;
+  font-weight: 500;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .botoes {
@@ -96,7 +120,11 @@ textarea:focus {
   border: none;
   border-radius: 1rem;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.botoes button:hover {
+  transform: translateY(-1px);
 }
 
 .botoes button[type="submit"] {
@@ -124,4 +152,19 @@ textarea:focus {
 
 .botoes button.excluir:hover {
   background-color: #333333;
+}
+
+@media (max-width: 480px) {
+  .modal {
+    padding: 1rem;
+    border-radius: 1.5rem;
+  }
+
+  .botoes {
+    flex-direction: column;
+  }
+
+  .botoes button {
+    width: 100%;
+  }
 }

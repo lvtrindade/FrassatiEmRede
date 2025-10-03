@@ -30,6 +30,10 @@ class AtividadeService {
         return $this->repo->findById($idAtividade);
     }
 
+    public function adicionarImagemGaleria($idAtividade, $base64Image) {
+        $this->repo->addImagemGaleria($idAtividade, $base64Image);
+    }
+
     public function editar($id, $dto) {
         if (!$dto->isValid('editar')) {
             throw new \Exception("Dados inválidos (editar)");
