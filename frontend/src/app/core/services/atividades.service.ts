@@ -43,7 +43,6 @@ export class AtividadesService {
       })
       .pipe(
         catchError((error) => {
-          console.error('Erro na requisição:', error);
           throw error;
         })
       );
@@ -59,7 +58,6 @@ export class AtividadesService {
       })
       .pipe(
         catchError((error) => {
-          console.error('Erro ao criar atividade:', error);
           throw error;
         })
       );

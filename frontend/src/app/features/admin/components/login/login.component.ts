@@ -45,17 +45,15 @@ export class LoginComponent implements OnInit {
     const { usuario, senha } = this.loginForm.value;
 
     this.authService.login(usuario, senha).subscribe({
-      next: (res) => {
-        if (res?.cod === 200 && res?.data?.token) {
-          this.authService.setToken(res.data.token);
+      next: (res: any) => {
+        if (res?.cod === 200 && res?.data) {
           this.authService.setUser(res.data.usuario);
           this.router.navigate(['/admin/dashboard']);
         } else {
           this.erroLogin = 'Usuário ou senha inválidos!';
         }
       },
-      error: (err) => {
-        console.error('Erro no login:', err);
+      error: () => {
         this.erroLogin = 'Erro ao tentar fazer login. Tente novamente.';
         this.loading = false;
       },

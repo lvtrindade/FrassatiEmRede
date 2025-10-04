@@ -69,7 +69,6 @@ export class BackgroundComponent {
         this.loading = false;
         this.mensagem = 'Erro ao enviar o arquivo.';
         this.tipoMensagem = 'erro';
-        console.error(error);
       },
     });
   }

@@ -40,9 +40,6 @@ export class BlogListaComponent implements OnInit {
       next: (res) => {
         this.tags = res.data;
       },
-      error: (err) => {
-        console.error('Erro ao carregar tags: ', err);
-      },
     });
   }
 
@@ -56,9 +53,6 @@ export class BlogListaComponent implements OnInit {
           this.atividades = [];
           this.atividadesFiltradas = [];
         }
-      },
-      error: (err) => {
-        console.error('Erro ao carregar atividades:', err);
       },
     });
   }

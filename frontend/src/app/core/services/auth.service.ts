@@ -1,25 +1,37 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environments';
-import { LoginResponse } from '../../models/loginResponse.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = `${environment.apiUrl}/login`;
+  private apiUrl = `${environment.apiUrl}`;
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  login(usuario: string, senha: string): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(this.apiUrl, { usuario, senha }, { headers });
+  login(usuario: string, senha: string) {
+    return this.http.post(
+      `${this.apiUrl}/login`,
+      { usuario, senha },
+      {
+        withCredentials: true,
+      }
+    );
   }
 
-  setToken(token: string) {
-    localStorage.setItem('authToken', token);
+  logout(): void {
+    this.http.post(`${environment.apiUrl}/logout`, {}).subscribe({
+      next: () => {
+        localStorage.removeItem('user');
+        this.router.navigate(['/admin/login']);
+      },
+      error: () => {
+        localStorage.removeItem('user');
+        this.router.navigate(['/admin/login']);
+      },
+    });
   }
 
   setUser(user: any) {
@@ -27,11 +39,6 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('authToken');
-  }
-
-  logout(): void {
-    localStorage.removeItem('authToken');
-    this.router.navigate(['/admin/login']);
+    return !!localStorage.getItem('user'); // token está no cookie
   }
 }

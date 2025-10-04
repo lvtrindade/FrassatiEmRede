@@ -30,8 +30,6 @@ export class HeaderComponent implements AfterViewInit {
     const headerElement = this.document.querySelector('.header') as HTMLElement;
     if (headerElement) {
       const headerHeight = headerElement.offsetHeight;
-    } else {
-      console.error('Elemento com classe .header não encontrado.');
     }
   }
 

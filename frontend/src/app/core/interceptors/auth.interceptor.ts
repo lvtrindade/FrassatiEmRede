@@ -1,26 +1,21 @@
-import { inject } from '@angular/core';
+// auth.interceptor.ts
 import {
-  HttpInterceptorFn,
   HttpRequest,
   HttpHandlerFn,
+  HttpInterceptorFn,
   HttpEvent,
 } from '@angular/common/http';
+import { inject } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
-export const AuthInterceptor: HttpInterceptorFn = (
+export const authInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> => {
-  const token = localStorage.getItem('authToken');
+  const router = inject(Router);
 
-  if (token) {
-    const authReq = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return next(authReq);
-  }
+  const authReq = req.clone({ withCredentials: true });
 
-  return next(req);
+  return next(authReq);
 };

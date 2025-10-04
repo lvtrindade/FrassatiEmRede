@@ -14,6 +14,9 @@ export class AtividadeComponent implements OnInit {
   atividadeId!: number;
   atividade?: Atividade;
 
+  selectedImage: string | null = null;
+  currentIndex: number = -1;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -47,5 +50,24 @@ export class AtividadeComponent implements OnInit {
 
   formatarData(data: string): string {
     return new Date(data).toLocaleDateString('pt-BR');
+  }
+
+  abrirImagem(foto: string, index: number): void {
+    this.selectedImage = foto;
+    this.currentIndex = index;
+  }
+
+  fecharImagem(): void {
+    this.selectedImage = null;
+    this.currentIndex = -1;
+  }
+
+  navegarImagem(direcao: number): void {
+    if (!this.atividade || !this.atividade.galeria) return;
+
+    const total = this.atividade.galeria.length;
+    this.currentIndex = (this.currentIndex + direcao + total) % total; // loop infinito
+    this.selectedImage =
+      'data:image/*;base64,' + this.atividade.galeria[this.currentIndex].imagem;
   }
 }

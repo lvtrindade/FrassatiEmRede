@@ -27,12 +27,50 @@ class AuthController {
 
             unset($login['senha']);
 
+            setcookie(
+                "authToken",
+                $token,
+                [
+                    'expires' => time() + 3600 * 12,
+                    'path' => '/',
+                    'domain' => $_ENV['APP_DOMAIN'] ?? '',
+                    'secure' => false,
+                    'httponly' => true,
+                    'samesite' => 'Lax'
+                ]
+            );
+
             return ResponseFormatter::success($response, "Login realizado", [
                 'usuario' => $login,
-                'token' => $token
             ], 200);
+
         } catch (\Exception $e) {
             return ResponseFormatter::error($response, $e->getMessage(), 400);
         }   
     }
+
+    public function logout(Request $request, Response $response): Response {
+        setcookie(
+            "authToken",
+            "",
+            [
+                'expires' => time() - 3600,
+                'path' => '/',
+                'domain' => $_ENV['APP_DOMAIN'] ?? '',
+                'secure' => false,
+                'httponly' => true,
+                'samesite' => 'Lax'
+            ]
+        );
+    
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(200)
+            ->withBody(
+                \Slim\Psr7\Stream::create(json_encode([
+                    'cod' => 200,
+                    'mensagem' => 'Logout realizado'
+                ]))
+            );
+        }
 }

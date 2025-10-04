@@ -40,10 +40,6 @@ export class NovaAtividadeComponent {
     this.tagService.getTags().subscribe({
       next: (res) => {
         this.tags = res.data;
-        console.log('Tags carregadas: ', this.tags);
-      },
-      error: (err) => {
-        console.error('Erro ao carregar tags: ', err);
       },
     });
   }
@@ -111,7 +107,6 @@ export class NovaAtividadeComponent {
         this.loading = false;
         this.mensagem = 'Erro ao criar atividade.';
         this.tipoMensagem = 'erro';
-        console.error('Erro ao criar atividade:', err);
       },
     });
   }

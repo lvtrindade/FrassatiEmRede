@@ -34,12 +34,7 @@ export class InicioComponent implements AfterViewInit {
           if (heroesPage) {
             heroesPage.style.backgroundImage = `url(data:image/*;base64,${response.imagem})`;
           }
-        } else {
-          console.error('Nenhuma imagem encontrada');
         }
-      },
-      error: (error: any) => {
-        console.error('Erro ao carregar imagem de fundo', error);
       },
     });
   }
@@ -96,8 +91,7 @@ export class InicioComponent implements AfterViewInit {
           this.atividades = [];
         }
       },
-      error: (error: any) => {
-        console.error('Erro ao carregar atividades', error);
+      error: () => {
         this.atividades = [];
       },
     });

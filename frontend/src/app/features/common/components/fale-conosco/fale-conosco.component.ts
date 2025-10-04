@@ -105,11 +105,10 @@ export class FaleConoscoComponent implements OnInit {
           this.tipoMensagem = 'erro';
         }
       },
-      error: (error) => {
+      error: () => {
         this.loading = false;
         this.mensagem = 'Erro ao enviar o e-mail.';
         this.tipoMensagem = 'erro';
-        console.error(error);
       },
     });
   }

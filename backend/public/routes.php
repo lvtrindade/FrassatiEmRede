@@ -13,6 +13,7 @@ use App\Controllers\TagController;
 use App\Middleware\JwtMiddleware;
 
 $app->post('/login', [AuthController::class, 'login']);
+$app->post('/logout', [AuthController::class, 'logout']);
 
 $app->get('/atividades[/{id}]', [AtividadeController::class, 'handle']);
 $app->group('/atividades', function (RouteCollectorProxy $group) {

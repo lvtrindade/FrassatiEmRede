@@ -20,8 +20,8 @@
     <section class="galeria" *ngIf="atividade.galeria && atividade.galeria.length > 0">
       <h2>Fotos da Galeria</h2>
       <div class="galeria-container">
-        <img *ngFor="let foto of atividade.galeria" [src]="'data:image/*;base64,' + foto.imagem" alt="Foto da galeria"
-          loading="lazy" />
+        <img *ngFor="let foto of atividade.galeria; let i = index" [src]="'data:image/*;base64,' + foto.imagem"
+          alt="Foto da galeria" loading="lazy" (click)="abrirImagem('data:image/*;base64,' + foto.imagem, i)" />
       </div>
     </section>
   </article>
@@ -29,4 +29,12 @@
 
 <div *ngIf="!atividade" class="loading">
   Carregando atividade...
+</div>
+
+<div *ngIf="selectedImage" class="lightbox" (click)="fecharImagem()">
+  <button class="nav-btn prev" (click)="navegarImagem(-1); $event.stopPropagation()">&#10094;</button>
+
+  <img [src]="selectedImage" alt="Imagem ampliada" (click)="$event.stopPropagation()" />
+
+  <button class="nav-btn next" (click)="navegarImagem(1); $event.stopPropagation()">&#10095;</button>
 </div>

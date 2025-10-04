@@ -22,7 +22,7 @@ import { ModalConfirmacaoComponent } from '../../../../shared/components/modal-c
     CommonModule,
     CardAtividadeComponent,
     ModalEdicaoComponent,
-    ModalConfirmacaoComponent
+    ModalConfirmacaoComponent,
   ],
   templateUrl: './adm-atv.component.html',
   styleUrl: './adm-atv.component.css',
@@ -73,10 +73,6 @@ export class AdmAtvComponent implements OnDestroy {
     this.tagService.getTags().subscribe({
       next: (res) => {
         this.tags = res.data;
-        console.log('Tags carregadas: ', this.tags);
-      },
-      error: (err) => {
-        console.error('Erro ao carregar tags: ', err);
       },
     });
   }
@@ -92,9 +88,6 @@ export class AdmAtvComponent implements OnDestroy {
           this.atividades = [];
           this.atividadesFiltradas = [];
         }
-      },
-      error: (err) => {
-        console.error('Erro ao carregar atividades:', err);
       },
     });
   }
@@ -182,16 +175,7 @@ export class AdmAtvComponent implements OnDestroy {
         next: (response: any) => {
           if (response && response.cod === 200) {
             this.loadAtividades();
-          } else {
-            console.error(
-              'Erro ao excluir atividade:',
-              response.mensagem || 'Erro desconhecido'
-            );
           }
-        },
-        error: (err) => {
-          console.error('Erro ao excluir atividade:', err);
-          alert('Erro ao excluir atividade.');
         },
         complete: () => {
           this.modalConfirmacaoAberto = false;
@@ -229,9 +213,6 @@ export class AdmAtvComponent implements OnDestroy {
     this.imagensExistenteGaleria = this.imagensExistenteGaleria.filter(
       (img) => img.id !== id
     );
-
-    console.log('Removida ->', id);
-    console.log('Lista atual de removidas ->', this.imagensRemovidasGaleria);
   }
 
   fecharModal(): void {
@@ -283,10 +264,6 @@ export class AdmAtvComponent implements OnDestroy {
       this.imagensRemovidasGaleria
     );
 
-    for (const pair of formData.entries()) {
-      console.log(pair[0] + ':', pair[1]);
-    }
-
     this.atividadesService
       .editarAtividade(this.atividadeEditando.id, formData)
       .subscribe({
@@ -300,10 +277,6 @@ export class AdmAtvComponent implements OnDestroy {
                 (response?.mensagem || 'Erro desconhecido')
             );
           }
-        },
-        error: (err) => {
-          console.error('Erro na requisição:', err);
-          alert('Erro ao salvar edição.');
         },
       });
   }
