@@ -3,15 +3,20 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TagsService } from '../../../../core/services/tags.service';
 import { AtividadesService } from '../../../../core/services/atividades.service';
+import { AlertaMensagemComponent } from '../../../../shared/components/alerta-mensagem/alerta-mensagem.component';
 
 @Component({
   selector: 'app-nova-atividade',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, AlertaMensagemComponent],
   templateUrl: './nova-atividade.component.html',
   styleUrl: './nova-atividade.component.css',
 })
 export class NovaAtividadeComponent {
+  loading = false;
+  mensagem = '';
+  tipoMensagem: 'sucesso' | 'erro' | 'aviso' | '' = '';
+
   titulo = '';
   data_atividade = '';
   descricao = '';
@@ -53,10 +58,13 @@ export class NovaAtividadeComponent {
 
   onGaleriaSelecionada(event: any) {
     const files: FileList = event.target.files;
+    if (this.imagens_galeria.length + files.length > 15) {
+      alert('Você pode enviar no máximo 15 fotos de cada vez.');
+      return;
+    }
     for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      this.imagens_galeria.push(file);
-      this.galeria_urls.push(URL.createObjectURL(file));
+      this.imagens_galeria.push(files[i]);
+      this.galeria_urls.push(URL.createObjectURL(files[i]));
     }
   }
 
@@ -76,23 +84,34 @@ export class NovaAtividadeComponent {
     formData.append('descricao', this.descricao);
     formData.append('id_tag', `${this.tag_selecionada}`);
 
-    if (this.imagem_principal) {
+    if (this.imagem_principal)
       formData.append('imagem_principal', this.imagem_principal);
-    }
+    this.imagens_galeria.forEach((imagem) =>
+      formData.append('imagens_galeria[]', imagem)
+    );
 
-    this.imagens_galeria.forEach((imagem) => {
-      formData.append('imagens_galeria[]', imagem);
-    });
+    this.loading = true;
+    this.mensagem = '';
+    this.tipoMensagem = '';
 
     this.atividadesService.criarAtividade(formData).subscribe({
       next: (res: any) => {
-        console.log('Resposta do backend:', res);
-        alert(res.mensagem || 'Atividade criada com sucesso!');
-        this.resetarFormulario();
+        this.loading = false;
+
+        if (res.cod === 200 || res.cod === 201) {
+          this.mensagem = res.mensagem || 'Atividade criada com sucesso!';
+          this.tipoMensagem = 'sucesso';
+          this.resetarFormulario();
+        } else {
+          this.mensagem = res.mensagem || 'Erro desconhecido';
+          this.tipoMensagem = 'erro';
+        }
       },
       error: (err) => {
+        this.loading = false;
+        this.mensagem = 'Erro ao criar atividade.';
+        this.tipoMensagem = 'erro';
         console.error('Erro ao criar atividade:', err);
-        alert('Erro ao criar atividade.');
       },
     });
   }

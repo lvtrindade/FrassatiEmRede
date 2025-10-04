@@ -1,9 +1,10 @@
 :host {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  padding: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
   min-height: 100vh;
   box-sizing: border-box;
   background-color: #fff;
@@ -27,9 +28,10 @@
   padding: 2rem;
   border-radius: 1rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
-form > div {
+form>div {
   margin-bottom: 1.5rem;
 }
 
@@ -94,4 +96,40 @@ button:hover:not(:disabled) {
 button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+/* Logo pulsando */
+.logo-pulse {
+  width: 100px;
+  height: 100px;
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    filter: brightness(1);
+    transform: scale(1);
+  }
+
+  50% {
+    filter: brightness(2);
+    transform: scale(1.2);
+  }
+
+  100% {
+    filter: brightness(1);
+    transform: scale(1);
+  }
 }

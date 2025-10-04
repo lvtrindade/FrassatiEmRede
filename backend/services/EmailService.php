@@ -15,7 +15,7 @@ class EmailService {
         }
 
         EmailSender::enviar(
-            'lucasventurintrindade@gmail.com',
+            'gejorgefrassati02pr@gmail.com',
             'Novo contato pelo site',
             "
                 <h2>Contato</h2>

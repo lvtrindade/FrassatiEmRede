@@ -18,7 +18,7 @@ class EmailSender {
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
-        $mail->setFrom('noreply-frassati@gmail.com', 'Site Frassati');
+        $mail->setFrom('sitefrassati@gmail.com', 'Site Frassati');
         $mail->addAddress($para);
         $mail->isHTML(true);
         $mail->Subject = $assunto;

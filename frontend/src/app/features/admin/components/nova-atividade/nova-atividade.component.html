@@ -57,6 +57,14 @@
         </div>
 
         <!-- Botão de Envio -->
-        <button type="submit" [disabled]="!atividadeForm.form.valid">Enviar</button>
+        <!-- Botão de envio -->
+        <button type="submit" [disabled]="!atividadeForm.form.valid || loading">
+            <ng-container *ngIf="!loading">Enviar</ng-container>
+            <ng-container *ngIf="loading" class="spinner"></ng-container>
+        </button>
+
+        <!-- Mensagem de resultado -->
+        <app-alerta-mensagem *ngIf="mensagem" [mensagem]="mensagem" [tipo]="tipoMensagem">
+        </app-alerta-mensagem>
     </form>
 </div>

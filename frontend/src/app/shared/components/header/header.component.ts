@@ -1,5 +1,12 @@
 import { DOCUMENT, NgIf } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, HostListener, Inject, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  Inject,
+  ViewChild,
+} from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -8,11 +15,11 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
-
 export class HeaderComponent implements AfterViewInit {
   @ViewChild('header', { static: true }) header!: ElementRef;
 
   isOpen = false;
+  menuAberto = false;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -48,5 +55,13 @@ export class HeaderComponent implements AfterViewInit {
   isGroupActive(): boolean {
     const currentUrl = this.router.url;
     return currentUrl.startsWith('/grupo/');
+  }
+
+  toggleMenu(): void {
+    this.menuAberto = !this.menuAberto;
+  }
+
+  closeMenu(): void {
+    this.menuAberto = false;
   }
 }

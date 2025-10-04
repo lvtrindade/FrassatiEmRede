@@ -5,6 +5,12 @@
     text-align: center;
 }
 
+body,
+html {
+    overflow-x: hidden;
+    width: 100%;
+}
+
 span {
     cursor: pointer;
 }
@@ -150,8 +156,8 @@ span {
 
 #landing_blog h2 {
     display: flex;
+    margin-top: 20px;
     align-self: center;
-    top: 20px;
     font-size: 45px;
     color: var(--red);
 }
@@ -186,7 +192,22 @@ span {
     max-height: 150px;
 }
 
-/* Estilos para as atividades */
+#map {
+    width: 90%;
+    max-width: 1200px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    margin-bottom: 30px;
+}
+
+#map iframe {
+    width: 100%;
+    height: 650px;
+    border: none;
+    display: block;
+}
+
 #atividades-container {
     display: flex;
     flex-wrap: wrap;
@@ -258,4 +279,105 @@ span {
     justify-content: center;
     gap: 2rem;
     padding: 2rem 1rem;
+}
+
+@media (max-width: 768px) {
+    #heroes_page {
+        height: 100vh;
+        /* garante 1 tela do celular */
+        min-height: 500px;
+        /* evita ficar muito pequeno */
+    }
+
+    #heroes_page .content {
+        width: 90%;
+        padding: 0 10px;
+        position: relative;
+        /* evita sair da tela */
+    }
+
+    #heroes_page h1,
+    #heroes_page p {
+        position: relative;
+        left: 0;
+        right: 0;
+        text-align: center;
+    }
+
+    #heroes_page .arrow-white {
+        position: relative;
+        bottom: 0;
+        margin-top: 20px;
+    }
+}
+
+/* Escotismo - hexágono abaixo do texto e texto centralizado */
+@media (max-width: 768px) {
+    #landing_escotismo {
+        text-align: center;
+        padding: 2rem 1rem;
+    }
+
+    #landing_escotismo h2 {
+        position: relative;
+        top: 0;
+        text-align: center;
+    }
+
+    #landing_escotismo p {
+        text-indent: 0;
+        max-width: 100%;
+        margin: 1rem auto 0 auto;
+    }
+
+    #landing_escotismo .hexagon-container {
+        position: relative;
+        margin-top: 2rem;
+        bottom: auto;
+        left: auto;
+        right: auto;
+    }
+}
+
+/* Atividades e mapa para celulares */
+@media (max-width: 768px) {
+
+    #atividades-container,
+    .cards-home-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+    }
+
+    .atividade-item {
+        width: 90%;
+        max-width: 350px;
+    }
+
+    #map {
+        width: 95%;
+        margin: 20px auto;
+    }
+
+    #map iframe {
+        height: 350px;
+    }
+}
+
+/* Landing como chegar - imagens e textos centralizados */
+@media (max-width: 480px) {
+    #landing_como_chegar {
+        text-align: center;
+    }
+
+    #landing_como_chegar img {
+        max-width: 80%;
+        height: auto;
+        margin-bottom: 10px;
+    }
+
+    #text p {
+        font-size: 16px;
+        line-height: 1.5rem;
+    }
 }

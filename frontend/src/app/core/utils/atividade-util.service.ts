@@ -25,7 +25,7 @@ export class AtividadeUtilService {
     formData.append('descricao', atividade.descricao);
     formData.append('data_atividade', atividade.data_atividade);
     formData.append('id_tag', atividade.id_tag.toString());
-    formData.append('imagens_removidas', JSON.stringify(imagensRemovidas));
+    formData.append('imagens_para_remover', JSON.stringify(imagensRemovidas));
 
     if (imagemPrincipal) {
       formData.append('imagem_principal', imagemPrincipal);

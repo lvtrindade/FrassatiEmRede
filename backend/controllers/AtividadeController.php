@@ -68,20 +68,31 @@ class AtividadeController {
 
                 case 'PUT':
                     $parsedBody = $request->getParsedBody();
-
-                    if ($parsedBody === null) {
-                        $body = (string) $request->getBody();
-                        $parsedBody = json_decode($body, true) ?? $_POST ?? [];
-                    }
-
                     $uploadedFiles = $request->getUploadedFiles();
 
-                    if (isset($uploadedFiles['imagem_principal'])) {
-                        $imagem = $uploadedFiles['imagem_principal'];
-                        $parsedBody['imagem_principal'] = base64_encode($imagem->getStream()->getContents());
+                    if (isset($parsedBody['imagens_para_remover']) || isset($parsedBody['imagens_removidas'])) {
+                        $json = $parsedBody['imagens_para_remover'] ?? $parsedBody['imagens_removidas'];
+                        $idsParaRemover = json_decode($json, true);
+                        foreach ($idsParaRemover as $idImagem) {
+                            $this->service->removerImagemGaleria($idImagem);
+                        }
                     }
 
-                    error_log("PUT (via POST): " . json_encode($parsedBody));
+                    if (isset($uploadedFiles['imagem_principal'])) {
+                        $imagemPrincipal = $uploadedFiles['imagem_principal'];
+                        if ($imagemPrincipal->getError() === UPLOAD_ERR_OK) {
+                            $parsedBody['imagem_principal'] = base64_encode($imagemPrincipal->getStream()->getContents());
+                        }
+                    }
+
+                    if (isset($uploadedFiles['imagens_galeria']) && is_array($uploadedFiles['imagens_galeria'])) {
+                        foreach ($uploadedFiles['imagens_galeria'] as $file) {
+                            if ($file->getError() === UPLOAD_ERR_OK) {
+                                $base64 = base64_encode($file->getStream()->getContents());
+                                $this->service->adicionarImagemGaleria($id, $base64);
+                            }
+                        }
+                    }
 
                     $dto = new AtividadeDTO($parsedBody);
 
@@ -90,6 +101,9 @@ class AtividadeController {
                     }
 
                     $atualizada = $this->service->editar($id, $dto);
+
+                    $atualizada = $this->service->buscarPorId($id);
+
                     return ResponseFormatter::success($response, "Atividade atualizada", $atualizada);
 
                 case 'DELETE':

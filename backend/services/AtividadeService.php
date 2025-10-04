@@ -34,6 +34,11 @@ class AtividadeService {
         $this->repo->addImagemGaleria($idAtividade, $base64Image);
     }
 
+    public function removerImagemGaleria($idImagem) {
+        $this->repo->removerImagemGaleria($idImagem);
+    }
+
+
     public function editar($id, $dto) {
         if (!$dto->isValid('editar')) {
             throw new \Exception("Dados inválidos (editar)");

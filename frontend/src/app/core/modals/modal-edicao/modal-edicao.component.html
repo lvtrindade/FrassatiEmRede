@@ -1,12 +1,22 @@
-<div class="modal" *ngIf="atividadeEditando">
-  <div class="modal-content">
+<div class="modal" *ngIf="atividadeEditando" (click)="fecharModal.emit()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
     <span class="close" (click)="fecharModal.emit()">&times;</span>
     <h2>Editar Atividade</h2>
 
     <form (ngSubmit)="salvar.emit()" #editarForm="ngForm">
-      <label>Escolha a sua imagem principal</label>
-      <input type="file" accept="image/*" (change)="onImagemPrincipalSelecionada.emit($event)" />
+      <!-- Imagem principal -->
+      <label>Imagem Principal</label>
+      <div class="upload-box" (click)="inputPrincipal.click()">
+        <input type="file" #inputPrincipal accept="image/*" (change)="onImagemPrincipalChange($event)" hidden />
+        <ng-container *ngIf="imagemPrincipalPreview">
+          <img [src]="imagemPrincipalPreview" class="preview-img" />
+        </ng-container>
+        <ng-container *ngIf="!imagemPrincipalPreview">
+          <span>+</span> Selecione a imagem
+        </ng-container>
+      </div>
 
+      <!-- Outros campos -->
       <label>Título</label>
       <input type="text" [(ngModel)]="atividadeEditando.titulo" name="titulo" required />
 
@@ -21,28 +31,35 @@
         <option *ngFor="let tag of tags" [value]="tag.id">{{ tag.nome }}</option>
       </select>
 
+      <!-- Galeria -->
       <label>Adicione fotos à galeria (opcional)</label>
-      <input type="file" accept="image/*" multiple (change)="onGaleriaSelecionada.emit($event)" />
+      <div class="upload-box" (click)="inputGaleria.click()">
+        <input type="file" #inputGaleria accept="image/*" multiple (change)="onGaleriaSelecionada.emit($event)"
+          hidden />
+        <span>+</span> Selecione imagens
+      </div>
 
-      <div *ngIf="(imagensExistenteGaleria.length > 0) || (imagensGaleria.length > 0)" class="galeria-preview">
+      <div *ngIf="imagensExistenteGaleriaUrls.length || imagensGaleria.length" class="galeria-preview">
         <h3>Fotos da Galeria</h3>
-
         <div class="galeria-container">
-          <div *ngFor="let imagem of imagensExistenteGaleria; let i = index" class="imagem-container">
-            <img [src]="'data:image/*;base64,' + imagem.caminho" class="thumbnail" />
-            <button type="button" (click)="removerImagemExistente.emit(i)">Remover</button>
+          <!-- Imagens existentes -->
+          <div *ngFor="let img of imagensExistenteGaleriaUrls; let i = index" class="imagem-container">
+            <img [src]="img.url" class="thumbnail" />
+            <button type="button" class="remove-btn" (click)="removerImagemExistenteClick(img.id)">&times;</button>
           </div>
 
+          <!-- Novas imagens -->
           <div *ngFor="let imagem of imagensGaleria; let i = index" class="imagem-container">
             <img [src]="imagem.url" class="thumbnail" />
-            <button type="button" (click)="removerNovaImagemGaleria.emit(i)">Remover</button>
+            <button type="button" class="remove-btn" (click)="removerNovaImagemGaleriaClick(i)">&times;</button>
           </div>
         </div>
       </div>
 
+      <!-- Ações -->
       <div class="form-actions">
         <button type="button" (click)="fecharModal.emit()">Cancelar</button>
-        <button type="submit" [disabled]="!editarForm.form.valid">Salvar Alterações</button>
+        <button type="button" (click)="onSalvar()" [disabled]="!editarForm.form.valid">Salvar Alterações</button>
       </div>
     </form>
   </div>

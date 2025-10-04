@@ -77,6 +77,11 @@ class AtividadeRepository {
         $stmt->execute([$idGaleria, $base64Image]);
     }
 
+    public function removerImagemGaleria($idImagem) {
+        $stmt = $this->conn->prepare("DELETE FROM ImagemGaleria WHERE id = ?");
+        $stmt->execute([$idImagem]);
+    }
+
     public function update($id, $atividadeDTO) {
         if ($atividadeDTO->imagem_principal) {
             $stmt = $this->conn->prepare("UPDATE Atividade SET titulo=?, descricao=?, imagem_destaque=?, data_atividade=?, id_tag=? WHERE id=?");

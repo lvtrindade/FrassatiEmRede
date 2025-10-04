@@ -21,9 +21,15 @@
             </div>
 
             <app-card-atividade *ngFor="let atividade of getAtividadesPaginaAtual()" [atividade]="atividade"
-                [modoAdmin]="true" (editar)="editarAtividade($event)"
-                (excluir)="excluirAtividade($event)"></app-card-atividade>
+                [modoAdmin]="true" (editar)="editarAtividade($event)" (excluir)="abrirModalExclusao($event)">
+            </app-card-atividade>
         </div>
+
+        <app-modal-confirmacao *ngIf="modalConfirmacaoAberto" [titulo]="'Excluir atividade'"
+            [mensagem]="'Tem certeza que deseja excluir esta atividade?'" [textoConfirmar]="'Excluir'"
+            [textoCancelar]="'Cancelar'" (confirmar)="confirmarExclusao()" (cancelar)="cancelarExclusao()">
+        </app-modal-confirmacao>
+
 
         <div class="spacer"></div>
 

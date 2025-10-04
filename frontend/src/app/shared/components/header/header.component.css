@@ -57,20 +57,21 @@ a.opcao.active {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     border-radius: 7%;
-  }
-  
-  .dropdown.open .dropdown-content {
+}
+
+.dropdown.open .dropdown-content {
     display: block;
-  }
-  
-  .dropdown-content a {
+}
+
+.dropdown-content a {
     display: block;
     padding: 8px 16px;
     color: black;
     text-decoration: none;
     white-space: nowrap;
-  }
-  
-  .dropdown-content a:hover {
+}
+
+.dropdown-content a:hover {
     color: var(--red);
-  }  
+}
+

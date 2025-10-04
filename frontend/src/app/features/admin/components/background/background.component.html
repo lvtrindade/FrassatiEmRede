@@ -15,6 +15,12 @@
             <img *ngIf="previewUrl" [src]="previewUrl" alt="Prévia da imagem" class="preview-image" />
         </div>
 
-        <button type="submit" [disabled]="!selectedFile">Enviar</button>
+        <button type="submit" [disabled]="!selectedFile || loading">
+            <ng-container *ngIf="!loading">Enviar</ng-container>
+            <ng-container *ngIf="loading" class="spinner"></ng-container>
+        </button>
+
+        <app-alerta-mensagem *ngIf="mensagem" [mensagem]="mensagem" [tipo]="tipoMensagem">
+        </app-alerta-mensagem>
     </form>
 </div>

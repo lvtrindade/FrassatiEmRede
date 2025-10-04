@@ -1,8 +1,10 @@
+/* --- Footer Base --- */
 a {
     cursor: pointer;
 }
 
-a, p {
+a,
+p {
     color: white;
     text-decoration: none;
 }
@@ -26,13 +28,14 @@ a, p {
     padding-left: 5%;
 }
 
-.menu  ul {
+.menu ul {
     display: flex;
     list-style: none;
     gap: 50px;
     margin: 0;
     padding: 0;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .rede {
@@ -66,8 +69,81 @@ a, p {
     padding-left: 40px;
     padding-bottom: 20px;
     font-size: 14px;
+    text-align: center;
 }
 
 #termos {
     padding-block: 30px;
+}
+
+/* --- Responsividade --- */
+@media (max-width: 1024px) {
+    .menu ul {
+        gap: 30px;
+    }
+
+    .rede ul {
+        padding-right: 5%;
+    }
+
+    #telefone p {
+        padding-right: 5%;
+    }
+}
+
+@media (max-width: 768px) {
+    .top {
+        grid-template-columns: 1fr;
+        /* menu em cima, redes sociais embaixo */
+        gap: 30px;
+        text-align: center;
+    }
+
+    .menu {
+        justify-content: center;
+        padding-left: 0;
+    }
+
+    .menu ul {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .rede {
+        justify-content: center;
+    }
+
+    .rede ul {
+        padding: 0;
+        gap: 15px;
+    }
+
+    #telefone {
+        justify-content: center;
+        padding-top: 20px;
+    }
+
+    #telefone p {
+        padding: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .menu ul {
+        gap: 15px;
+    }
+
+    .menu ul li {
+        font-size: 14px;
+    }
+
+    #creditos {
+        font-size: 12px;
+        padding-left: 0;
+    }
+
+    .rede ul img {
+        width: 20px;
+        height: 20px;
+    }
 }

@@ -13,6 +13,7 @@ import { TagsService } from '../../../../core/services/tags.service';
 import { AtividadeUtilService } from '../../../../core/utils/atividade-util.service';
 import { CardAtividadeComponent } from '../../../../shared/components/cards/card-atividade/card-atividade.component';
 import { ModalEdicaoComponent } from '../../../../core/modals/modal-edicao/modal-edicao.component';
+import { ModalConfirmacaoComponent } from '../../../../shared/components/modal-confirmacao/modal-confirmacao.component';
 
 @Component({
   selector: 'app-adm-atv',
@@ -21,6 +22,7 @@ import { ModalEdicaoComponent } from '../../../../core/modals/modal-edicao/modal
     CommonModule,
     CardAtividadeComponent,
     ModalEdicaoComponent,
+    ModalConfirmacaoComponent
   ],
   templateUrl: './adm-atv.component.html',
   styleUrl: './adm-atv.component.css',
@@ -41,6 +43,9 @@ export class AdmAtvComponent implements OnDestroy {
   atividadesPorPagina: number = 20;
   paginaAtual: number = 1;
   totalPaginas: number = 1;
+
+  modalConfirmacaoAberto: boolean = false;
+  atividadeParaExcluir: number | null = null;
 
   constructor(
     private tagService: TagsService,
@@ -163,9 +168,17 @@ export class AdmAtvComponent implements OnDestroy {
     }
   }
 
-  excluirAtividade(atividadeId: number): void {
-    if (confirm('Tem certeza que deseja excluir esta atividade?')) {
-      this.atividadesService.excluirAtividade(atividadeId).subscribe({
+  abrirModalExclusao(atividadeId: number): void {
+    this.modalConfirmacaoAberto = true;
+    this.atividadeParaExcluir = atividadeId;
+  }
+
+  confirmarExclusao(): void {
+    if (!this.atividadeParaExcluir) return;
+
+    this.atividadesService
+      .excluirAtividade(this.atividadeParaExcluir)
+      .subscribe({
         next: (response: any) => {
           if (response && response.cod === 200) {
             this.loadAtividades();
@@ -180,8 +193,16 @@ export class AdmAtvComponent implements OnDestroy {
           console.error('Erro ao excluir atividade:', err);
           alert('Erro ao excluir atividade.');
         },
+        complete: () => {
+          this.modalConfirmacaoAberto = false;
+          this.atividadeParaExcluir = null;
+        },
       });
-    }
+  }
+
+  cancelarExclusao(): void {
+    this.modalConfirmacaoAberto = false;
+    this.atividadeParaExcluir = null;
   }
 
   getArrayPaginas(): number[] {
@@ -203,14 +224,14 @@ export class AdmAtvComponent implements OnDestroy {
     }
   }
 
-  removerImagemExistente(index: number): void {
-    // Adiciona o ID da imagem à lista de removidas (se tiver ID)
-    if (this.imagensExistenteGaleria[index].id) {
-      this.imagensRemovidasGaleria.push(this.imagensExistenteGaleria[index].id);
-    }
-    // Remove da lista de exibição
-    this.imagensExistenteGaleria.splice(index, 1);
-    this.cdRef.detectChanges();
+  removerImagemExistente(id: number): void {
+    this.imagensRemovidasGaleria.push(id);
+    this.imagensExistenteGaleria = this.imagensExistenteGaleria.filter(
+      (img) => img.id !== id
+    );
+
+    console.log('Removida ->', id);
+    console.log('Lista atual de removidas ->', this.imagensRemovidasGaleria);
   }
 
   fecharModal(): void {

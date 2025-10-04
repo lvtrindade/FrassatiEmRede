@@ -7,16 +7,20 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { EmailService } from '../../../../core/services/email.service';
+import { AlertaMensagemComponent } from '../../../../shared/components/alerta-mensagem/alerta-mensagem.component';
 
 @Component({
   selector: 'app-fale-conosco',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, AlertaMensagemComponent],
   templateUrl: './fale-conosco.component.html',
   styleUrl: './fale-conosco.component.css',
 })
 export class FaleConoscoComponent implements OnInit {
   emailForm: FormGroup;
+  loading = false;
+  mensagem = '';
+  tipoMensagem: 'sucesso' | 'erro' | 'aviso' | '' = '';
 
   constructor(private fb: FormBuilder, private emailService: EmailService) {
     this.emailForm = this.fb.group({
@@ -32,10 +36,7 @@ export class FaleConoscoComponent implements OnInit {
       ],
       telephone: [
         '',
-        [
-          Validators.required,
-          Validators.pattern(/^\(\d{2}\) \d{4,5}-\d{4}$/),
-        ],
+        [Validators.required, Validators.pattern(/^\(\d{2}\) \d{4,5}-\d{4}$/)],
       ],
       section: ['', Validators.required],
       content: ['', Validators.required],
@@ -65,9 +66,13 @@ export class FaleConoscoComponent implements OnInit {
     } else if (digits.length <= 6) {
       formatted = `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
     } else if (digits.length <= 10) {
-      formatted = `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+      formatted = `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(
+        6
+      )}`;
     } else {
-      formatted = `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+      formatted = `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(
+        7
+      )}`;
     }
 
     if (value.length < formatted.length && digits.length === 0) {
@@ -82,25 +87,30 @@ export class FaleConoscoComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.emailForm.valid) {
-      this.emailService.sendEmail(this.emailForm.value).subscribe({
-        next: (response: any) => {
-          if (response?.cod === 200) {
-            console.log('E-mail enviado com sucesso:', response);
-            alert('E-mail enviado com sucesso!');
-            this.emailForm.reset();
-          } else {
-            console.error('Erro ao enviar o E-mail:', response.mensagem);
-            alert('Erro ao enviar o e-mail: ' + response.mensagem);
-          }
-        },
-        error: (error) => {
-          console.error('Erro ao enviar o E-mail:', error);
-          alert('Erro ao enviar o e-mail.');
-        },
-      });
-    } else {
-      console.log('Email inválido');
-    }
+    if (!this.emailForm.valid) return;
+
+    this.loading = true;
+    this.mensagem = '';
+    this.tipoMensagem = '';
+
+    this.emailService.sendEmail(this.emailForm.value).subscribe({
+      next: (response: any) => {
+        this.loading = false;
+        if (response?.cod === 200) {
+          this.mensagem = 'E-mail enviado com sucesso!';
+          this.tipoMensagem = 'sucesso';
+          this.emailForm.reset();
+        } else {
+          this.mensagem = 'Erro ao enviar o e-mail: ' + response.mensagem;
+          this.tipoMensagem = 'erro';
+        }
+      },
+      error: (error) => {
+        this.loading = false;
+        this.mensagem = 'Erro ao enviar o e-mail.';
+        this.tipoMensagem = 'erro';
+        console.error(error);
+      },
+    });
   }
 }

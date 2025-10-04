@@ -2,17 +2,23 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environments';
 import { CommonModule } from '@angular/common';
+import { AlertaMensagemComponent } from '../../../../shared/components/alerta-mensagem/alerta-mensagem.component';
 
 @Component({
   selector: 'app-background',
   templateUrl: './background.component.html',
   styleUrls: ['./background.component.css'],
-  imports: [CommonModule]
+  imports: [CommonModule, AlertaMensagemComponent],
 })
 export class BackgroundComponent {
   private apiUrl = `${environment.apiUrl}/background`;
+
   selectedFile: File | null = null;
   previewUrl: string | null = null;
+
+  loading = false;
+  mensagem = '';
+  tipoMensagem: 'sucesso' | 'erro' | 'aviso' | '' = '';
 
   constructor(private http: HttpClient) {}
 
@@ -36,28 +42,34 @@ export class BackgroundComponent {
   uploadFile(event: Event) {
     event.preventDefault();
 
-    if (!this.selectedFile) {
-      alert('Nenhum arquivo selecionado.');
-      return;
-    }
+    if (!this.selectedFile) return;
+
+    this.loading = true;
+    this.mensagem = '';
+    this.tipoMensagem = '';
 
     const formData = new FormData();
     formData.append('background', this.selectedFile);
 
     this.http.post(this.apiUrl, formData).subscribe({
       next: (response: any) => {
+        this.loading = false;
+
         if (response.cod === 200) {
-          alert(response.mensagem);
-          // Limpa seleção após upload
+          this.mensagem = response.mensagem || 'Arquivo enviado com sucesso!';
+          this.tipoMensagem = 'sucesso';
           this.selectedFile = null;
           this.previewUrl = null;
         } else {
-          alert(response.mensagem || 'Erro desconhecido');
+          this.mensagem = response.mensagem || 'Erro desconhecido';
+          this.tipoMensagem = 'erro';
         }
       },
       error: (error) => {
-        console.error('Erro ao enviar o arquivo:', error);
-        alert('Erro ao enviar o arquivo. Verifique o console.');
+        this.loading = false;
+        this.mensagem = 'Erro ao enviar o arquivo.';
+        this.tipoMensagem = 'erro';
+        console.error(error);
       },
     });
   }
