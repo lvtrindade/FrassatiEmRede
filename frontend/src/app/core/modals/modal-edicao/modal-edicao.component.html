@@ -59,7 +59,7 @@
       <!-- Ações -->
       <div class="form-actions">
         <button type="button" (click)="fecharModal.emit()">Cancelar</button>
-        <button type="button" (click)="onSalvar()" [disabled]="!editarForm.form.valid">Salvar Alterações</button>
+        <button type="submit" (click)="onSalvar()" [disabled]="!editarForm.form.valid">Salvar Alterações</button>
       </div>
     </form>
   </div>

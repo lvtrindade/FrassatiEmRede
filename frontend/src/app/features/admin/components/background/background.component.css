@@ -92,7 +92,7 @@
 button[type='submit'] {
     font-family: 'Reddit Sans', sans-serif;
     font-size: 16px;
-    background-color: #cc263c;
+    background-color: #28a745;
     color: white;
     padding: 14px 40px;
     border: none;
@@ -104,7 +104,7 @@ button[type='submit'] {
 }
 
 button[type='submit']:hover:not(:disabled) {
-    background-color: #a9192f;
+    background-color: #34c759;
 }
 
 button[type='submit']:disabled {

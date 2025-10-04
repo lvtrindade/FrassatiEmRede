@@ -172,9 +172,14 @@ form textarea {
     color: #000;
 }
 
+/* Botão Salvar */
 .form-actions button[type="submit"] {
-    background-color: #FE0002;
+    background-color: #28a745;
     color: #fff;
+}
+
+.form-actions button[type="submit"]:hover:not(:disabled) {
+    background-color: #34c759;
 }
 
 .form-actions button:disabled {
